@@ -11,17 +11,21 @@ import java.util.concurrent.Semaphore;
  */
 public class Worker extends Thread {
     private int type; //0 = placaBase, 1 = cpu, 2 = memoriaRam, 3 = fuentesAlimentacion, 4 = GPU. 
-    private int workerProfit;
+    private int workerProfit; //Se usuará para el acumalado del salario del worker. 
     private int salaryPerHour;
-    private int daysPerComponent;
+    private int quantityWorkers; //Cantidad de trabajadores. 
     private int components;
     public int days;
-    public int hours;
+    public int daysDuration; //Duracion de los dias de los trabajadores. 
+    public int daysTofinishWork; 
+    public Wharehouse wharehouse; 
     private Semaphore sem;       
     
-    public Worker(int type, int daysPerComponent, Semaphore sem){
+    public Worker(int type,int dayDuration,int quantity ,Wharehouse wharehouse, Semaphore sem, int [] daysTofinish){
         this.type = type; 
-        this.workerProfit = 0;
+        this.quantityWorkers = quantity; 
+        this.daysTofinishWork = daysTofinish[type]; 
+        this.quantityWorkers = quantity; 
         switch (type) {
             case 0: //Productor de placa base
                 this.salaryPerHour = 20;
@@ -47,34 +51,27 @@ public class Worker extends Thread {
                 this.salaryPerHour = 0;
                 break;
         }
-        this.daysPerComponent = daysPerComponent;
+        this.workerProfit = 0;
         this.days = 0;
-        this.hours = 0;
-        this.sem = sem;         
+        this.daysDuration = dayDuration;
+        this.sem = sem;   
+        this.wharehouse = wharehouse; 
     }
     
-    @Override
-    public void run(){
-        try{
-            while(true){
-                System.out.println("Dia " + this.days + ". Hora " + this.hours);
-                System.out.println("El trabajador ha ganado " + this.workerProfit + "$");
-                System.out.println("Se han hecho " + this.components + " componentes\n");
-                this.workerProfit += this.salaryPerHour;
-                this.hours += 1;
-                if(this.hours / 24 == 1){
-                    this.days++;
-                    this.components++;
-                    this.hours = 0;
-                }                
-                Thread.sleep(1000);               
+    public void paysalary(){ //se calcula el salario que tiene el trabajador. 
+        this.setWorkerProfit(this.getWorkerProfit() + (this.getSalaryPerHour() *24 ) * this.getQuantityWorkers()); 
+    }
+    
+    public void work(){
+        this.setDays(this.getDays() + 1);
+        if(this.getDays() == this.getDaysTofinishWork()){
+            try{
+                this.getSem().acquire(); 
+                this.getWharehouse(); 
+            }catch(){
             }
-        }   
-        catch(Exception e){
-            System.out.println(e);
         }
     }
-    
 
     public int getType() {
         return type;
@@ -84,21 +81,13 @@ public class Worker extends Thread {
         this.type = type;
     }
 
-    public int getSalaryperhour() {
-        return salaryPerHour;
+    public int getWorkerProfit() {
+        return workerProfit;
     }
 
-    public void setSalaryperhour(int salaryPerHour) {
-        this.salaryPerHour = salaryPerHour;
+    public void setWorkerProfit(int workerProfit) {
+        this.workerProfit = workerProfit;
     }
-
-    public Semaphore getSem() {
-        return sem;
-    }
-
-    public void setSem(Semaphore sem) {
-        this.sem = sem;
-    }   
 
     public int getSalaryPerHour() {
         return salaryPerHour;
@@ -108,12 +97,20 @@ public class Worker extends Thread {
         this.salaryPerHour = salaryPerHour;
     }
 
-    public int getDaysPerComponent() {
-        return daysPerComponent;
+    public int getQuantityWorkers() {
+        return quantityWorkers;
     }
 
-    public void setDaysPerComponent(int daysPerComponent) {
-        this.daysPerComponent = daysPerComponent;
+    public void setQuantityWorkers(int quantityWorkers) {
+        this.quantityWorkers = quantityWorkers;
+    }
+
+    public int getComponents() {
+        return components;
+    }
+
+    public void setComponents(int components) {
+        this.components = components;
     }
 
     public int getDays() {
@@ -124,23 +121,37 @@ public class Worker extends Thread {
         this.days = days;
     }
 
-    public int getHours() {
-        return hours;
+    public int getDaysDuration() {
+        return daysDuration;
     }
 
-    public void setHours(int hours) {
-        this.hours = hours;
+    public void setDaysDuration(int daysDuration) {
+        this.daysDuration = daysDuration;
     }
-    
-    
 
-    
+    public int getDaysTofinishWork() {
+        return daysTofinishWork;
+    }
 
-        
-    
+    public void setDaysTofinishWork(int daysTofinishWork) {
+        this.daysTofinishWork = daysTofinishWork;
+    }
 
-    
-    
-    
-    
+    public Wharehouse getWharehouse() {
+        return wharehouse;
+    }
+
+    public void setWharehouse(Wharehouse wharehouse) {
+        this.wharehouse = wharehouse;
+    }
+
+    public Semaphore getSem() {
+        return sem;
+    }
+
+    public void setSem(Semaphore sem) {
+        this.sem = sem;
+    }
+  
 }
+
