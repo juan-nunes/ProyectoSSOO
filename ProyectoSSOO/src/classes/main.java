@@ -1,5 +1,6 @@
 package classes;
 
+import GUI.MainView;
 import java.util.concurrent.Semaphore;
 
 /*
@@ -18,15 +19,8 @@ public class main {
      */
     public static void main(String[] args) {
         
-        Semaphore semaphore = new Semaphore(3);
-        
-        Worker worker1 = new Worker(0, 1, semaphore);
-        Worker worker2 = new Worker(0, 1, semaphore);
-        Worker worker3 = new Worker(0, 1, semaphore);
-        
-        worker1.start();
-        worker2.start();
-        worker3.start();
+        MainView mv = new MainView();
+        mv.setVisible(true);
         
     }
     

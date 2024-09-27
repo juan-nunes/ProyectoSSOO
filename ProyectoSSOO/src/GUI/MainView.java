@@ -4,17 +4,28 @@
  */
 package GUI;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+
 /**
  *
  * @author juann
  */
 public class MainView extends javax.swing.JFrame {
-
-    /**
-     * Creates new form Main
-     */
+    
+    int xMouse, yMouse;
+    
     public MainView() {
         initComponents();
+        
+        ConfigurationView configurationView = new ConfigurationView();
+        configurationView.setSize(800, 410);
+        configurationView.setLocation(0, 0);
+        
+        body.removeAll();
+        body.add(configurationView, BorderLayout.CENTER);
+        body.revalidate();
+        body.repaint();
     }
 
     /**
@@ -26,191 +37,227 @@ public class MainView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
+        body = new javax.swing.JPanel();
+        header = new javax.swing.JPanel();
+        configuration = new javax.swing.JButton();
+        dell = new javax.swing.JButton();
+        apple = new javax.swing.JButton();
+        exit = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        minusNumWorkers = new javax.swing.JButton();
-        numWorkers = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
-        jButton10 = new javax.swing.JButton();
-        jButton11 = new javax.swing.JButton();
-        jButton12 = new javax.swing.JButton();
-        jButton13 = new javax.swing.JButton();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
-        jButton14 = new javax.swing.JButton();
-        jLabel15 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton15 = new javax.swing.JButton();
-        jButton16 = new javax.swing.JButton();
-        jButton17 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setLocationByPlatform(true);
+        setUndecorated(true);
+        setResizable(false);
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setText("Configuracion");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 60, -1, -1));
+        body.setBackground(new java.awt.Color(153, 153, 153));
 
-        jLabel2.setText("Nro de trabajadores");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 100, -1, -1));
+        javax.swing.GroupLayout bodyLayout = new javax.swing.GroupLayout(body);
+        body.setLayout(bodyLayout);
+        bodyLayout.setHorizontalGroup(
+            bodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 800, Short.MAX_VALUE)
+        );
+        bodyLayout.setVerticalGroup(
+            bodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 410, Short.MAX_VALUE)
+        );
 
-        jLabel3.setText("Productores de placa base");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 140, -1, -1));
+        jPanel1.add(body, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 800, 410));
 
-        minusNumWorkers.setText("-");
-        minusNumWorkers.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                minusNumWorkersActionPerformed(evt);
+        header.setBackground(new java.awt.Color(255, 255, 255));
+        header.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102)));
+        header.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                headerMouseDragged(evt);
             }
         });
-        jPanel1.add(minusNumWorkers, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 100, 20, -1));
-
-        numWorkers.setText("0");
-        jPanel1.add(numWorkers, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 100, 20, -1));
-
-        jButton1.setText("+");
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 100, -1, -1));
-
-        jButton2.setText("-");
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 140, 20, -1));
-
-        jLabel4.setText("0");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 140, 20, -1));
-
-        jButton3.setText("+");
-        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 140, 20, -1));
-
-        jLabel5.setText("Productores de CPU");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 180, -1, -1));
-
-        jLabel6.setText("Productores de RAM");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 220, -1, -1));
-
-        jLabel7.setText("Productores de fuentes de alimentacion");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, -1, -1));
-
-        jLabel8.setText("Productores de GPU");
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 300, -1, -1));
-
-        jLabel9.setText("Emsambladores");
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 340, -1, -1));
-
-        jButton4.setText("-");
-        jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 180, 20, -1));
-
-        jButton5.setText("+");
-        jPanel1.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 180, 20, -1));
-
-        jButton6.setText("-");
-        jPanel1.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 220, 20, -1));
-
-        jButton7.setText("+");
-        jPanel1.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 220, 20, -1));
-
-        jButton8.setText("-");
-        jPanel1.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 260, 20, -1));
-
-        jButton9.setText("+");
-        jButton9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton9ActionPerformed(evt);
+        header.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                headerMousePressed(evt);
             }
         });
-        jPanel1.add(jButton9, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 260, 20, -1));
+        header.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton10.setText("-");
-        jPanel1.add(jButton10, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 300, 20, -1));
-
-        jButton11.setText("+");
-        jPanel1.add(jButton11, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 300, 20, -1));
-
-        jButton12.setText("-");
-        jPanel1.add(jButton12, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 340, 20, -1));
-
-        jButton13.setText("+");
-        jPanel1.add(jButton13, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 340, 20, -1));
-
-        jLabel10.setText("0");
-        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 180, 20, -1));
-
-        jLabel11.setText("0");
-        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 220, 20, -1));
-
-        jLabel12.setText("0");
-        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 260, 20, -1));
-
-        jLabel13.setText("0");
-        jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 300, 20, -1));
-
-        jLabel14.setText("0");
-        jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 340, 20, -1));
-
-        jButton14.setText("Guardar");
-        jPanel1.add(jButton14, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 240, -1, -1));
-
-        jLabel15.setText("Duracion de un dia");
-        jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 100, -1, -1));
-
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+        configuration.setBackground(new java.awt.Color(204, 255, 255));
+        configuration.setText("Configuracion");
+        configuration.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                configurationMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                configurationMouseExited(evt);
             }
         });
-        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 100, 110, -1));
+        configuration.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                configurationActionPerformed(evt);
+            }
+        });
+        header.add(configuration, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 110, 40));
 
-        jButton15.setText("Configuracion");
-        jPanel1.add(jButton15, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 110, 40));
+        dell.setBackground(new java.awt.Color(204, 255, 255));
+        dell.setText("Dell");
+        dell.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                dellMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                dellMouseExited(evt);
+            }
+        });
+        dell.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dellActionPerformed(evt);
+            }
+        });
+        header.add(dell, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 0, 120, 40));
 
-        jButton16.setText("Dell");
-        jPanel1.add(jButton16, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 0, 120, 40));
+        apple.setBackground(new java.awt.Color(204, 255, 255));
+        apple.setText("Apple");
+        apple.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                appleMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                appleMouseExited(evt);
+            }
+        });
+        apple.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                appleActionPerformed(evt);
+            }
+        });
+        header.add(apple, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 0, 110, 40));
 
-        jButton17.setText("Apple");
-        jPanel1.add(jButton17, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 0, 110, 40));
+        exit.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102)));
+        exit.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                exitMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                exitMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                exitMouseExited(evt);
+            }
+        });
+        exit.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel1.setText("  X");
+        exit.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 40, -1));
+
+        header.add(exit, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 0, 40, 40));
+
+        jPanel1.add(header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void minusNumWorkersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minusNumWorkersActionPerformed
+    private void configurationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_configurationActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_minusNumWorkersActionPerformed
+        ConfigurationView configurationView = new ConfigurationView();
+        configurationView.setSize(800, 410);
+        configurationView.setLocation(0, 0);
+        
+        body.removeAll();
+        body.add(configurationView, BorderLayout.CENTER);
+        body.revalidate();
+        body.repaint();
+        
+    }//GEN-LAST:event_configurationActionPerformed
 
-    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton9ActionPerformed
+    private void dellActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dellActionPerformed
+        DellView dellView = new DellView();
+        dellView.setSize(800, 410);
+        dellView.setLocation(0, 0);
+        
+        body.removeAll();
+        body.add(dellView, BorderLayout.CENTER);
+        body.revalidate();
+        body.repaint();
+    }//GEN-LAST:event_dellActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    private void appleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_appleActionPerformed
+        AppleView appleView = new AppleView();
+        appleView.setSize(800, 410);
+        appleView.setLocation(0, 0);
+        
+        body.removeAll();
+        body.add(appleView, BorderLayout.CENTER);
+        body.revalidate();
+        body.repaint();
+    }//GEN-LAST:event_appleActionPerformed
+
+    private void exitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitMouseClicked
+        System.exit(0);
+    }//GEN-LAST:event_exitMouseClicked
+
+    private void headerMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_headerMousePressed
+        xMouse = evt.getX();
+        yMouse = evt.getY();
+    }//GEN-LAST:event_headerMousePressed
+
+    private void headerMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_headerMouseDragged
+        int x = evt.getXOnScreen();
+        int y = evt.getYOnScreen();
+        this.setLocation(x - xMouse, y - yMouse);
+    }//GEN-LAST:event_headerMouseDragged
+
+    private void exitMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitMouseEntered
+        Color color = new Color(255, 51, 51);
+        exit.setBackground(Color.red);
+    }//GEN-LAST:event_exitMouseEntered
+
+    private void exitMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitMouseExited
+        Color color = new Color(242, 242, 242);
+        exit.setBackground(color);
+    }//GEN-LAST:event_exitMouseExited
+
+    private void configurationMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_configurationMouseEntered
+        Color color = new Color(152, 234, 234);
+        configuration.setBackground(color);
+    }//GEN-LAST:event_configurationMouseEntered
+
+    private void configurationMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_configurationMouseExited
+        Color color = new Color(204, 255, 255);
+        configuration.setBackground(color);
+    }//GEN-LAST:event_configurationMouseExited
+
+    private void dellMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dellMouseEntered
+        Color color = new Color(152, 234, 234);
+        dell.setBackground(color);
+    }//GEN-LAST:event_dellMouseEntered
+
+    private void dellMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dellMouseExited
+        Color color = new Color(204, 255, 255);
+        dell.setBackground(color);
+    }//GEN-LAST:event_dellMouseExited
+
+    private void appleMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_appleMouseEntered
+        Color color = new Color(152, 234, 234);
+        apple.setBackground(color);
+    }//GEN-LAST:event_appleMouseEntered
+
+    private void appleMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_appleMouseExited
+        Color color = new Color(204, 255, 255);
+        apple.setBackground(color);
+    }//GEN-LAST:event_appleMouseExited
 
     /**
      * @param args the command line arguments
@@ -255,41 +302,14 @@ public class MainView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton12;
-    private javax.swing.JButton jButton13;
-    private javax.swing.JButton jButton14;
-    private javax.swing.JButton jButton15;
-    private javax.swing.JButton jButton16;
-    private javax.swing.JButton jButton17;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
+    private javax.swing.JButton apple;
+    private javax.swing.JPanel body;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JButton configuration;
+    private javax.swing.JButton dell;
+    private javax.swing.JPanel exit;
+    private javax.swing.JPanel header;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JButton minusNumWorkers;
-    private javax.swing.JLabel numWorkers;
     // End of variables declaration//GEN-END:variables
 }
