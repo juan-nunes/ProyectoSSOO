@@ -7,6 +7,10 @@ package GUI;
 import classes.Company;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Paths;
 
 /**
  *
@@ -23,7 +27,24 @@ public class MainView extends javax.swing.JFrame {
         this.dell = null;
         this.apple = null;
         
-        this.configurationView = new ConfigurationView(this.dell, this.apple);
+        String[] values = new String[7];
+        String currentDir = System.getProperty("user.dir");        
+        String path = Paths.get(currentDir, "src", "txtFiles", "config.txt").toString(); 
+        
+        try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
+            String linea;
+            int count = 0;
+            while ((linea = reader.readLine()) != null) {
+                values[count] = linea;
+                count++;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        
+        
+        this.configurationView = new ConfigurationView(this.dell, this.apple, values);
         this.configurationView.setSize(800, 410);
         this.configurationView.setLocation(0, 0);
         
@@ -51,7 +72,6 @@ public class MainView extends javax.swing.JFrame {
         appleButton = new javax.swing.JButton();
         exit = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -159,14 +179,6 @@ public class MainView extends javax.swing.JFrame {
 
         header.add(exit, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 0, 40, 40));
 
-        jButton1.setText("test");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        header.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 10, -1, -1));
-
         jPanel1.add(header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -273,10 +285,6 @@ public class MainView extends javax.swing.JFrame {
         appleButton.setBackground(color);
     }//GEN-LAST:event_appleButtonMouseExited
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        System.out.println(this.configurationView.getApple());
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -327,7 +335,6 @@ public class MainView extends javax.swing.JFrame {
     private javax.swing.JButton dellButton;
     private javax.swing.JPanel exit;
     private javax.swing.JPanel header;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables

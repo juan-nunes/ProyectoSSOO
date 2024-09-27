@@ -5,7 +5,14 @@
 package GUI;
 
 import classes.Company;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.concurrent.Semaphore;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -15,12 +22,30 @@ public class ConfigurationView extends javax.swing.JPanel {
 
     Company dell, apple;
     int workersCount;
+    String[] values;
     
     public ConfigurationView(Company dell, Company apple) {
         this.dell = dell;
         this.apple = apple;  
         this.workersCount = 0; 
+        this.values = null;
         initComponents();
+    }
+    
+    public ConfigurationView(Company dell, Company apple, String[] values) {
+        this.dell = dell;
+        this.apple = apple;  
+        this.workersCount = 0; 
+        this.values = values;
+        
+        initComponents();
+        numWorkers.setText(values[0]);
+        workersMotherboards.setText(values[1]);
+        workersCPU.setText(values[2]);
+        workersRAM.setText(values[3]);
+        workersPowerSupply.setText(values[4]);
+        workersGPU.setText(values[5]);
+        numAssemblers.setText(values[6]);
     }
     
     public Company getDell(){
@@ -383,34 +408,55 @@ public class ConfigurationView extends javax.swing.JPanel {
     private void saveConfigurationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveConfigurationActionPerformed
         Semaphore sem = new Semaphore(2);
         
+        String[] values = new String[7];        
+        
+        values[0] = numWorkers.getText();
+        values[1] = workersMotherboards.getText();
+        values[2] = workersCPU.getText();
+        values[3] = workersRAM.getText();
+        values[4] = workersPowerSupply.getText();
+        values[5] = workersGPU.getText();
+        values[6] = numAssemblers.getText();                
+        
         Company dellCompany = new Company(
                 "Dell",
-                Integer.parseInt(numWorkers.getText()),
-                Integer.parseInt(workersMotherboards.getText()),
-                Integer.parseInt(workersCPU.getText()),
-                Integer.parseInt(workersRAM.getText()),
-                Integer.parseInt(workersPowerSupply.getText()),
-                Integer.parseInt(workersGPU.getText()),
-                Integer.parseInt(numAssemblers.getText()),
+                Integer.parseInt(values[0]),
+                Integer.parseInt(values[1]),
+                Integer.parseInt(values[2]),
+                Integer.parseInt(values[3]),
+                Integer.parseInt(values[4]),
+                Integer.parseInt(values[5]),
+                Integer.parseInt(values[6]),
                 sem
         );
         
         Company appleCompany = new Company(
                 "Apple",
-                Integer.parseInt(numWorkers.getText()),
-                Integer.parseInt(workersMotherboards.getText()),
-                Integer.parseInt(workersCPU.getText()),
-                Integer.parseInt(workersRAM.getText()),
-                Integer.parseInt(workersPowerSupply.getText()),
-                Integer.parseInt(workersGPU.getText()),
-                Integer.parseInt(numAssemblers.getText()),
+                Integer.parseInt(values[0]),
+                Integer.parseInt(values[1]),
+                Integer.parseInt(values[2]),
+                Integer.parseInt(values[3]),
+                Integer.parseInt(values[4]),
+                Integer.parseInt(values[5]),
+                Integer.parseInt(values[6]),
                 sem
         );
         
+        String currentDir = System.getProperty("user.dir");        
+        String path = Paths.get(currentDir, "src", "txtFiles", "config.txt").toString();    
+        
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(path))) {                                
+            for(String value: values){
+                writer.write(value);
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        
         this.dell = dellCompany;
         this.apple = appleCompany;
-        System.out.println(dell);
-        System.out.println(apple);
     }//GEN-LAST:event_saveConfigurationActionPerformed
 
 
