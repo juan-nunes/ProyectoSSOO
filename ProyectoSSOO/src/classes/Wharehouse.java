@@ -24,17 +24,19 @@ public class Wharehouse {
         this.powerSupply = 0;
         this.gpu = 0;        
     }
+    
+  
 
     public int getMotherboard() {
         return motherboard;
     }
 
-    public void addMotherboard() {
+    public void addMotherboard(int quantity) {
         if(this.motherboard > 25){
             JOptionPane.showMessageDialog(null, "Almacen de placas bases lleno!!");
         }
         else{
-            this.motherboard++;            
+            this.motherboard += quantity;            
         }
     }
 
@@ -42,12 +44,12 @@ public class Wharehouse {
         return cpu;
     }
 
-    public void setCpu(int cpu) {
+    public void addCpu(int quantity) {
         if(this.cpu > 20){
             JOptionPane.showMessageDialog(null, "Almacen de procesadores lleno!!");
         }
         else{
-            this.cpu++;            
+            this.cpu += quantity;        
         }
     }
 
@@ -55,12 +57,12 @@ public class Wharehouse {
         return ram;
     }
 
-    public void setRam(int ram) {
+    public void addRam(int quantity) {
         if(this.ram > 55){
             JOptionPane.showMessageDialog(null, "Almacen de memoria ram lleno!!");
         }
         else{
-            this.ram++;            
+            this.ram += quantity;            
         }
     }
 
@@ -68,12 +70,12 @@ public class Wharehouse {
         return powerSupply;
     }
 
-    public void setPowerSupply(int powerSupply) {
+    public void addPowerSupply(int quantity) {
         if(this.powerSupply > 35){
             JOptionPane.showMessageDialog(null, "Almacen de fuentes de poder lleno!!");
         }
         else{
-            this.powerSupply++;            
+            this.powerSupply += quantity;          
         }
     }
 
@@ -81,12 +83,12 @@ public class Wharehouse {
         return gpu;
     }
 
-    public void setGpu(int gpu) {
+    public void addGpu(int quantity) {
         if(this.gpu > 10){
             JOptionPane.showMessageDialog(null, "Almacen de tarjetas graficas lleno!!");
         }
         else{
-            this.gpu++;            
+            this.gpu += quantity;            
         }
     }
 

@@ -19,8 +19,11 @@ public class main {
      */
     public static void main(String[] args) {
         
-        MainView mv = new MainView();
-        mv.setVisible(true);
+        Semaphore sem = new Semaphore(1);
+        Wharehouse wh = new Wharehouse();
+        
+        Worker worker = new Worker(0, 2000, 3, wh, sem, 4);
+        worker.start();
         
     }
     

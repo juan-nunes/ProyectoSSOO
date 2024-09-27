@@ -16,15 +16,16 @@ public class Worker extends Thread {
     private int quantityWorkers; //Cantidad de trabajadores. 
     private int components;
     public int days;
+    public int daysCount;
     public int daysDuration; //Duracion de los dias de los trabajadores. 
     public int daysTofinishWork; 
     public Wharehouse wharehouse; 
     private Semaphore sem;       
     
-    public Worker(int type,int dayDuration,int quantity ,Wharehouse wharehouse, Semaphore sem, int [] daysTofinish){
+    public Worker(int type, int dayDuration, int quantity, Wharehouse wharehouse, Semaphore sem, int daysTofinish){
         this.type = type; 
         this.quantityWorkers = quantity; 
-        this.daysTofinishWork = daysTofinish[type]; 
+        this.daysTofinishWork = daysTofinish; 
         this.quantityWorkers = quantity; 
         switch (type) {
             case 0: //Productor de placa base
@@ -53,22 +54,67 @@ public class Worker extends Thread {
         }
         this.workerProfit = 0;
         this.days = 0;
+        this.daysCount = 0;
         this.daysDuration = dayDuration;
         this.sem = sem;   
         this.wharehouse = wharehouse; 
     }
     
+    
+    @Override
+    public void run(){
+        boolean run = true;
+        while(run){
+            try{
+                work();
+                paysalary();
+                sleep(this.daysDuration); 
+                System.out.println("Dia: " + this.days);
+                System.out.println("Ganancia del trabajdor: " + this.workerProfit);
+                System.out.println("Componentes creados: " + this.components);
+            }
+            catch(Exception e){
+                System.out.println(e);
+            }
+        }
+    }
+    
     public void paysalary(){ //se calcula el salario que tiene el trabajador. 
-        this.setWorkerProfit(this.getWorkerProfit() + (this.getSalaryPerHour() *24 ) * this.getQuantityWorkers()); 
+        this.setWorkerProfit(this.getWorkerProfit() + (this.getSalaryPerHour() * 24 ) * this.getQuantityWorkers()); 
     }
     
     public void work(){
         this.setDays(this.getDays() + 1);
-        if(this.getDays() == this.getDaysTofinishWork()){
+        this.daysCount++;
+        if(this.daysCount == this.getDaysTofinishWork()){ // 4
             try{
-                this.getSem().acquire(); 
-                this.getWharehouse(); 
-            }catch(){
+                this.sem.acquire(); 
+                switch (type) {
+                    case 0: //placa base
+                        this.wharehouse.addMotherboard(this.quantityWorkers);                        
+                        break;
+                        
+                    case 1: //CPU
+                        this.wharehouse.addCpu(this.quantityWorkers);                        
+                        break;
+                    
+                    case 2: //RAM
+                        this.wharehouse.addRam(this.quantityWorkers);                        
+                        break;
+                       
+                    case 3: //powerSupply
+                        this.wharehouse.addPowerSupply(this.quantityWorkers);                        
+                        break;
+                    
+                    case 4: //GPU
+                        this.wharehouse.addGpu(this.quantityWorkers);                        
+                        break;                                                                                
+                }
+                this.sem.release();
+                this.components++;
+                this.daysCount = 0;
+            }catch(Exception e){
+                System.out.println(e);
             }
         }
     }
