@@ -4,6 +4,7 @@
  */
 package GUI;
 
+import classes.Company;
 import java.awt.BorderLayout;
 import java.awt.Color;
 
@@ -14,13 +15,17 @@ import java.awt.Color;
 public class MainView extends javax.swing.JFrame {
     
     int xMouse, yMouse;
+    Company dell, apple;    
+    ConfigurationView configurationView;
     
     public MainView() {
         initComponents();
+        this.dell = null;
+        this.apple = null;
         
-        ConfigurationView configurationView = new ConfigurationView();
-        configurationView.setSize(800, 410);
-        configurationView.setLocation(0, 0);
+        this.configurationView = new ConfigurationView(this.dell, this.apple);
+        this.configurationView.setSize(800, 410);
+        this.configurationView.setLocation(0, 0);
         
         body.removeAll();
         body.add(configurationView, BorderLayout.CENTER);
@@ -41,11 +46,12 @@ public class MainView extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         body = new javax.swing.JPanel();
         header = new javax.swing.JPanel();
-        configuration = new javax.swing.JButton();
-        dell = new javax.swing.JButton();
-        apple = new javax.swing.JButton();
+        configurationButton = new javax.swing.JButton();
+        dellButton = new javax.swing.JButton();
+        appleButton = new javax.swing.JButton();
         exit = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -83,56 +89,56 @@ public class MainView extends javax.swing.JFrame {
         });
         header.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        configuration.setBackground(new java.awt.Color(204, 255, 255));
-        configuration.setText("Configuracion");
-        configuration.addMouseListener(new java.awt.event.MouseAdapter() {
+        configurationButton.setBackground(new java.awt.Color(204, 255, 255));
+        configurationButton.setText("Configuracion");
+        configurationButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                configurationMouseEntered(evt);
+                configurationButtonMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                configurationMouseExited(evt);
+                configurationButtonMouseExited(evt);
             }
         });
-        configuration.addActionListener(new java.awt.event.ActionListener() {
+        configurationButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                configurationActionPerformed(evt);
+                configurationButtonActionPerformed(evt);
             }
         });
-        header.add(configuration, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 110, 40));
+        header.add(configurationButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 110, 40));
 
-        dell.setBackground(new java.awt.Color(204, 255, 255));
-        dell.setText("Dell");
-        dell.addMouseListener(new java.awt.event.MouseAdapter() {
+        dellButton.setBackground(new java.awt.Color(204, 255, 255));
+        dellButton.setText("Dell");
+        dellButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                dellMouseEntered(evt);
+                dellButtonMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                dellMouseExited(evt);
+                dellButtonMouseExited(evt);
             }
         });
-        dell.addActionListener(new java.awt.event.ActionListener() {
+        dellButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                dellActionPerformed(evt);
+                dellButtonActionPerformed(evt);
             }
         });
-        header.add(dell, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 0, 120, 40));
+        header.add(dellButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 0, 120, 40));
 
-        apple.setBackground(new java.awt.Color(204, 255, 255));
-        apple.setText("Apple");
-        apple.addMouseListener(new java.awt.event.MouseAdapter() {
+        appleButton.setBackground(new java.awt.Color(204, 255, 255));
+        appleButton.setText("Apple");
+        appleButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                appleMouseEntered(evt);
+                appleButtonMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                appleMouseExited(evt);
+                appleButtonMouseExited(evt);
             }
         });
-        apple.addActionListener(new java.awt.event.ActionListener() {
+        appleButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                appleActionPerformed(evt);
+                appleButtonActionPerformed(evt);
             }
         });
-        header.add(apple, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 0, 110, 40));
+        header.add(appleButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 0, 110, 40));
 
         exit.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102)));
         exit.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -153,6 +159,14 @@ public class MainView extends javax.swing.JFrame {
 
         header.add(exit, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 0, 40, 40));
 
+        jButton1.setText("test");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        header.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 10, -1, -1));
+
         jPanel1.add(header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -169,9 +183,9 @@ public class MainView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void configurationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_configurationActionPerformed
+    private void configurationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_configurationButtonActionPerformed
         // TODO add your handling code here:
-        ConfigurationView configurationView = new ConfigurationView();
+        ConfigurationView configurationView = new ConfigurationView(this.dell, this.apple);
         configurationView.setSize(800, 410);
         configurationView.setLocation(0, 0);
         
@@ -180,9 +194,9 @@ public class MainView extends javax.swing.JFrame {
         body.revalidate();
         body.repaint();
         
-    }//GEN-LAST:event_configurationActionPerformed
+    }//GEN-LAST:event_configurationButtonActionPerformed
 
-    private void dellActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dellActionPerformed
+    private void dellButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dellButtonActionPerformed
         DellView dellView = new DellView();
         dellView.setSize(800, 410);
         dellView.setLocation(0, 0);
@@ -191,9 +205,9 @@ public class MainView extends javax.swing.JFrame {
         body.add(dellView, BorderLayout.CENTER);
         body.revalidate();
         body.repaint();
-    }//GEN-LAST:event_dellActionPerformed
+    }//GEN-LAST:event_dellButtonActionPerformed
 
-    private void appleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_appleActionPerformed
+    private void appleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_appleButtonActionPerformed
         AppleView appleView = new AppleView();
         appleView.setSize(800, 410);
         appleView.setLocation(0, 0);
@@ -202,7 +216,7 @@ public class MainView extends javax.swing.JFrame {
         body.add(appleView, BorderLayout.CENTER);
         body.revalidate();
         body.repaint();
-    }//GEN-LAST:event_appleActionPerformed
+    }//GEN-LAST:event_appleButtonActionPerformed
 
     private void exitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitMouseClicked
         System.exit(0);
@@ -229,35 +243,39 @@ public class MainView extends javax.swing.JFrame {
         exit.setBackground(color);
     }//GEN-LAST:event_exitMouseExited
 
-    private void configurationMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_configurationMouseEntered
+    private void configurationButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_configurationButtonMouseEntered
         Color color = new Color(152, 234, 234);
-        configuration.setBackground(color);
-    }//GEN-LAST:event_configurationMouseEntered
+        configurationButton.setBackground(color);
+    }//GEN-LAST:event_configurationButtonMouseEntered
 
-    private void configurationMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_configurationMouseExited
+    private void configurationButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_configurationButtonMouseExited
         Color color = new Color(204, 255, 255);
-        configuration.setBackground(color);
-    }//GEN-LAST:event_configurationMouseExited
+        configurationButton.setBackground(color);
+    }//GEN-LAST:event_configurationButtonMouseExited
 
-    private void dellMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dellMouseEntered
+    private void dellButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dellButtonMouseEntered
         Color color = new Color(152, 234, 234);
-        dell.setBackground(color);
-    }//GEN-LAST:event_dellMouseEntered
+        dellButton.setBackground(color);
+    }//GEN-LAST:event_dellButtonMouseEntered
 
-    private void dellMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dellMouseExited
+    private void dellButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dellButtonMouseExited
         Color color = new Color(204, 255, 255);
-        dell.setBackground(color);
-    }//GEN-LAST:event_dellMouseExited
+        dellButton.setBackground(color);
+    }//GEN-LAST:event_dellButtonMouseExited
 
-    private void appleMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_appleMouseEntered
+    private void appleButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_appleButtonMouseEntered
         Color color = new Color(152, 234, 234);
-        apple.setBackground(color);
-    }//GEN-LAST:event_appleMouseEntered
+        appleButton.setBackground(color);
+    }//GEN-LAST:event_appleButtonMouseEntered
 
-    private void appleMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_appleMouseExited
+    private void appleButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_appleButtonMouseExited
         Color color = new Color(204, 255, 255);
-        apple.setBackground(color);
-    }//GEN-LAST:event_appleMouseExited
+        appleButton.setBackground(color);
+    }//GEN-LAST:event_appleButtonMouseExited
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        System.out.println(this.configurationView.getApple());
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -302,13 +320,14 @@ public class MainView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton apple;
+    private javax.swing.JButton appleButton;
     private javax.swing.JPanel body;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JButton configuration;
-    private javax.swing.JButton dell;
+    private javax.swing.JButton configurationButton;
+    private javax.swing.JButton dellButton;
     private javax.swing.JPanel exit;
     private javax.swing.JPanel header;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables

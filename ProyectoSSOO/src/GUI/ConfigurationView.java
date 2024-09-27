@@ -4,17 +4,31 @@
  */
 package GUI;
 
+import classes.Company;
+import java.util.concurrent.Semaphore;
+
 /**
  *
  * @author juann
  */
 public class ConfigurationView extends javax.swing.JPanel {
 
-    /**
-     * Creates new form ConfigurationView
-     */
-    public ConfigurationView() {
+    Company dell, apple;
+    int workersCount;
+    
+    public ConfigurationView(Company dell, Company apple) {
+        this.dell = dell;
+        this.apple = apple;  
+        this.workersCount = 0; 
         initComponents();
+    }
+    
+    public Company getDell(){
+        return this.dell;
+    }
+    
+    public Company getApple(){
+        return this.apple;
     }
 
     /**
@@ -88,8 +102,8 @@ public class ConfigurationView extends javax.swing.JPanel {
         jLabel7.setText("Ensambladores");
         content.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 310, -1, -1));
 
-        jLabel8.setText("Duracion de un dia");
-        content.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 70, -1, -1));
+        jLabel8.setText("Duracion de un dia (ms):");
+        content.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 70, -1, -1));
 
         minusWorkers.setText("-");
         minusWorkers.addActionListener(new java.awt.event.ActionListener() {
@@ -223,9 +237,17 @@ public class ConfigurationView extends javax.swing.JPanel {
 
         numAssemblers.setText("0");
         content.add(numAssemblers, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 310, 20, -1));
-        content.add(daysDuration, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 70, 150, -1));
+
+        daysDuration.setBackground(new java.awt.Color(204, 204, 204));
+        daysDuration.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        content.add(daysDuration, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 70, 150, -1));
 
         saveConfiguration.setText("Guardar");
+        saveConfiguration.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveConfigurationActionPerformed(evt);
+            }
+        });
         content.add(saveConfiguration, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 300, -1, -1));
 
         jLabel9.setText("Configuracion");
@@ -239,13 +261,15 @@ public class ConfigurationView extends javax.swing.JPanel {
         if(num != 0){
             num--;
             numWorkers.setText(Integer.toString(num));
-        }
+            this.workersCount = num;
+        }        
     }//GEN-LAST:event_minusWorkersActionPerformed
 
     private void plusWorkersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_plusWorkersActionPerformed
         int num = Integer.parseInt(numWorkers.getText());        
         num++;
-        numWorkers.setText(Integer.toString(num));     
+        numWorkers.setText(Integer.toString(num));
+        this.workersCount++;        
     }//GEN-LAST:event_plusWorkersActionPerformed
 
     private void minusMotherboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minusMotherboardActionPerformed
@@ -253,13 +277,17 @@ public class ConfigurationView extends javax.swing.JPanel {
         if(num != 0){
             num--;
             workersMotherboards.setText(Integer.toString(num));
-        }
+            this.workersCount++;
+        }        
     }//GEN-LAST:event_minusMotherboardActionPerformed
 
     private void plusMotherboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_plusMotherboardActionPerformed
-        int num = Integer.parseInt(workersMotherboards.getText());        
-        num++;
-        workersMotherboards.setText(Integer.toString(num)); 
+        if(this.workersCount > 0){
+            int num = Integer.parseInt(workersMotherboards.getText());        
+            num++;
+            workersMotherboards.setText(Integer.toString(num)); 
+            this.workersCount--;            
+        }        
     }//GEN-LAST:event_plusMotherboardActionPerformed
 
     private void minusCPUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minusCPUActionPerformed
@@ -267,13 +295,17 @@ public class ConfigurationView extends javax.swing.JPanel {
         if(num != 0){
             num--;
             workersCPU.setText(Integer.toString(num));
-        }
+            this.workersCount++;
+        }        
     }//GEN-LAST:event_minusCPUActionPerformed
 
     private void plusCPUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_plusCPUActionPerformed
-        int num = Integer.parseInt(workersCPU.getText());        
-        num++;
-        workersCPU.setText(Integer.toString(num)); 
+        if(this.workersCount > 0){
+            int num = Integer.parseInt(workersCPU.getText());        
+            num++;
+            workersCPU.setText(Integer.toString(num)); 
+            this.workersCount--;
+        }        
     }//GEN-LAST:event_plusCPUActionPerformed
 
     private void minusRAMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minusRAMActionPerformed
@@ -281,13 +313,17 @@ public class ConfigurationView extends javax.swing.JPanel {
         if(num != 0){
             num--;
             workersRAM.setText(Integer.toString(num));
-        }
+            this.workersCount++;
+        }        
     }//GEN-LAST:event_minusRAMActionPerformed
 
     private void plusRAMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_plusRAMActionPerformed
-        int num = Integer.parseInt(workersRAM.getText());        
-        num++;
-        workersRAM.setText(Integer.toString(num)); 
+        if(this.workersCount > 0){
+            int num = Integer.parseInt(workersRAM.getText());        
+            num++;
+            workersRAM.setText(Integer.toString(num)); 
+            this.workersCount--;
+        }        
     }//GEN-LAST:event_plusRAMActionPerformed
 
     private void minusPowerSupplyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minusPowerSupplyActionPerformed
@@ -295,13 +331,17 @@ public class ConfigurationView extends javax.swing.JPanel {
         if(num != 0){
             num--;
             workersPowerSupply.setText(Integer.toString(num));
-        }
+            this.workersCount++;
+        }        
     }//GEN-LAST:event_minusPowerSupplyActionPerformed
 
     private void plusPowerSupplyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_plusPowerSupplyActionPerformed
-        int num = Integer.parseInt(workersPowerSupply.getText());        
-        num++;
-        workersPowerSupply.setText(Integer.toString(num)); 
+        if(this.workersCount > 0){
+            int num = Integer.parseInt(workersPowerSupply.getText());        
+            num++;
+            workersPowerSupply.setText(Integer.toString(num)); 
+            this.workersCount--;
+        }        
     }//GEN-LAST:event_plusPowerSupplyActionPerformed
 
     private void minusGPUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minusGPUActionPerformed
@@ -309,13 +349,17 @@ public class ConfigurationView extends javax.swing.JPanel {
         if(num != 0){
             num--;
             workersGPU.setText(Integer.toString(num));
-        }
+            this.workersCount++;
+        }        
     }//GEN-LAST:event_minusGPUActionPerformed
 
     private void plusGPUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_plusGPUActionPerformed
-        int num = Integer.parseInt(workersGPU.getText());        
-        num++;
-        workersGPU.setText(Integer.toString(num)); 
+        if(this.workersCount > 0){
+            int num = Integer.parseInt(workersGPU.getText());        
+            num++;
+            workersGPU.setText(Integer.toString(num)); 
+            this.workersCount--;
+        }        
     }//GEN-LAST:event_plusGPUActionPerformed
 
     private void minusAssemblersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minusAssemblersActionPerformed
@@ -323,14 +367,51 @@ public class ConfigurationView extends javax.swing.JPanel {
         if(num != 0){
             num--;
             numAssemblers.setText(Integer.toString(num));
-        }
+            this.workersCount++;
+        }        
     }//GEN-LAST:event_minusAssemblersActionPerformed
 
     private void plusAssemblersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_plusAssemblersActionPerformed
-        int num = Integer.parseInt(numAssemblers.getText());        
-        num++;
-        numAssemblers.setText(Integer.toString(num)); 
+        if(this.workersCount > 0){
+            int num = Integer.parseInt(numAssemblers.getText());        
+            num++;
+            numAssemblers.setText(Integer.toString(num)); 
+            this.workersCount--;
+        }        
     }//GEN-LAST:event_plusAssemblersActionPerformed
+
+    private void saveConfigurationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveConfigurationActionPerformed
+        Semaphore sem = new Semaphore(2);
+        
+        Company dellCompany = new Company(
+                "Dell",
+                Integer.parseInt(numWorkers.getText()),
+                Integer.parseInt(workersMotherboards.getText()),
+                Integer.parseInt(workersCPU.getText()),
+                Integer.parseInt(workersRAM.getText()),
+                Integer.parseInt(workersPowerSupply.getText()),
+                Integer.parseInt(workersGPU.getText()),
+                Integer.parseInt(numAssemblers.getText()),
+                sem
+        );
+        
+        Company appleCompany = new Company(
+                "Apple",
+                Integer.parseInt(numWorkers.getText()),
+                Integer.parseInt(workersMotherboards.getText()),
+                Integer.parseInt(workersCPU.getText()),
+                Integer.parseInt(workersRAM.getText()),
+                Integer.parseInt(workersPowerSupply.getText()),
+                Integer.parseInt(workersGPU.getText()),
+                Integer.parseInt(numAssemblers.getText()),
+                sem
+        );
+        
+        this.dell = dellCompany;
+        this.apple = appleCompany;
+        System.out.println(dell);
+        System.out.println(apple);
+    }//GEN-LAST:event_saveConfigurationActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

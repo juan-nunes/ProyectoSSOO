@@ -11,19 +11,28 @@ import java.util.concurrent.Semaphore;
  * @author orveodiluca
  */
 public class Company extends Thread{
-    public String nameCompany; 
-    public int employeesCantity; //cantidad de empleados. 
-    public Worker[] employeesArray;
-    public int computerProfit; //cuanta gana la empresa.     
-    public int hours;
-    public Semaphore sem;
+    private String nameCompany; 
+    private int employeesCantity; //cantidad de empleados.     
+    private Worker[] employeesMotherboard;
+    private Worker[] employeesCpus;
+    private Worker[] employeesRams;
+    private Worker[] employeesPowerSupplys;
+    private Worker[] employeesGpus;
+    private Worker[] employeesAssemblers;    
+    private int computerProfit; //cuanta gana la empresa.         
+    private Semaphore sem;
 
-    public Company(String nameCompany, int employeesCantity, Semaphore sem) {
+    public Company(String nameCompany, int employeesCantity, int numMotherboards, int numCpus, int numRams, int numPowerSupplys, 
+            int numGpus, int numAssemblers, Semaphore sem) {
         this.nameCompany = nameCompany;
-        this.employeesCantity = employeesCantity;
-        this.employeesArray = new Worker[employeesCantity];                      
-        this.computerProfit = 0;
-        this.hours = 0;
+        this.employeesCantity = employeesCantity;        
+        this.employeesMotherboard = new Worker[numMotherboards];
+        this.employeesCpus = new Worker[numCpus];
+        this.employeesRams = new Worker[numRams];
+        this.employeesPowerSupplys = new Worker[numPowerSupplys];
+        this.employeesGpus = new Worker[numGpus];
+        this.employeesAssemblers = new Worker[numAssemblers];
+        this.computerProfit = 0;                
         this.sem = sem;
     }
     
@@ -47,6 +56,64 @@ public class Company extends Thread{
 
     public void setEmployeesCantity(int employeesCantity) {
         this.employeesCantity = employeesCantity;
+    }
+
+    public Worker[] getEmployeesMotherboard() {
+        return employeesMotherboard;
+    }
+
+    public void setEmployeesMotherboard(Worker[] employeesMotherboard) {
+        this.employeesMotherboard = employeesMotherboard;
+    }
+
+    public Worker[] getEmployeesCpus() {
+        return employeesCpus;
+    }
+
+    public void setEmployeesCpus(Worker[] employeesCpus) {
+        this.employeesCpus = employeesCpus;
+    }
+
+    public Worker[] getEmployeesRams() {
+        return employeesRams;
+    }
+
+    public void setEmployeesRams(Worker[] employeesRams) {
+        this.employeesRams = employeesRams;
+    }
+
+    public Worker[] getEmployeesPowerSupplys() {
+        return employeesPowerSupplys;
+    }
+
+    public void setEmployeesPowerSupplys(Worker[] employeesPowerSupplys) {
+        this.employeesPowerSupplys = employeesPowerSupplys;
+    }
+
+    public Worker[] getEmployeesGpus() {
+        return employeesGpus;
+    }
+
+    public void setEmployeesGpus(Worker[] employeesGpus) {
+        this.employeesGpus = employeesGpus;
+    }
+
+    public Worker[] getEmployeesAssemblers() {
+        return employeesAssemblers;
+    }
+
+    public void setEmployeesAssemblers(Worker[] employeesAssemblers) {
+        this.employeesAssemblers = employeesAssemblers;
+    }
+
+           
+
+    public Semaphore getSem() {
+        return sem;
+    }
+
+    public void setSem(Semaphore sem) {
+        this.sem = sem;
     }
 
     public int getComputerProfit() {

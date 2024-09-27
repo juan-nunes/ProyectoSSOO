@@ -13,8 +13,7 @@ public class Worker extends Thread {
     private int type; //0 = placaBase, 1 = cpu, 2 = memoriaRam, 3 = fuentesAlimentacion, 4 = GPU. 
     private int workerProfit; //Se usuará para el acumalado del salario del worker. 
     private int salaryPerHour;
-    private int quantityWorkers; //Cantidad de trabajadores. 
-    private int components;
+    private int quantityWorkers; //Cantidad de trabajadores.     
     public int days;
     public int daysCount;
     public int daysDuration; //Duracion de los dias de los trabajadores. 
@@ -71,7 +70,7 @@ public class Worker extends Thread {
                 sleep(this.daysDuration); 
                 System.out.println("Dia: " + this.days);
                 System.out.println("Ganancia del trabajdor: " + this.workerProfit);
-                System.out.println("Componentes creados: " + this.components);
+                System.out.println("Placas base: " + this.wharehouse.getMotherboard());
             }
             catch(Exception e){
                 System.out.println(e);
@@ -110,8 +109,7 @@ public class Worker extends Thread {
                         this.wharehouse.addGpu(this.quantityWorkers);                        
                         break;                                                                                
                 }
-                this.sem.release();
-                this.components++;
+                this.sem.release();                
                 this.daysCount = 0;
             }catch(Exception e){
                 System.out.println(e);
@@ -149,14 +147,6 @@ public class Worker extends Thread {
 
     public void setQuantityWorkers(int quantityWorkers) {
         this.quantityWorkers = quantityWorkers;
-    }
-
-    public int getComponents() {
-        return components;
-    }
-
-    public void setComponents(int components) {
-        this.components = components;
     }
 
     public int getDays() {
