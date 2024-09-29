@@ -45,48 +45,55 @@ public class Wharehouse {
         this.gpuComponent = 0; 
         this.pcGPU = 0; 
         this.powerSupplyComponent = 0; 
+        this.computers = 0; 
+        
     }
     
     public void addPC(int quantityAssemblers){
         int quantityComputers = quantityAssemblers; //se puede ver cuantas computadoras se pueden hacer, por la cantidad de ensambladores que hay. 
         //placa base
-        int quantity = calculatePossibleComponent(this.motherboardComponent,0); 
+        int quantity = calculatePossibleComponent(this.motherboard,0); 
         if(quantity < quantityComputers){
             quantityComputers = quantity; 
         }
         //cpu
-        quantity = calculatePossibleComponent(this.cpuComponent,1); 
+        quantity = calculatePossibleComponent(this.cpu,1); 
         if(quantity < quantityComputers){
             quantityComputers = quantity; 
         }
         //ram
-        quantity = calculatePossibleComponent(this.ramComponent,2);
+        quantity = calculatePossibleComponent(this.ram,2);
         if(quantity < quantityComputers){
             quantityComputers = quantity; 
         }
         //powerSupply
-        quantity = calculatePossibleComponent(this.powerSupplyComponent,3); 
+        quantity = calculatePossibleComponent(this.powerSupply,3); 
         if(quantity < quantityComputers){
             quantityComputers = quantity; 
         }
-
         
-
-            motherboardComponent -= (necessities[0] * quantityComputers);
-            cpuComponent -= (necessities[1] * quantityComputers);
-            ramComponent -= (necessities[2] * quantityComputers);
-            powerSupplyComponent -= (necessities[3] * quantityComputers);
-
+        motherboard -= (necessities[0] * quantityComputers); 
+        this.labels[0].setText(Integer.toString(this.getMotherboard())); 
+        cpu -= (necessities[1] * quantityComputers); 
+        this.labels[1].setText(Integer.toString(this.getCpu()));
+        ram -= (necessities[2] * quantityComputers); 
+        this.labels[2].setText(Integer.toString(this.getRam())); 
+        powerSupply -= (necessities[3] * quantityComputers); 
+        this.labels[3].setText(Integer.toString(this.getPowerSupply()));
         
         while(counterGPU >= necessities[5] && pcGPU >= necessities[4] && quantityComputers > 0){
-            gpuComponent += 1; 
+            gpuComponent +=1; 
             pcGPU -= necessities[4]; 
-            counterGPU -= necessities[5];
+            counterGPU -= necessities[5]; 
             quantityComputers -= 1; 
+            
         }
-        computers += quantityAssemblers - quantityComputers; // Se añade el total de computadoras fabricadas.
-        counterGPU += (quantityAssemblers - quantityComputers);
+        this.labels[4].setText(Integer.toString(pcGPU)); 
+        computers += quantityComputers; 
+        counterGPU += quantityComputers; 
         
+        this.labels[5].setText(Integer.toString(computers)); 
+        this.labels[6].setText(Integer.toString(pcGPU)); 
     }
     
     public int calculatePossibleComponent(int value,int type){
@@ -101,6 +108,7 @@ public class Wharehouse {
         }
         return quantity; 
     }
+
     
     public int getMotherboard() {
         return motherboard;
@@ -230,9 +238,15 @@ public class Wharehouse {
     public void setComputers(int computers) {
         this.computers = computers;
     }
+    
+    
+    public JLabel[] getLabels() {
+        return labels;
+    }
 
-    
-    
+    public void setLabels(JLabel[] labels) {
+        this.labels = labels;
+    }
     
     
 }

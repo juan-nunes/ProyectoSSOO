@@ -7,7 +7,7 @@ package classes;
 import java.util.concurrent.Semaphore;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import javax.swing.JLabel;
 /**
  *
  * @author orveodiluca
@@ -25,6 +25,7 @@ public class Pm extends Thread {
     private Company company; 
     private Semaphore sem; 
     private Semaphore sem2; //controlara las operaciones financieras. 
+    private JLabel[] labels;
     
     public Pm(int DayDuration, Semaphore sem,Semaphore sem2, Company company){
        this.salaryAcumulate = 0; 
@@ -48,6 +49,7 @@ public class Pm extends Thread {
             Logger.getLogger(Worker.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
     
     public void work(){
         
