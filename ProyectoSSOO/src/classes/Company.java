@@ -19,27 +19,29 @@ public class Company extends Thread{
     private Worker[] employeesPowerSupplys;
     private Worker[] employeesGpus;
     private Worker[] employeesAssemblers;    
-    private int computerProfit; //cuanta gana la empresa.         
+    private int computerProfit; //cuanto gana la empresa.  
+    /*private int MotherBoard; //cantidad de placas bases que va a tener las empresas. 
+    private int CPU; //cantidad de cpu's que va a tener las empresas. 
+    private int RAM; //cantidad de RAM que va a tener las empresas. 
+    private int PowerSupplys; //cantidad de Fuente de alimentacion que va a tener las empresas. 
+    private int [] necessities; */
     private Semaphore sem;
 
     public Company(String nameCompany, int employeesCantity, int numMotherboards, int numCpus, int numRams, int numPowerSupplys, 
-            int numGpus, int numAssemblers, Semaphore sem) {
-        this.nameCompany = nameCompany;
-        this.employeesCantity = employeesCantity;        
-        this.employeesMotherboard = new Worker[numMotherboards];
-        this.employeesCpus = new Worker[numCpus];
-        this.employeesRams = new Worker[numRams];
-        this.employeesPowerSupplys = new Worker[numPowerSupplys];
-        this.employeesGpus = new Worker[numGpus];
-        this.employeesAssemblers = new Worker[numAssemblers];
-        this.computerProfit = 0;                
-        this.sem = sem;
+        int numGpus, int numAssemblers, Semaphore sem) {
+            this.nameCompany = nameCompany;
+            this.employeesCantity = employeesCantity;        
+            this.employeesMotherboard = new Worker[numMotherboards];
+            this.employeesCpus = new Worker[numCpus];//preguntar sobre que es esto?? 
+            this.employeesRams = new Worker[numRams];
+            this.employeesPowerSupplys = new Worker[numPowerSupplys];
+            this.employeesGpus = new Worker[numGpus];
+            this.employeesAssemblers = new Worker[numAssemblers];
+            this.computerProfit = 0;                
+            this.sem = sem;
     }
     
-    @Override
-    public void run(){
-        
-    }
+    
     
 
     public String getNameCompany() {
