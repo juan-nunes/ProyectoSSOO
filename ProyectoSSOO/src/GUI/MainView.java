@@ -11,6 +11,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Paths;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -43,15 +44,6 @@ public class MainView extends javax.swing.JFrame {
         }
         
         
-        
-        this.configurationView = new ConfigurationView(this.dell, this.apple, values);
-        this.configurationView.setSize(800, 410);
-        this.configurationView.setLocation(0, 0);
-        
-        body.removeAll();
-        body.add(configurationView, BorderLayout.CENTER);
-        body.revalidate();
-        body.repaint();
     }
 
     /**
@@ -65,13 +57,246 @@ public class MainView extends javax.swing.JFrame {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
-        body = new javax.swing.JPanel();
-        header = new javax.swing.JPanel();
-        configurationButton = new javax.swing.JButton();
-        dellButton = new javax.swing.JButton();
-        appleButton = new javax.swing.JButton();
-        exit = new javax.swing.JPanel();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        ConfigurationDashboard = new javax.swing.JPanel();
+        ProductoresdeCPUsLabel1 = new javax.swing.JLabel();
+        ensambladorLabel2 = new javax.swing.JLabel();
+        dayDuration = new javax.swing.JLabel();
+        removeDia = new javax.swing.JButton();
+        dia = new javax.swing.JLabel();
+        addDia = new javax.swing.JButton();
+        deadline = new javax.swing.JLabel();
+        removeAmmount = new javax.swing.JButton();
+        ammount = new javax.swing.JLabel();
+        addAmmount = new javax.swing.JButton();
+        txt = new javax.swing.JButton();
+        jPanel9 = new javax.swing.JPanel();
+        jLabel18 = new javax.swing.JLabel();
+        ProductoresPlacaBaseLabel1 = new javax.swing.JLabel();
+        GuionistasNick = new javax.swing.JLabel();
+        removePlacaBase = new javax.swing.JButton();
+        ProductoresMemoriaRAMLabel1 = new javax.swing.JLabel();
+        removeRAM = new javax.swing.JButton();
+        removeCPU = new javax.swing.JButton();
+        removeFuenteAlimentacion = new javax.swing.JButton();
+        ProductoresFuentealimentaciónLabel1 = new javax.swing.JLabel();
+        addFuenteAlimentacion = new javax.swing.JButton();
+        removeTarjetaGrafica = new javax.swing.JButton();
+        addTarjetaGrafica = new javax.swing.JButton();
+        ProductorestarjetasgráficasLabel1 = new javax.swing.JLabel();
+        GuionistasPlotTwistsNick = new javax.swing.JLabel();
+        addPlacaBase = new javax.swing.JButton();
+        addCPU = new javax.swing.JButton();
+        EscenariosNick = new javax.swing.JLabel();
+        addRAM = new javax.swing.JButton();
+        AnimadoresNick = new javax.swing.JLabel();
+        DobladoresNick = new javax.swing.JLabel();
+        ensambladorLabel1 = new javax.swing.JLabel();
+        addEnsamblador1 = new javax.swing.JButton();
+        EnsambladoresNick = new javax.swing.JLabel();
+        removeEnsamblador1 = new javax.swing.JButton();
+        jPanel11 = new javax.swing.JPanel();
+        ProductoresPlacaBaseLabel2 = new javax.swing.JLabel();
+        addPlacaBase2 = new javax.swing.JButton();
+        GuionistasDisney = new javax.swing.JLabel();
+        removePlacaBase2 = new javax.swing.JButton();
+        ProductoresdeCPUsLabel3 = new javax.swing.JLabel();
+        addCPU2 = new javax.swing.JButton();
+        EscenariosDisney = new javax.swing.JLabel();
+        removeCPU2 = new javax.swing.JButton();
+        addRAM2 = new javax.swing.JButton();
+        AnimadoresDisney = new javax.swing.JLabel();
+        removeRAM2 = new javax.swing.JButton();
+        addFuenteAlimentacion2 = new javax.swing.JButton();
+        DobladoresDisney = new javax.swing.JLabel();
+        removeFuenteAlimentacion2 = new javax.swing.JButton();
+        addTarjetaGrafica2 = new javax.swing.JButton();
+        GuionistasPlotTwistsDisney = new javax.swing.JLabel();
+        removeTarjetaGrafica2 = new javax.swing.JButton();
+        addEnsamblador2 = new javax.swing.JButton();
+        EnsambladoresDisney = new javax.swing.JLabel();
+        removeEnsamblador2 = new javax.swing.JButton();
+        ProductoresMemoriaRAMLabel2 = new javax.swing.JLabel();
+        ProductoresFuentealimentaciónLabel2 = new javax.swing.JLabel();
+        ProductorestarjetasgráficasLabel2 = new javax.swing.JLabel();
+        jPanel10 = new javax.swing.JPanel();
+        jPanel12 = new javax.swing.JPanel();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        ProductoresdeCPUsLabel2 = new javax.swing.JLabel();
+        NickelodeonDash = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        PlacasBasesMaxLabel = new javax.swing.JLabel();
+        qttyPlacasBasesMaxApple = new javax.swing.JLabel();
+        CPUsSavedLabel = new javax.swing.JLabel();
+        qttyCPUsSavedApple = new javax.swing.JLabel();
+        CPUsMaxLabel = new javax.swing.JLabel();
+        qttyCPUsMaxApple = new javax.swing.JLabel();
+        RamsSavedLabel = new javax.swing.JLabel();
+        RAMMaxLabel = new javax.swing.JLabel();
+        qttyRAMMaxApple = new javax.swing.JLabel();
+        FuentesAlimentacionMaxLabel = new javax.swing.JLabel();
+        qttyFuentesAlimentacionMaxApple = new javax.swing.JLabel();
+        TarjetasGraficasMaxLabel4 = new javax.swing.JLabel();
+        qttyTarjetasGraficasMaxApple = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        faultsLabelText = new javax.swing.JLabel();
+        faultsLabel = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        qttyProjectsManagersApple = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        qttyDirectoresApple = new javax.swing.JLabel();
+        pmStatusLabel = new javax.swing.JLabel();
+        pmStatus = new javax.swing.JLabel();
+        directorStatusLabel = new javax.swing.JLabel();
+        directorStatus = new javax.swing.JLabel();
+        ensambladorLabel = new javax.swing.JLabel();
+        ProductoresPlacaBaseLabelApple = new javax.swing.JLabel();
+        ProductoresdeCPUsLabelApple = new javax.swing.JLabel();
+        ProductoresMemoriaRAMLabelApple = new javax.swing.JLabel();
+        ProductoresFuentealimentaciónLabelApple = new javax.swing.JLabel();
+        ProductorestarjetasgráficasLabelApple = new javax.swing.JLabel();
+        removeEnsamblador = new javax.swing.JButton();
+        removeTarjetaGraficaApple = new javax.swing.JButton();
+        removeFuenteAlimentacionApple = new javax.swing.JButton();
+        removeRAMApple = new javax.swing.JButton();
+        removeCPUApple = new javax.swing.JButton();
+        removePlacaBaseApple = new javax.swing.JButton();
+        qttyGuionistasNick = new javax.swing.JLabel();
+        addPlacaBaseApple = new javax.swing.JButton();
+        addCPUApple = new javax.swing.JButton();
+        qttyEscenariosNick = new javax.swing.JLabel();
+        qttyAnimadoresNick = new javax.swing.JLabel();
+        qttyDobladoresNick = new javax.swing.JLabel();
+        qttyGuionistasPlotTwistsNick = new javax.swing.JLabel();
+        qttyEnsambladoresNick = new javax.swing.JLabel();
+        addEnsamblador = new javax.swing.JButton();
+        addTarjetaGraficaApple = new javax.swing.JButton();
+        addFuenteAlimentacionApple = new javax.swing.JButton();
+        addRAMApple = new javax.swing.JButton();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel14 = new javax.swing.JLabel();
+        jPanel7 = new javax.swing.JPanel();
+        jPanel8 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel13 = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        PCsEstandarReadyLabel = new javax.swing.JLabel();
+        qttyStandardPCsReadyApple = new javax.swing.JLabel();
+        qttyGPUsPCsReadyApple = new javax.swing.JLabel();
+        PcsGPUReadyLabel = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        PlacasBasesSavedLabel = new javax.swing.JLabel();
+        qttyPlacasBasesSavedApple = new javax.swing.JLabel();
+        qttyRAMSavedApple = new javax.swing.JLabel();
+        FuentesAlimentacionSavedLabel = new javax.swing.JLabel();
+        qttyFuentesAlimentacionSavedApple = new javax.swing.JLabel();
+        qttyTarjetasGraficasSavedApple = new javax.swing.JLabel();
+        TarjetasGraficasSavedLabel = new javax.swing.JLabel();
+        jPanel6 = new javax.swing.JPanel();
+        discountedLabelText = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        deadlineLabelText = new javax.swing.JLabel();
+        costosLabelText1 = new javax.swing.JLabel();
+        costosLabelText = new javax.swing.JLabel();
+        gananciaLabelText = new javax.swing.JLabel();
+        gananciasLabel = new javax.swing.JLabel();
+        costosLabel = new javax.swing.JLabel();
+        utilidadesLabel = new javax.swing.JLabel();
+        deadlineLabel = new javax.swing.JLabel();
+        daysPassedLabelN = new javax.swing.JLabel();
+        discountedLabel = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        DisneyDash = new javax.swing.JPanel();
+        jPanel17 = new javax.swing.JPanel();
+        gananciaLabelText1 = new javax.swing.JLabel();
+        costosLabelText2 = new javax.swing.JLabel();
+        costosLabelText3 = new javax.swing.JLabel();
+        gananciasLabelDell = new javax.swing.JLabel();
+        costosLabelDell = new javax.swing.JLabel();
+        utilidadesLabelDell = new javax.swing.JLabel();
+        deadlineLabelText1 = new javax.swing.JLabel();
+        deadlineLabelDell = new javax.swing.JLabel();
+        discountedLabelText1 = new javax.swing.JLabel();
+        discountedLabelDell = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        daysPassedLabeDell = new javax.swing.JLabel();
+        jLabel23 = new javax.swing.JLabel();
+        jPanel15 = new javax.swing.JPanel();
+        qttyTarjetasGraficasMaxDell = new javax.swing.JLabel();
+        PcsGPUReadyLabelDell = new javax.swing.JLabel();
+        PCsEstandarReadyLabelDell = new javax.swing.JLabel();
+        qttyStandardPCsReadyDell = new javax.swing.JLabel();
+        qttyGPUsPCsReadyDell = new javax.swing.JLabel();
+        PlacasBasesSavedLabelDell = new javax.swing.JLabel();
+        qttyPlacasBasesSavedDell = new javax.swing.JLabel();
+        PlacasBasesMaxLabelDell = new javax.swing.JLabel();
+        qttyPlacasBasesMaxDell = new javax.swing.JLabel();
+        CPUsSavedLabelDell = new javax.swing.JLabel();
+        qttyCPUsSavedDell = new javax.swing.JLabel();
+        CPUsMaxLabelDell = new javax.swing.JLabel();
+        qttyCPUsMaxDell = new javax.swing.JLabel();
+        RamsSavedLabelDell = new javax.swing.JLabel();
+        qttyRAMSavedDell = new javax.swing.JLabel();
+        RAMMaxLabelDell = new javax.swing.JLabel();
+        qttyRAMMaxDell = new javax.swing.JLabel();
+        FuentesAlimentacionSavedLabelDell = new javax.swing.JLabel();
+        qttyFuentesAlimentacionSavedDell = new javax.swing.JLabel();
+        FuentesAlimentacionMaxLabelDell = new javax.swing.JLabel();
+        qttyFuentesAlimentacionMaxDell = new javax.swing.JLabel();
+        TarjetasGraficasSavedLabelDell = new javax.swing.JLabel();
+        qttyTarjetasGraficasSavedDell = new javax.swing.JLabel();
+        TarjetasGraficasMaxLabelDell = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        jPanel16 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        jPanel14 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        qttyProjectsManagersDell = new javax.swing.JLabel();
+        pmStatusLabelD = new javax.swing.JLabel();
+        directorStatusLabelD = new javax.swing.JLabel();
+        qttyDirectoresDell = new javax.swing.JLabel();
+        pmStatusDell = new javax.swing.JLabel();
+        directorStatusDell = new javax.swing.JLabel();
+        faultsLabelText1 = new javax.swing.JLabel();
+        faultsLabelDell = new javax.swing.JLabel();
+        ProductoresPlacaBaseLabelDell = new javax.swing.JLabel();
+        ProductoresdeCPUsLabelDell = new javax.swing.JLabel();
+        ProductoresMemoriaRAMLabelDell = new javax.swing.JLabel();
+        ProductoresFuentealimentaciónLabelDell = new javax.swing.JLabel();
+        ProductorestarjetasgráficasLabelDell = new javax.swing.JLabel();
+        ensambladorLabelDisney = new javax.swing.JLabel();
+        qttyGuionistasDisney = new javax.swing.JLabel();
+        qttyEscenariosDisney = new javax.swing.JLabel();
+        qttyAnimadoresDisney = new javax.swing.JLabel();
+        qttyDobladoresDisney = new javax.swing.JLabel();
+        qttyGuionistasPlotTwistsDisney = new javax.swing.JLabel();
+        qttyEnsambladoresDisney = new javax.swing.JLabel();
+        removePlacaBaseDisney = new javax.swing.JButton();
+        addPlacaBaseDisney = new javax.swing.JButton();
+        removeCPUDell = new javax.swing.JButton();
+        addCPUDell = new javax.swing.JButton();
+        removeRAMDell = new javax.swing.JButton();
+        addRAMDell = new javax.swing.JButton();
+        removeFuenteAlimentacionDell = new javax.swing.JButton();
+        addFuenteAlimentacionDell = new javax.swing.JButton();
+        removeTarjetaGraficaDell = new javax.swing.JButton();
+        addTarjetaGraficaDell = new javax.swing.JButton();
+        removeEnsambladorDell = new javax.swing.JButton();
+        addEnsambladorDell = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        jPanel19 = new javax.swing.JPanel();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel25 = new javax.swing.JLabel();
+        dinseyFondo = new javax.swing.JLabel();
+        NickVSDisney = new javax.swing.JPanel();
+        Grafico = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
+        daysPassedLabelGrafico = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -80,106 +305,1582 @@ public class MainView extends javax.swing.JFrame {
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        body.setBackground(new java.awt.Color(153, 153, 153));
+        ConfigurationDashboard.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        javax.swing.GroupLayout bodyLayout = new javax.swing.GroupLayout(body);
-        body.setLayout(bodyLayout);
-        bodyLayout.setHorizontalGroup(
-            bodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 800, Short.MAX_VALUE)
+        ProductoresdeCPUsLabel1.setForeground(new java.awt.Color(204, 204, 204));
+        ProductoresdeCPUsLabel1.setText("Productores de CPUs:");
+        ConfigurationDashboard.add(ProductoresdeCPUsLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, -1, -1));
+
+        ensambladorLabel2.setForeground(new java.awt.Color(204, 204, 204));
+        ensambladorLabel2.setText("Ensambladores:");
+        ConfigurationDashboard.add(ensambladorLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 410, -1, -1));
+
+        dayDuration.setForeground(new java.awt.Color(204, 204, 204));
+        dayDuration.setText("Duracion de un dia");
+        ConfigurationDashboard.add(dayDuration, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 270, -1, -1));
+
+        removeDia.setText("-");
+        removeDia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeDiaActionPerformed(evt);
+            }
+        });
+        ConfigurationDashboard.add(removeDia, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 270, -1, -1));
+
+        dia.setForeground(new java.awt.Color(255, 255, 255));
+        dia.setText("0");
+        ConfigurationDashboard.add(dia, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 270, -1, -1));
+
+        addDia.setText("+");
+        addDia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addDiaActionPerformed(evt);
+            }
+        });
+        ConfigurationDashboard.add(addDia, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 270, -1, -1));
+
+        deadline.setForeground(new java.awt.Color(204, 204, 204));
+        deadline.setText("Deadline");
+        ConfigurationDashboard.add(deadline, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 330, -1, -1));
+
+        removeAmmount.setText("-");
+        removeAmmount.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeAmmountActionPerformed(evt);
+            }
+        });
+        ConfigurationDashboard.add(removeAmmount, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 330, -1, -1));
+
+        ammount.setForeground(new java.awt.Color(255, 255, 255));
+        ammount.setText("0");
+        ConfigurationDashboard.add(ammount, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 330, -1, -1));
+
+        addAmmount.setText("+");
+        addAmmount.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addAmmountActionPerformed(evt);
+            }
+        });
+        ConfigurationDashboard.add(addAmmount, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 330, -1, -1));
+
+        txt.setBackground(new java.awt.Color(51, 51, 51));
+        txt.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        txt.setForeground(new java.awt.Color(204, 204, 204));
+        txt.setText("Guardar");
+        txt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtActionPerformed(evt);
+            }
+        });
+        ConfigurationDashboard.add(txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 460, -1, -1));
+
+        jPanel9.setBackground(new java.awt.Color(51, 51, 51));
+
+        jLabel18.setFont(new java.awt.Font("Segoe UI", 3, 24)); // NOI18N
+
+        ProductoresPlacaBaseLabel1.setForeground(new java.awt.Color(204, 204, 204));
+        ProductoresPlacaBaseLabel1.setText("Productores de placa base:");
+
+        GuionistasNick.setForeground(new java.awt.Color(255, 255, 255));
+        GuionistasNick.setText("0");
+
+        removePlacaBase.setText("-");
+        removePlacaBase.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removePlacaBaseActionPerformed(evt);
+            }
+        });
+
+        ProductoresMemoriaRAMLabel1.setForeground(new java.awt.Color(204, 204, 204));
+        ProductoresMemoriaRAMLabel1.setText("Productores Memoria RAM:");
+
+        removeRAM.setText("-");
+        removeRAM.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeRAMActionPerformed(evt);
+            }
+        });
+
+        removeCPU.setText("-");
+        removeCPU.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeCPUActionPerformed(evt);
+            }
+        });
+
+        removeFuenteAlimentacion.setText("-");
+        removeFuenteAlimentacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeFuenteAlimentacionActionPerformed(evt);
+            }
+        });
+
+        ProductoresFuentealimentaciónLabel1.setForeground(new java.awt.Color(204, 204, 204));
+        ProductoresFuentealimentaciónLabel1.setText("Productores Fuente de alimentación:");
+
+        addFuenteAlimentacion.setText("+");
+        addFuenteAlimentacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addFuenteAlimentacionActionPerformed(evt);
+            }
+        });
+
+        removeTarjetaGrafica.setText("-");
+        removeTarjetaGrafica.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeTarjetaGraficaActionPerformed(evt);
+            }
+        });
+
+        addTarjetaGrafica.setText("+");
+        addTarjetaGrafica.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addTarjetaGraficaActionPerformed(evt);
+            }
+        });
+
+        ProductorestarjetasgráficasLabel1.setForeground(new java.awt.Color(204, 204, 204));
+        ProductorestarjetasgráficasLabel1.setText("Productores de tarjetas gráficas:");
+
+        GuionistasPlotTwistsNick.setForeground(new java.awt.Color(255, 255, 255));
+        GuionistasPlotTwistsNick.setText("0");
+
+        addPlacaBase.setText("+");
+        addPlacaBase.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addPlacaBaseActionPerformed(evt);
+            }
+        });
+
+        addCPU.setText("+");
+        addCPU.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addCPUActionPerformed(evt);
+            }
+        });
+
+        EscenariosNick.setForeground(new java.awt.Color(255, 255, 255));
+        EscenariosNick.setText("0");
+
+        addRAM.setText("+");
+        addRAM.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addRAMActionPerformed(evt);
+            }
+        });
+
+        AnimadoresNick.setForeground(new java.awt.Color(255, 255, 255));
+        AnimadoresNick.setText("0");
+
+        DobladoresNick.setForeground(new java.awt.Color(255, 255, 255));
+        DobladoresNick.setText("0");
+
+        ensambladorLabel1.setForeground(new java.awt.Color(204, 204, 204));
+        ensambladorLabel1.setText("Ensambladores:");
+
+        addEnsamblador1.setText("+");
+        addEnsamblador1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addEnsamblador1ActionPerformed(evt);
+            }
+        });
+
+        EnsambladoresNick.setForeground(new java.awt.Color(255, 255, 255));
+        EnsambladoresNick.setText("0");
+
+        removeEnsamblador1.setText("-");
+        removeEnsamblador1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeEnsamblador1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
+        jPanel9.setLayout(jPanel9Layout);
+        jPanel9Layout.setHorizontalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel9Layout.createSequentialGroup()
+                                .addComponent(removeCPU)
+                                .addGap(18, 18, 18)
+                                .addComponent(EscenariosNick))
+                            .addGroup(jPanel9Layout.createSequentialGroup()
+                                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel18)
+                                    .addGroup(jPanel9Layout.createSequentialGroup()
+                                        .addComponent(ProductoresPlacaBaseLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(45, 45, 45)
+                                        .addComponent(removePlacaBase)))
+                                .addGap(18, 18, 18)
+                                .addComponent(GuionistasNick)))
+                        .addGap(29, 29, 29))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel9Layout.createSequentialGroup()
+                                .addComponent(ensambladorLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(removeEnsamblador1)
+                                .addGap(18, 18, 18)
+                                .addComponent(EnsambladoresNick))
+                            .addGroup(jPanel9Layout.createSequentialGroup()
+                                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(ProductoresMemoriaRAMLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(ProductorestarjetasgráficasLabel1)
+                                    .addComponent(ProductoresFuentealimentaciónLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel9Layout.createSequentialGroup()
+                                        .addComponent(removeTarjetaGrafica)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(GuionistasPlotTwistsNick, javax.swing.GroupLayout.PREFERRED_SIZE, 7, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel9Layout.createSequentialGroup()
+                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addGroup(jPanel9Layout.createSequentialGroup()
+                                                .addComponent(removeRAM)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(AnimadoresNick))
+                                            .addGroup(jPanel9Layout.createSequentialGroup()
+                                                .addComponent(removeFuenteAlimentacion)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(DobladoresNick, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
+                        .addGap(27, 27, 27)))
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(addTarjetaGrafica)
+                    .addComponent(addPlacaBase)
+                    .addComponent(addCPU)
+                    .addComponent(addRAM)
+                    .addComponent(addFuenteAlimentacion)
+                    .addComponent(addEnsamblador1))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
-        bodyLayout.setVerticalGroup(
-            bodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 410, Short.MAX_VALUE)
+        jPanel9Layout.setVerticalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ProductoresPlacaBaseLabel1)
+                    .addComponent(GuionistasNick)
+                    .addComponent(removePlacaBase)
+                    .addComponent(addPlacaBase))
+                .addGap(29, 29, 29)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(removeCPU)
+                    .addComponent(addCPU)
+                    .addComponent(EscenariosNick))
+                .addGap(27, 27, 27)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ProductoresMemoriaRAMLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(removeRAM)
+                    .addComponent(addRAM)
+                    .addComponent(AnimadoresNick))
+                .addGap(26, 26, 26)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(removeFuenteAlimentacion)
+                    .addComponent(ProductoresFuentealimentaciónLabel1)
+                    .addComponent(addFuenteAlimentacion)
+                    .addComponent(DobladoresNick))
+                .addGap(27, 27, 27)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(removeTarjetaGrafica)
+                    .addComponent(addTarjetaGrafica)
+                    .addComponent(ProductorestarjetasgráficasLabel1)
+                    .addComponent(GuionistasPlotTwistsNick))
+                .addGap(27, 27, 27)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ensambladorLabel1)
+                    .addComponent(addEnsamblador1)
+                    .addComponent(EnsambladoresNick, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(removeEnsamblador1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addComponent(jLabel18)
+                .addGap(17, 17, 17))
         );
 
-        jPanel1.add(body, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 800, 410));
+        ConfigurationDashboard.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 340, 320));
 
-        header.setBackground(new java.awt.Color(255, 255, 255));
-        header.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102)));
-        header.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseDragged(java.awt.event.MouseEvent evt) {
-                headerMouseDragged(evt);
-            }
-        });
-        header.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                headerMousePressed(evt);
-            }
-        });
-        header.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel11.setBackground(new java.awt.Color(51, 51, 51));
 
-        configurationButton.setBackground(new java.awt.Color(204, 255, 255));
-        configurationButton.setText("Configuracion");
-        configurationButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                configurationButtonMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                configurationButtonMouseExited(evt);
-            }
-        });
-        configurationButton.addActionListener(new java.awt.event.ActionListener() {
+        ProductoresPlacaBaseLabel2.setForeground(new java.awt.Color(204, 204, 204));
+        ProductoresPlacaBaseLabel2.setText("Productores de placa base:");
+
+        addPlacaBase2.setText("+");
+        addPlacaBase2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                configurationButtonActionPerformed(evt);
+                addPlacaBase2ActionPerformed(evt);
             }
         });
-        header.add(configurationButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 110, 40));
 
-        dellButton.setBackground(new java.awt.Color(204, 255, 255));
-        dellButton.setText("Dell");
-        dellButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                dellButtonMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                dellButtonMouseExited(evt);
-            }
-        });
-        dellButton.addActionListener(new java.awt.event.ActionListener() {
+        GuionistasDisney.setForeground(new java.awt.Color(255, 255, 255));
+        GuionistasDisney.setText("0");
+
+        removePlacaBase2.setText("-");
+        removePlacaBase2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                dellButtonActionPerformed(evt);
+                removePlacaBase2ActionPerformed(evt);
             }
         });
-        header.add(dellButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 0, 120, 40));
 
-        appleButton.setBackground(new java.awt.Color(204, 255, 255));
-        appleButton.setText("Apple");
-        appleButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                appleButtonMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                appleButtonMouseExited(evt);
-            }
-        });
-        appleButton.addActionListener(new java.awt.event.ActionListener() {
+        ProductoresdeCPUsLabel3.setForeground(new java.awt.Color(204, 204, 204));
+        ProductoresdeCPUsLabel3.setText("Productores de CPUs:");
+
+        addCPU2.setText("+");
+        addCPU2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                appleButtonActionPerformed(evt);
+                addCPU2ActionPerformed(evt);
             }
         });
-        header.add(appleButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 0, 110, 40));
 
-        exit.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102)));
-        exit.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                exitMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                exitMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                exitMouseExited(evt);
+        EscenariosDisney.setForeground(new java.awt.Color(255, 255, 255));
+        EscenariosDisney.setText("0");
+
+        removeCPU2.setText("-");
+        removeCPU2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeCPU2ActionPerformed(evt);
             }
         });
-        exit.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setText("  X");
-        exit.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 40, -1));
+        addRAM2.setText("+");
+        addRAM2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addRAM2ActionPerformed(evt);
+            }
+        });
 
-        header.add(exit, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 0, 40, 40));
+        AnimadoresDisney.setForeground(new java.awt.Color(255, 255, 255));
+        AnimadoresDisney.setText("0");
 
-        jPanel1.add(header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 40));
+        removeRAM2.setText("-");
+        removeRAM2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeRAM2ActionPerformed(evt);
+            }
+        });
+
+        addFuenteAlimentacion2.setText("+");
+        addFuenteAlimentacion2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addFuenteAlimentacion2ActionPerformed(evt);
+            }
+        });
+
+        DobladoresDisney.setForeground(new java.awt.Color(255, 255, 255));
+        DobladoresDisney.setText("0");
+
+        removeFuenteAlimentacion2.setText("-");
+        removeFuenteAlimentacion2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeFuenteAlimentacion2ActionPerformed(evt);
+            }
+        });
+
+        addTarjetaGrafica2.setText("+");
+        addTarjetaGrafica2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addTarjetaGrafica2ActionPerformed(evt);
+            }
+        });
+
+        GuionistasPlotTwistsDisney.setForeground(new java.awt.Color(255, 255, 255));
+        GuionistasPlotTwistsDisney.setText("0");
+
+        removeTarjetaGrafica2.setText("-");
+        removeTarjetaGrafica2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeTarjetaGrafica2ActionPerformed(evt);
+            }
+        });
+
+        addEnsamblador2.setText("+");
+        addEnsamblador2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addEnsamblador2ActionPerformed(evt);
+            }
+        });
+
+        EnsambladoresDisney.setForeground(new java.awt.Color(255, 255, 255));
+        EnsambladoresDisney.setText("0");
+
+        removeEnsamblador2.setText("-");
+        removeEnsamblador2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeEnsamblador2ActionPerformed(evt);
+            }
+        });
+
+        ProductoresMemoriaRAMLabel2.setForeground(new java.awt.Color(204, 204, 204));
+        ProductoresMemoriaRAMLabel2.setText("Productores Memoria RAM:");
+
+        ProductoresFuentealimentaciónLabel2.setForeground(new java.awt.Color(204, 204, 204));
+        ProductoresFuentealimentaciónLabel2.setText("Productores Fuente de alimentación:");
+
+        ProductorestarjetasgráficasLabel2.setForeground(new java.awt.Color(204, 204, 204));
+        ProductorestarjetasgráficasLabel2.setText("Productores de tarjetas gráficas:");
+
+        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
+        jPanel11.setLayout(jPanel11Layout);
+        jPanel11Layout.setHorizontalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel11Layout.createSequentialGroup()
+                        .addComponent(ProductoresFuentealimentaciónLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(removeFuenteAlimentacion2))
+                    .addGroup(jPanel11Layout.createSequentialGroup()
+                        .addComponent(ProductorestarjetasgráficasLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(removeTarjetaGrafica2))
+                    .addGroup(jPanel11Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel11Layout.createSequentialGroup()
+                                .addComponent(ProductoresPlacaBaseLabel2)
+                                .addGap(18, 18, 18)
+                                .addComponent(removePlacaBase2))
+                            .addGroup(jPanel11Layout.createSequentialGroup()
+                                .addComponent(ProductoresdeCPUsLabel3)
+                                .addGap(42, 42, 42)
+                                .addComponent(removeCPU2))
+                            .addGroup(jPanel11Layout.createSequentialGroup()
+                                .addComponent(ProductoresMemoriaRAMLabel2)
+                                .addGap(18, 18, 18)
+                                .addComponent(removeRAM2))
+                            .addComponent(removeEnsamblador2))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(GuionistasDisney, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(EscenariosDisney, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(AnimadoresDisney, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(DobladoresDisney)
+                    .addComponent(GuionistasPlotTwistsDisney)
+                    .addComponent(EnsambladoresDisney))
+                .addGap(26, 26, 26)
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(addEnsamblador2)
+                    .addComponent(addTarjetaGrafica2)
+                    .addComponent(addFuenteAlimentacion2)
+                    .addComponent(addRAM2)
+                    .addComponent(addCPU2)
+                    .addComponent(addPlacaBase2))
+                .addGap(21, 21, 21))
+        );
+        jPanel11Layout.setVerticalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel11Layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ProductoresPlacaBaseLabel2)
+                    .addComponent(addPlacaBase2)
+                    .addComponent(GuionistasDisney)
+                    .addComponent(removePlacaBase2))
+                .addGap(25, 25, 25)
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ProductoresdeCPUsLabel3)
+                    .addComponent(addCPU2)
+                    .addComponent(EscenariosDisney)
+                    .addComponent(removeCPU2))
+                .addGap(27, 27, 27)
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(addRAM2)
+                    .addComponent(AnimadoresDisney)
+                    .addComponent(removeRAM2)
+                    .addComponent(ProductoresMemoriaRAMLabel2))
+                .addGap(27, 27, 27)
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(addFuenteAlimentacion2)
+                    .addComponent(DobladoresDisney)
+                    .addComponent(removeFuenteAlimentacion2)
+                    .addComponent(ProductoresFuentealimentaciónLabel2))
+                .addGap(27, 27, 27)
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(addTarjetaGrafica2)
+                    .addComponent(GuionistasPlotTwistsDisney)
+                    .addComponent(removeTarjetaGrafica2)
+                    .addComponent(ProductorestarjetasgráficasLabel2))
+                .addGap(27, 27, 27)
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(addEnsamblador2)
+                    .addComponent(EnsambladoresDisney)
+                    .addComponent(removeEnsamblador2))
+                .addContainerGap(18, Short.MAX_VALUE))
+        );
+
+        ConfigurationDashboard.add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 140, 320, 310));
+
+        jPanel10.setBackground(new java.awt.Color(51, 51, 51));
+
+        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
+        jPanel10.setLayout(jPanel10Layout);
+        jPanel10Layout.setHorizontalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 290, Short.MAX_VALUE)
+        );
+        jPanel10Layout.setVerticalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 130, Short.MAX_VALUE)
+        );
+
+        ConfigurationDashboard.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 240, 290, 130));
+
+        jPanel12.setBackground(new java.awt.Color(51, 51, 51));
+
+        jLabel17.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel17.setFont(new java.awt.Font("Segoe UI Black", 1, 36)); // NOI18N
+        jLabel17.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel17.setText("Configuracion");
+
+        javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
+        jPanel12.setLayout(jPanel12Layout);
+        jPanel12Layout.setHorizontalGroup(
+            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
+                .addContainerGap(44, Short.MAX_VALUE)
+                .addComponent(jLabel17)
+                .addGap(33, 33, 33))
+        );
+        jPanel12Layout.setVerticalGroup(
+            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel12Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel17)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        ConfigurationDashboard.add(jPanel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 30, 340, 60));
+        ConfigurationDashboard.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 600));
+
+        ProductoresdeCPUsLabel2.setForeground(new java.awt.Color(204, 204, 204));
+        ProductoresdeCPUsLabel2.setText("Productores de CPUs:");
+        ConfigurationDashboard.add(ProductoresdeCPUsLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, -1, -1));
+
+        jTabbedPane1.addTab("ConfigurationDashboard", ConfigurationDashboard);
+
+        NickelodeonDash.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        NickelodeonDash.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 10, -1, 130));
+
+        PlacasBasesMaxLabel.setForeground(new java.awt.Color(255, 255, 255));
+        PlacasBasesMaxLabel.setText("Capacidad Máx:");
+        NickelodeonDash.add(PlacasBasesMaxLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 230, -1, -1));
+
+        qttyPlacasBasesMaxApple.setForeground(new java.awt.Color(255, 255, 255));
+        qttyPlacasBasesMaxApple.setText("25");
+        NickelodeonDash.add(qttyPlacasBasesMaxApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 230, -1, -1));
+
+        CPUsSavedLabel.setForeground(new java.awt.Color(255, 255, 255));
+        CPUsSavedLabel.setText("CPU's en el Almacen");
+        NickelodeonDash.add(CPUsSavedLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 280, -1, -1));
+
+        qttyCPUsSavedApple.setForeground(new java.awt.Color(255, 255, 255));
+        qttyCPUsSavedApple.setText("0");
+        NickelodeonDash.add(qttyCPUsSavedApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 280, -1, -1));
+
+        CPUsMaxLabel.setForeground(new java.awt.Color(255, 255, 255));
+        CPUsMaxLabel.setText("Capacidad Máx:");
+        NickelodeonDash.add(CPUsMaxLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 280, -1, -1));
+
+        qttyCPUsMaxApple.setForeground(new java.awt.Color(255, 255, 255));
+        qttyCPUsMaxApple.setText("20");
+        NickelodeonDash.add(qttyCPUsMaxApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 280, -1, -1));
+
+        RamsSavedLabel.setForeground(new java.awt.Color(255, 255, 255));
+        RamsSavedLabel.setText("RAM en el Almacen");
+        NickelodeonDash.add(RamsSavedLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 330, -1, -1));
+
+        RAMMaxLabel.setForeground(new java.awt.Color(255, 255, 255));
+        RAMMaxLabel.setText("Capacidad Máx:");
+        NickelodeonDash.add(RAMMaxLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 330, -1, -1));
+
+        qttyRAMMaxApple.setForeground(new java.awt.Color(255, 255, 255));
+        qttyRAMMaxApple.setText("55");
+        NickelodeonDash.add(qttyRAMMaxApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 330, -1, -1));
+
+        FuentesAlimentacionMaxLabel.setForeground(new java.awt.Color(255, 255, 255));
+        FuentesAlimentacionMaxLabel.setText("Capacidad Máx:");
+        NickelodeonDash.add(FuentesAlimentacionMaxLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 380, -1, -1));
+
+        qttyFuentesAlimentacionMaxApple.setForeground(new java.awt.Color(255, 255, 255));
+        qttyFuentesAlimentacionMaxApple.setText("35");
+        NickelodeonDash.add(qttyFuentesAlimentacionMaxApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 380, -1, -1));
+
+        TarjetasGraficasMaxLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        TarjetasGraficasMaxLabel4.setText("Capacidad Máx:");
+        NickelodeonDash.add(TarjetasGraficasMaxLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 430, -1, -1));
+
+        qttyTarjetasGraficasMaxApple.setForeground(new java.awt.Color(255, 255, 255));
+        qttyTarjetasGraficasMaxApple.setText("10");
+        NickelodeonDash.add(qttyTarjetasGraficasMaxApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 430, -1, -1));
+
+        jPanel2.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        faultsLabelText.setText("Faltas del Project Manager:");
+        jPanel2.add(faultsLabelText, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 510, -1, -1));
+
+        faultsLabel.setText("0");
+        jPanel2.add(faultsLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 510, -1, -1));
+
+        jLabel3.setText("Projects Managers:");
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 400, -1, -1));
+
+        qttyProjectsManagersApple.setText("1");
+        jPanel2.add(qttyProjectsManagersApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 400, -1, -1));
+
+        jLabel4.setText("Directores Ejecutivos:");
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 400, -1, -1));
+
+        qttyDirectoresApple.setText("1");
+        jPanel2.add(qttyDirectoresApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 400, -1, -1));
+
+        pmStatusLabel.setText("Project Manager Status:");
+        jPanel2.add(pmStatusLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 440, -1, -1));
+
+        pmStatus.setText("...");
+        jPanel2.add(pmStatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 440, -1, -1));
+
+        directorStatusLabel.setText("Director Status:");
+        jPanel2.add(directorStatusLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 480, -1, -1));
+
+        directorStatus.setText("...");
+        jPanel2.add(directorStatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 480, -1, -1));
+
+        ensambladorLabel.setText("Ensambladores:");
+        jPanel2.add(ensambladorLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 330, -1, -1));
+
+        ProductoresPlacaBaseLabelApple.setText("Productores de placa base:");
+        jPanel2.add(ProductoresPlacaBaseLabelApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, -1, -1));
+
+        ProductoresdeCPUsLabelApple.setText("Productores de CPUs:");
+        jPanel2.add(ProductoresdeCPUsLabelApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, -1, -1));
+
+        ProductoresMemoriaRAMLabelApple.setText("Productores Memoria RAM:");
+        jPanel2.add(ProductoresMemoriaRAMLabelApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, -1, -1));
+
+        ProductoresFuentealimentaciónLabelApple.setText("Productores Fuente de alimentación:");
+        jPanel2.add(ProductoresFuentealimentaciónLabelApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 230, 170, -1));
+
+        ProductorestarjetasgráficasLabelApple.setText("Productores de tarjetas gráficas:");
+        jPanel2.add(ProductorestarjetasgráficasLabelApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, 160, -1));
+
+        removeEnsamblador.setText("-");
+        removeEnsamblador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeEnsambladorActionPerformed(evt);
+            }
+        });
+        jPanel2.add(removeEnsamblador, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 330, -1, -1));
+
+        removeTarjetaGraficaApple.setText("-");
+        removeTarjetaGraficaApple.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeTarjetaGraficaAppleActionPerformed(evt);
+            }
+        });
+        jPanel2.add(removeTarjetaGraficaApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 280, -1, -1));
+
+        removeFuenteAlimentacionApple.setText("-");
+        removeFuenteAlimentacionApple.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeFuenteAlimentacionAppleActionPerformed(evt);
+            }
+        });
+        jPanel2.add(removeFuenteAlimentacionApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 230, -1, -1));
+
+        removeRAMApple.setText("-");
+        removeRAMApple.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeRAMAppleActionPerformed(evt);
+            }
+        });
+        jPanel2.add(removeRAMApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 180, -1, -1));
+
+        removeCPUApple.setText("-");
+        removeCPUApple.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeCPUAppleActionPerformed(evt);
+            }
+        });
+        jPanel2.add(removeCPUApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 130, -1, -1));
+
+        removePlacaBaseApple.setText("-");
+        removePlacaBaseApple.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removePlacaBaseAppleActionPerformed(evt);
+            }
+        });
+        jPanel2.add(removePlacaBaseApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 80, -1, -1));
+
+        qttyGuionistasNick.setText("0");
+        jPanel2.add(qttyGuionistasNick, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 80, -1, -1));
+
+        addPlacaBaseApple.setText("+");
+        addPlacaBaseApple.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addPlacaBaseAppleActionPerformed(evt);
+            }
+        });
+        jPanel2.add(addPlacaBaseApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 80, -1, -1));
+
+        addCPUApple.setText("+");
+        addCPUApple.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addCPUAppleActionPerformed(evt);
+            }
+        });
+        jPanel2.add(addCPUApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 130, -1, -1));
+
+        qttyEscenariosNick.setText("0");
+        jPanel2.add(qttyEscenariosNick, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 130, -1, -1));
+
+        qttyAnimadoresNick.setText("0");
+        jPanel2.add(qttyAnimadoresNick, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 180, -1, -1));
+
+        qttyDobladoresNick.setText("0");
+        jPanel2.add(qttyDobladoresNick, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 230, -1, -1));
+
+        qttyGuionistasPlotTwistsNick.setText("0");
+        jPanel2.add(qttyGuionistasPlotTwistsNick, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 280, -1, -1));
+
+        qttyEnsambladoresNick.setText("0");
+        jPanel2.add(qttyEnsambladoresNick, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 330, -1, -1));
+
+        addEnsamblador.setText("+");
+        addEnsamblador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addEnsambladorActionPerformed(evt);
+            }
+        });
+        jPanel2.add(addEnsamblador, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 330, -1, -1));
+
+        addTarjetaGraficaApple.setText("+");
+        addTarjetaGraficaApple.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addTarjetaGraficaAppleActionPerformed(evt);
+            }
+        });
+        jPanel2.add(addTarjetaGraficaApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 280, -1, -1));
+
+        addFuenteAlimentacionApple.setText("+");
+        addFuenteAlimentacionApple.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addFuenteAlimentacionAppleActionPerformed(evt);
+            }
+        });
+        jPanel2.add(addFuenteAlimentacionApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 230, -1, -1));
+
+        addRAMApple.setText("+");
+        addRAMApple.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addRAMAppleActionPerformed(evt);
+            }
+        });
+        jPanel2.add(addRAMApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 180, -1, -1));
+
+        jPanel5.setBackground(new java.awt.Color(232, 114, 0));
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        jPanel2.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 330, -1));
+
+        jLabel14.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel14.setFont(new java.awt.Font("Segoe UI Black", 3, 24)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel14.setText("Trabajadores");
+        jPanel2.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 0, 190, -1));
+
+        jPanel7.setBackground(new java.awt.Color(19, 139, 30));
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        jPanel2.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, -1, -1));
+
+        jPanel8.setBackground(new java.awt.Color(102, 102, 102));
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 330, Short.MAX_VALUE)
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 10, Short.MAX_VALUE)
+        );
+
+        jPanel2.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 330, 10));
+
+        NickelodeonDash.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 350, 540));
+
+        jPanel3.setBackground(new java.awt.Color(255, 51, 51));
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel13.setFont(new java.awt.Font("Segoe UI Black", 3, 24)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel13.setText("Almacen");
+        jPanel3.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 0, -1, -1));
+
+        jPanel4.setBackground(new java.awt.Color(204, 204, 204));
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 310, Short.MAX_VALUE)
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 10, Short.MAX_VALUE)
+        );
+
+        jPanel3.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 310, 10));
+
+        PCsEstandarReadyLabel.setForeground(new java.awt.Color(255, 255, 255));
+        PCsEstandarReadyLabel.setText("Computadoras estándar Listas:");
+        jPanel3.add(PCsEstandarReadyLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 340, -1, -1));
+
+        qttyStandardPCsReadyApple.setForeground(new java.awt.Color(255, 255, 255));
+        qttyStandardPCsReadyApple.setText("0");
+        jPanel3.add(qttyStandardPCsReadyApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 340, -1, -1));
+
+        qttyGPUsPCsReadyApple.setForeground(new java.awt.Color(255, 255, 255));
+        qttyGPUsPCsReadyApple.setText("0");
+        jPanel3.add(qttyGPUsPCsReadyApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 370, 10, -1));
+
+        PcsGPUReadyLabel.setForeground(new java.awt.Color(255, 255, 255));
+        PcsGPUReadyLabel.setText("Computadoras con GPU Listas:");
+        jPanel3.add(PcsGPUReadyLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 370, -1, -1));
+
+        jLabel16.setText("jLabel16");
+        jPanel3.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 300, 190, 130));
+
+        PlacasBasesSavedLabel.setForeground(new java.awt.Color(255, 255, 255));
+        PlacasBasesSavedLabel.setText("Placas bases en el Almacen");
+        jPanel3.add(PlacasBasesSavedLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 60, 160, -1));
+
+        qttyPlacasBasesSavedApple.setForeground(new java.awt.Color(255, 255, 255));
+        qttyPlacasBasesSavedApple.setText("0");
+        jPanel3.add(qttyPlacasBasesSavedApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 60, -1, -1));
+
+        qttyRAMSavedApple.setForeground(new java.awt.Color(255, 255, 255));
+        qttyRAMSavedApple.setText("0");
+        jPanel3.add(qttyRAMSavedApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 160, -1, -1));
+
+        FuentesAlimentacionSavedLabel.setForeground(new java.awt.Color(255, 255, 255));
+        FuentesAlimentacionSavedLabel.setText("Fuente de alimentacion en el Almacen");
+        jPanel3.add(FuentesAlimentacionSavedLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, 140, -1));
+
+        qttyFuentesAlimentacionSavedApple.setForeground(new java.awt.Color(255, 255, 255));
+        qttyFuentesAlimentacionSavedApple.setText("0");
+        jPanel3.add(qttyFuentesAlimentacionSavedApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 210, -1, -1));
+
+        qttyTarjetasGraficasSavedApple.setForeground(new java.awt.Color(255, 255, 255));
+        qttyTarjetasGraficasSavedApple.setText("0");
+        jPanel3.add(qttyTarjetasGraficasSavedApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 260, 10, -1));
+
+        TarjetasGraficasSavedLabel.setForeground(new java.awt.Color(255, 255, 255));
+        TarjetasGraficasSavedLabel.setText("Tarjetas graficas en el Almacen");
+        jPanel3.add(TarjetasGraficasSavedLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, 140, -1));
+
+        NickelodeonDash.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 170, 330, 400));
+
+        jPanel6.setBackground(new java.awt.Color(0, 102, 102));
+        jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        discountedLabelText.setForeground(new java.awt.Color(255, 255, 255));
+        discountedLabelText.setText("Dinero Descontado al PM:");
+        jPanel6.add(discountedLabelText, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 270, -1, -1));
+
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Dias totales transcurridos:");
+        jPanel6.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 220, -1, -1));
+
+        deadlineLabelText.setForeground(new java.awt.Color(255, 255, 255));
+        deadlineLabelText.setText("Deadline:");
+        jPanel6.add(deadlineLabelText, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, -1, -1));
+
+        costosLabelText1.setForeground(new java.awt.Color(255, 255, 255));
+        costosLabelText1.setText("Utilidad Total:");
+        jPanel6.add(costosLabelText1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, -1, -1));
+
+        costosLabelText.setForeground(new java.awt.Color(255, 255, 255));
+        costosLabelText.setText("Costos Totales:");
+        jPanel6.add(costosLabelText, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, -1, -1));
+
+        gananciaLabelText.setForeground(new java.awt.Color(255, 255, 255));
+        gananciaLabelText.setText("Ganancias Totales:");
+        jPanel6.add(gananciaLabelText, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, -1, -1));
+
+        gananciasLabel.setForeground(new java.awt.Color(255, 255, 255));
+        gananciasLabel.setText("0");
+        jPanel6.add(gananciasLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 70, -1, -1));
+
+        costosLabel.setForeground(new java.awt.Color(255, 255, 255));
+        costosLabel.setText("0");
+        jPanel6.add(costosLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 100, -1, -1));
+
+        utilidadesLabel.setForeground(new java.awt.Color(255, 255, 255));
+        utilidadesLabel.setText("0");
+        jPanel6.add(utilidadesLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 130, -1, -1));
+
+        deadlineLabel.setForeground(new java.awt.Color(255, 255, 255));
+        deadlineLabel.setText("0");
+        jPanel6.add(deadlineLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 180, -1, -1));
+
+        daysPassedLabelN.setForeground(new java.awt.Color(255, 255, 255));
+        daysPassedLabelN.setText("0");
+        jPanel6.add(daysPassedLabelN, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 220, -1, -1));
+
+        discountedLabel.setForeground(new java.awt.Color(255, 255, 255));
+        discountedLabel.setText("0");
+        jPanel6.add(discountedLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 270, -1, -1));
+
+        jLabel15.setFont(new java.awt.Font("Segoe UI Black", 3, 24)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel15.setText("Estadisticas");
+        jPanel6.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(26, 6, 155, -1));
+
+        NickelodeonDash.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 200, 210, 350));
+
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        NickelodeonDash.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 1030, 600));
+
+        jTabbedPane1.addTab("Apple", NickelodeonDash);
+
+        DisneyDash.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel17.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel17.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        gananciaLabelText1.setBackground(new java.awt.Color(255, 255, 255));
+        gananciaLabelText1.setForeground(new java.awt.Color(0, 153, 153));
+        gananciaLabelText1.setText("Ganancias Totales:");
+        jPanel17.add(gananciaLabelText1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, -1, -1));
+
+        costosLabelText2.setBackground(new java.awt.Color(255, 255, 255));
+        costosLabelText2.setForeground(new java.awt.Color(0, 153, 153));
+        costosLabelText2.setText("Costos Totales:");
+        jPanel17.add(costosLabelText2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, -1, -1));
+
+        costosLabelText3.setBackground(new java.awt.Color(255, 255, 255));
+        costosLabelText3.setForeground(new java.awt.Color(0, 153, 153));
+        costosLabelText3.setText("Utilidad Total:");
+        jPanel17.add(costosLabelText3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, -1, -1));
+
+        gananciasLabelDell.setBackground(new java.awt.Color(255, 255, 255));
+        gananciasLabelDell.setForeground(new java.awt.Color(0, 153, 153));
+        gananciasLabelDell.setText("0");
+        jPanel17.add(gananciasLabelDell, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 80, -1, -1));
+
+        costosLabelDell.setBackground(new java.awt.Color(255, 255, 255));
+        costosLabelDell.setForeground(new java.awt.Color(0, 153, 153));
+        costosLabelDell.setText("0");
+        jPanel17.add(costosLabelDell, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 110, -1, -1));
+
+        utilidadesLabelDell.setBackground(new java.awt.Color(255, 255, 255));
+        utilidadesLabelDell.setForeground(new java.awt.Color(0, 153, 153));
+        utilidadesLabelDell.setText("0");
+        jPanel17.add(utilidadesLabelDell, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 150, -1, -1));
+
+        deadlineLabelText1.setBackground(new java.awt.Color(255, 255, 255));
+        deadlineLabelText1.setForeground(new java.awt.Color(0, 153, 153));
+        deadlineLabelText1.setText("Deadline:");
+        jPanel17.add(deadlineLabelText1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, -1, -1));
+
+        deadlineLabelDell.setBackground(new java.awt.Color(255, 255, 255));
+        deadlineLabelDell.setForeground(new java.awt.Color(0, 153, 153));
+        deadlineLabelDell.setText("0");
+        jPanel17.add(deadlineLabelDell, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 210, -1, -1));
+
+        discountedLabelText1.setBackground(new java.awt.Color(255, 255, 255));
+        discountedLabelText1.setForeground(new java.awt.Color(0, 153, 153));
+        discountedLabelText1.setText("Dinero Descontado al PM:");
+        jPanel17.add(discountedLabelText1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 270, -1, -1));
+
+        discountedLabelDell.setBackground(new java.awt.Color(255, 255, 255));
+        discountedLabelDell.setForeground(new java.awt.Color(0, 153, 153));
+        discountedLabelDell.setText("0");
+        jPanel17.add(discountedLabelDell, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 270, -1, -1));
+
+        jLabel8.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel8.setForeground(new java.awt.Color(0, 153, 153));
+        jLabel8.setText("Dias totales transcurridos:");
+        jPanel17.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, -1, -1));
+
+        daysPassedLabeDell.setBackground(new java.awt.Color(255, 255, 255));
+        daysPassedLabeDell.setForeground(new java.awt.Color(0, 153, 153));
+        daysPassedLabeDell.setText("0");
+        jPanel17.add(daysPassedLabeDell, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 240, -1, -1));
+
+        jLabel23.setBackground(new java.awt.Color(185, 219, 253));
+        jLabel23.setFont(new java.awt.Font("Segoe UI Black", 3, 24)); // NOI18N
+        jLabel23.setForeground(new java.awt.Color(0, 153, 153));
+        jLabel23.setText("Estadisticas");
+        jPanel17.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, 155, -1));
+
+        DisneyDash.add(jPanel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 190, 220, 370));
+
+        jPanel15.setBackground(new java.awt.Color(0, 0, 0));
+        jPanel15.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        qttyTarjetasGraficasMaxDell.setBackground(new java.awt.Color(255, 255, 255));
+        qttyTarjetasGraficasMaxDell.setForeground(new java.awt.Color(255, 255, 255));
+        qttyTarjetasGraficasMaxDell.setText("10");
+        jPanel15.add(qttyTarjetasGraficasMaxDell, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 240, -1, -1));
+
+        PcsGPUReadyLabelDell.setBackground(new java.awt.Color(255, 255, 255));
+        PcsGPUReadyLabelDell.setForeground(new java.awt.Color(255, 255, 255));
+        PcsGPUReadyLabelDell.setText("Computadoras con GPU Listas:");
+        jPanel15.add(PcsGPUReadyLabelDell, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 380, -1, -1));
+
+        PCsEstandarReadyLabelDell.setBackground(new java.awt.Color(255, 255, 255));
+        PCsEstandarReadyLabelDell.setForeground(new java.awt.Color(255, 255, 255));
+        PCsEstandarReadyLabelDell.setText("Computadoras Standar Listas:");
+        jPanel15.add(PCsEstandarReadyLabelDell, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 340, 180, -1));
+
+        qttyStandardPCsReadyDell.setBackground(new java.awt.Color(255, 255, 255));
+        qttyStandardPCsReadyDell.setForeground(new java.awt.Color(255, 255, 255));
+        qttyStandardPCsReadyDell.setText("0");
+        jPanel15.add(qttyStandardPCsReadyDell, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 340, -1, -1));
+
+        qttyGPUsPCsReadyDell.setBackground(new java.awt.Color(255, 255, 255));
+        qttyGPUsPCsReadyDell.setForeground(new java.awt.Color(255, 255, 255));
+        qttyGPUsPCsReadyDell.setText("0");
+        jPanel15.add(qttyGPUsPCsReadyDell, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 380, -1, -1));
+
+        PlacasBasesSavedLabelDell.setBackground(new java.awt.Color(255, 255, 255));
+        PlacasBasesSavedLabelDell.setForeground(new java.awt.Color(255, 255, 255));
+        PlacasBasesSavedLabelDell.setText("Placas bases en el Almacen:");
+        jPanel15.add(PlacasBasesSavedLabelDell, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 140, -1));
+
+        qttyPlacasBasesSavedDell.setBackground(new java.awt.Color(255, 255, 255));
+        qttyPlacasBasesSavedDell.setForeground(new java.awt.Color(255, 255, 255));
+        qttyPlacasBasesSavedDell.setText("0");
+        jPanel15.add(qttyPlacasBasesSavedDell, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 70, -1, -1));
+
+        PlacasBasesMaxLabelDell.setBackground(new java.awt.Color(255, 255, 255));
+        PlacasBasesMaxLabelDell.setForeground(new java.awt.Color(255, 255, 255));
+        PlacasBasesMaxLabelDell.setText("Capacidad Máx:");
+        jPanel15.add(PlacasBasesMaxLabelDell, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 70, -1, -1));
+
+        qttyPlacasBasesMaxDell.setBackground(new java.awt.Color(255, 255, 255));
+        qttyPlacasBasesMaxDell.setForeground(new java.awt.Color(255, 255, 255));
+        qttyPlacasBasesMaxDell.setText("25");
+        jPanel15.add(qttyPlacasBasesMaxDell, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 70, -1, -1));
+
+        CPUsSavedLabelDell.setBackground(new java.awt.Color(255, 255, 255));
+        CPUsSavedLabelDell.setForeground(new java.awt.Color(255, 255, 255));
+        CPUsSavedLabelDell.setText("CPU's en el Almacen");
+        jPanel15.add(CPUsSavedLabelDell, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, -1, -1));
+
+        qttyCPUsSavedDell.setBackground(new java.awt.Color(255, 255, 255));
+        qttyCPUsSavedDell.setForeground(new java.awt.Color(255, 255, 255));
+        qttyCPUsSavedDell.setText("0");
+        jPanel15.add(qttyCPUsSavedDell, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 110, -1, -1));
+
+        CPUsMaxLabelDell.setBackground(new java.awt.Color(255, 255, 255));
+        CPUsMaxLabelDell.setForeground(new java.awt.Color(255, 255, 255));
+        CPUsMaxLabelDell.setText("Capacidad Máx:");
+        jPanel15.add(CPUsMaxLabelDell, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 110, -1, -1));
+
+        qttyCPUsMaxDell.setBackground(new java.awt.Color(255, 255, 255));
+        qttyCPUsMaxDell.setForeground(new java.awt.Color(255, 255, 255));
+        qttyCPUsMaxDell.setText("20");
+        jPanel15.add(qttyCPUsMaxDell, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 110, -1, -1));
+
+        RamsSavedLabelDell.setBackground(new java.awt.Color(255, 255, 255));
+        RamsSavedLabelDell.setForeground(new java.awt.Color(255, 255, 255));
+        RamsSavedLabelDell.setText("RAM en el Almacen");
+        jPanel15.add(RamsSavedLabelDell, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, -1, -1));
+
+        qttyRAMSavedDell.setBackground(new java.awt.Color(255, 255, 255));
+        qttyRAMSavedDell.setForeground(new java.awt.Color(255, 255, 255));
+        qttyRAMSavedDell.setText("0");
+        jPanel15.add(qttyRAMSavedDell, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 150, -1, -1));
+
+        RAMMaxLabelDell.setBackground(new java.awt.Color(255, 255, 255));
+        RAMMaxLabelDell.setForeground(new java.awt.Color(255, 255, 255));
+        RAMMaxLabelDell.setText("Capacidad Máx:");
+        jPanel15.add(RAMMaxLabelDell, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 150, -1, -1));
+
+        qttyRAMMaxDell.setBackground(new java.awt.Color(255, 255, 255));
+        qttyRAMMaxDell.setForeground(new java.awt.Color(255, 255, 255));
+        qttyRAMMaxDell.setText("55");
+        jPanel15.add(qttyRAMMaxDell, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 150, -1, -1));
+
+        FuentesAlimentacionSavedLabelDell.setBackground(new java.awt.Color(255, 255, 255));
+        FuentesAlimentacionSavedLabelDell.setForeground(new java.awt.Color(255, 255, 255));
+        FuentesAlimentacionSavedLabelDell.setText("Fuente de alimentacion en el Almacen");
+        jPanel15.add(FuentesAlimentacionSavedLabelDell, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, 140, -1));
+
+        qttyFuentesAlimentacionSavedDell.setBackground(new java.awt.Color(255, 255, 255));
+        qttyFuentesAlimentacionSavedDell.setForeground(new java.awt.Color(255, 255, 255));
+        qttyFuentesAlimentacionSavedDell.setText("0");
+        jPanel15.add(qttyFuentesAlimentacionSavedDell, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 190, -1, -1));
+
+        FuentesAlimentacionMaxLabelDell.setBackground(new java.awt.Color(255, 255, 255));
+        FuentesAlimentacionMaxLabelDell.setForeground(new java.awt.Color(255, 255, 255));
+        FuentesAlimentacionMaxLabelDell.setText("Capacidad Máx:");
+        jPanel15.add(FuentesAlimentacionMaxLabelDell, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 190, -1, -1));
+
+        qttyFuentesAlimentacionMaxDell.setBackground(new java.awt.Color(255, 255, 255));
+        qttyFuentesAlimentacionMaxDell.setForeground(new java.awt.Color(255, 255, 255));
+        qttyFuentesAlimentacionMaxDell.setText("35");
+        jPanel15.add(qttyFuentesAlimentacionMaxDell, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 190, -1, -1));
+
+        TarjetasGraficasSavedLabelDell.setBackground(new java.awt.Color(255, 255, 255));
+        TarjetasGraficasSavedLabelDell.setForeground(new java.awt.Color(255, 255, 255));
+        TarjetasGraficasSavedLabelDell.setText("Tarjetas graficas en el Almacen");
+        jPanel15.add(TarjetasGraficasSavedLabelDell, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, 140, -1));
+
+        qttyTarjetasGraficasSavedDell.setBackground(new java.awt.Color(255, 255, 255));
+        qttyTarjetasGraficasSavedDell.setForeground(new java.awt.Color(255, 255, 255));
+        qttyTarjetasGraficasSavedDell.setText("0");
+        jPanel15.add(qttyTarjetasGraficasSavedDell, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 240, -1, -1));
+
+        TarjetasGraficasMaxLabelDell.setBackground(new java.awt.Color(255, 255, 255));
+        TarjetasGraficasMaxLabelDell.setForeground(new java.awt.Color(255, 255, 255));
+        TarjetasGraficasMaxLabelDell.setText("Capacidad Máx:");
+        jPanel15.add(TarjetasGraficasMaxLabelDell, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 240, -1, -1));
+
+        jLabel22.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel22.setFont(new java.awt.Font("Segoe UI Black", 3, 24)); // NOI18N
+        jLabel22.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel22.setText("Almacen");
+        jPanel15.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 0, -1, -1));
+
+        jPanel16.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
+        jPanel16.setLayout(jPanel16Layout);
+        jPanel16Layout.setHorizontalGroup(
+            jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 320, Short.MAX_VALUE)
+        );
+        jPanel16Layout.setVerticalGroup(
+            jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 10, Short.MAX_VALUE)
+        );
+
+        jPanel15.add(jPanel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 320, 10));
+        jPanel15.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 310, -1, -1));
+
+        DisneyDash.add(jPanel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 150, 340, 420));
+
+        jPanel14.setBackground(new java.awt.Color(7, 37, 57));
+
+        jLabel5.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("Directores Ejecutivos:");
+
+        qttyProjectsManagersDell.setBackground(new java.awt.Color(255, 255, 255));
+        qttyProjectsManagersDell.setForeground(new java.awt.Color(255, 255, 255));
+        qttyProjectsManagersDell.setText("1");
+
+        pmStatusLabelD.setBackground(new java.awt.Color(255, 255, 255));
+        pmStatusLabelD.setForeground(new java.awt.Color(255, 255, 255));
+        pmStatusLabelD.setText("Project Manager Status:");
+
+        directorStatusLabelD.setBackground(new java.awt.Color(255, 255, 255));
+        directorStatusLabelD.setForeground(new java.awt.Color(255, 255, 255));
+        directorStatusLabelD.setText("Director Status:");
+
+        qttyDirectoresDell.setBackground(new java.awt.Color(255, 255, 255));
+        qttyDirectoresDell.setForeground(new java.awt.Color(255, 255, 255));
+        qttyDirectoresDell.setText("1");
+
+        pmStatusDell.setBackground(new java.awt.Color(255, 255, 255));
+        pmStatusDell.setForeground(new java.awt.Color(255, 255, 255));
+        pmStatusDell.setText("...");
+
+        directorStatusDell.setBackground(new java.awt.Color(255, 255, 255));
+        directorStatusDell.setForeground(new java.awt.Color(255, 255, 255));
+        directorStatusDell.setText("...");
+
+        faultsLabelText1.setBackground(new java.awt.Color(255, 255, 255));
+        faultsLabelText1.setForeground(new java.awt.Color(255, 255, 255));
+        faultsLabelText1.setText("Faltas del Project Manager:");
+
+        faultsLabelDell.setBackground(new java.awt.Color(255, 255, 255));
+        faultsLabelDell.setForeground(new java.awt.Color(255, 255, 255));
+        faultsLabelDell.setText("0");
+
+        ProductoresPlacaBaseLabelDell.setBackground(new java.awt.Color(255, 255, 255));
+        ProductoresPlacaBaseLabelDell.setForeground(new java.awt.Color(255, 255, 255));
+        ProductoresPlacaBaseLabelDell.setText("Productores de placa base:");
+
+        ProductoresdeCPUsLabelDell.setBackground(new java.awt.Color(255, 255, 255));
+        ProductoresdeCPUsLabelDell.setForeground(new java.awt.Color(255, 255, 255));
+        ProductoresdeCPUsLabelDell.setText("Productores de CPUs:");
+
+        ProductoresMemoriaRAMLabelDell.setBackground(new java.awt.Color(255, 255, 255));
+        ProductoresMemoriaRAMLabelDell.setForeground(new java.awt.Color(255, 255, 255));
+        ProductoresMemoriaRAMLabelDell.setText("Productores Memoria RAM:");
+
+        ProductoresFuentealimentaciónLabelDell.setBackground(new java.awt.Color(255, 255, 255));
+        ProductoresFuentealimentaciónLabelDell.setForeground(new java.awt.Color(255, 255, 255));
+        ProductoresFuentealimentaciónLabelDell.setText("Productores Fuente de alimentación:");
+
+        ProductorestarjetasgráficasLabelDell.setBackground(new java.awt.Color(255, 255, 255));
+        ProductorestarjetasgráficasLabelDell.setForeground(new java.awt.Color(255, 255, 255));
+        ProductorestarjetasgráficasLabelDell.setText("Productores de tarjetas gráficas:");
+
+        ensambladorLabelDisney.setBackground(new java.awt.Color(255, 255, 255));
+        ensambladorLabelDisney.setForeground(new java.awt.Color(255, 255, 255));
+        ensambladorLabelDisney.setText("Ensambladores:");
+
+        qttyGuionistasDisney.setBackground(new java.awt.Color(255, 255, 255));
+        qttyGuionistasDisney.setForeground(new java.awt.Color(255, 255, 255));
+        qttyGuionistasDisney.setText("0");
+
+        qttyEscenariosDisney.setBackground(new java.awt.Color(255, 255, 255));
+        qttyEscenariosDisney.setForeground(new java.awt.Color(255, 255, 255));
+        qttyEscenariosDisney.setText("0");
+
+        qttyAnimadoresDisney.setBackground(new java.awt.Color(255, 255, 255));
+        qttyAnimadoresDisney.setForeground(new java.awt.Color(255, 255, 255));
+        qttyAnimadoresDisney.setText("0");
+
+        qttyDobladoresDisney.setBackground(new java.awt.Color(255, 255, 255));
+        qttyDobladoresDisney.setForeground(new java.awt.Color(255, 255, 255));
+        qttyDobladoresDisney.setText("0");
+
+        qttyGuionistasPlotTwistsDisney.setBackground(new java.awt.Color(255, 255, 255));
+        qttyGuionistasPlotTwistsDisney.setForeground(new java.awt.Color(255, 255, 255));
+        qttyGuionistasPlotTwistsDisney.setText("0");
+
+        qttyEnsambladoresDisney.setBackground(new java.awt.Color(255, 255, 255));
+        qttyEnsambladoresDisney.setForeground(new java.awt.Color(255, 255, 255));
+        qttyEnsambladoresDisney.setText("0");
+
+        removePlacaBaseDisney.setText("-");
+        removePlacaBaseDisney.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removePlacaBaseDisneyActionPerformed(evt);
+            }
+        });
+
+        addPlacaBaseDisney.setText("+");
+        addPlacaBaseDisney.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addPlacaBaseDisneyActionPerformed(evt);
+            }
+        });
+
+        removeCPUDell.setText("-");
+        removeCPUDell.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeCPUDellActionPerformed(evt);
+            }
+        });
+
+        addCPUDell.setText("+");
+        addCPUDell.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addCPUDellActionPerformed(evt);
+            }
+        });
+
+        removeRAMDell.setText("-");
+        removeRAMDell.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeRAMDellActionPerformed(evt);
+            }
+        });
+
+        addRAMDell.setText("+");
+        addRAMDell.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addRAMDellActionPerformed(evt);
+            }
+        });
+
+        removeFuenteAlimentacionDell.setText("-");
+        removeFuenteAlimentacionDell.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeFuenteAlimentacionDellActionPerformed(evt);
+            }
+        });
+
+        addFuenteAlimentacionDell.setText("+");
+        addFuenteAlimentacionDell.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addFuenteAlimentacionDellActionPerformed(evt);
+            }
+        });
+
+        removeTarjetaGraficaDell.setText("-");
+        removeTarjetaGraficaDell.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeTarjetaGraficaDellActionPerformed(evt);
+            }
+        });
+
+        addTarjetaGraficaDell.setText("+");
+        addTarjetaGraficaDell.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addTarjetaGraficaDellActionPerformed(evt);
+            }
+        });
+
+        removeEnsambladorDell.setText("-");
+        removeEnsambladorDell.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeEnsambladorDellActionPerformed(evt);
+            }
+        });
+
+        addEnsambladorDell.setText("+");
+        addEnsambladorDell.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addEnsambladorDellActionPerformed(evt);
+            }
+        });
+
+        jLabel7.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setText("Projects Managers:");
+
+        jLabel20.setBackground(new java.awt.Color(147, 193, 252));
+        jLabel20.setFont(new java.awt.Font("Segoe UI Black", 3, 24)); // NOI18N
+        jLabel20.setForeground(new java.awt.Color(147, 193, 252));
+        jLabel20.setText("Trabajadores");
+
+        jPanel19.setBackground(new java.awt.Color(147, 193, 252));
+
+        javax.swing.GroupLayout jPanel19Layout = new javax.swing.GroupLayout(jPanel19);
+        jPanel19.setLayout(jPanel19Layout);
+        jPanel19Layout.setHorizontalGroup(
+            jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 330, Short.MAX_VALUE)
+        );
+        jPanel19Layout.setVerticalGroup(
+            jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 10, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
+        jPanel14.setLayout(jPanel14Layout);
+        jPanel14Layout.setHorizontalGroup(
+            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel14Layout.createSequentialGroup()
+                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel14Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel14Layout.createSequentialGroup()
+                                .addGap(80, 80, 80)
+                                .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jPanel19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel14Layout.createSequentialGroup()
+                                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel14Layout.createSequentialGroup()
+                                        .addComponent(ProductoresMemoriaRAMLabelDell)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(removeRAMDell))
+                                    .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel14Layout.createSequentialGroup()
+                                            .addComponent(ProductoresPlacaBaseLabelDell, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(removePlacaBaseDisney))
+                                        .addGroup(jPanel14Layout.createSequentialGroup()
+                                            .addComponent(ProductoresdeCPUsLabelDell)
+                                            .addGap(50, 50, 50)
+                                            .addComponent(removeCPUDell))))
+                                .addGap(28, 28, 28)
+                                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel14Layout.createSequentialGroup()
+                                        .addComponent(qttyGuionistasDisney)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(addPlacaBaseDisney))
+                                    .addGroup(jPanel14Layout.createSequentialGroup()
+                                        .addComponent(qttyEscenariosDisney)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(addCPUDell))
+                                    .addGroup(jPanel14Layout.createSequentialGroup()
+                                        .addComponent(qttyAnimadoresDisney)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(addRAMDell))
+                                    .addGroup(jPanel14Layout.createSequentialGroup()
+                                        .addComponent(qttyDobladoresDisney)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(addFuenteAlimentacionDell))
+                                    .addGroup(jPanel14Layout.createSequentialGroup()
+                                        .addComponent(qttyGuionistasPlotTwistsDisney)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(addTarjetaGraficaDell))))))
+                    .addGroup(jPanel14Layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel14Layout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addGap(8, 8, 8)
+                                .addComponent(qttyProjectsManagersDell)
+                                .addGap(13, 13, 13)
+                                .addComponent(jLabel5)
+                                .addGap(13, 13, 13)
+                                .addComponent(qttyDirectoresDell))
+                            .addGroup(jPanel14Layout.createSequentialGroup()
+                                .addComponent(pmStatusLabelD)
+                                .addGap(11, 11, 11)
+                                .addComponent(pmStatusDell))
+                            .addGroup(jPanel14Layout.createSequentialGroup()
+                                .addComponent(directorStatusLabelD)
+                                .addGap(60, 60, 60)
+                                .addComponent(directorStatusDell))
+                            .addGroup(jPanel14Layout.createSequentialGroup()
+                                .addComponent(faultsLabelText1)
+                                .addGap(11, 11, 11)
+                                .addComponent(faultsLabelDell))))
+                    .addGroup(jPanel14Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(ProductoresFuentealimentaciónLabelDell, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(removeFuenteAlimentacionDell))
+                    .addGroup(jPanel14Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(ProductorestarjetasgráficasLabelDell, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(removeTarjetaGraficaDell))
+                    .addGroup(jPanel14Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(ensambladorLabelDisney)
+                        .addGap(88, 88, 88)
+                        .addComponent(removeEnsambladorDell)
+                        .addGap(28, 28, 28)
+                        .addComponent(qttyEnsambladoresDisney)
+                        .addGap(18, 18, 18)
+                        .addComponent(addEnsambladorDell)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel14Layout.setVerticalGroup(
+            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel14Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel20)
+                .addGap(10, 10, 10)
+                .addComponent(jPanel19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(22, 22, 22)
+                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ProductoresPlacaBaseLabelDell)
+                    .addComponent(removePlacaBaseDisney)
+                    .addComponent(qttyGuionistasDisney)
+                    .addComponent(addPlacaBaseDisney))
+                .addGap(21, 21, 21)
+                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ProductoresdeCPUsLabelDell)
+                    .addComponent(removeCPUDell)
+                    .addComponent(qttyEscenariosDisney)
+                    .addComponent(addCPUDell))
+                .addGap(28, 28, 28)
+                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(removeRAMDell)
+                    .addComponent(qttyAnimadoresDisney)
+                    .addComponent(addRAMDell)
+                    .addComponent(ProductoresMemoriaRAMLabelDell))
+                .addGap(30, 30, 30)
+                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ProductoresFuentealimentaciónLabelDell)
+                    .addComponent(removeFuenteAlimentacionDell)
+                    .addComponent(qttyDobladoresDisney)
+                    .addComponent(addFuenteAlimentacionDell))
+                .addGap(24, 24, 24)
+                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ProductorestarjetasgráficasLabelDell)
+                    .addComponent(removeTarjetaGraficaDell)
+                    .addComponent(qttyGuionistasPlotTwistsDisney)
+                    .addComponent(addTarjetaGraficaDell))
+                .addGap(24, 24, 24)
+                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ensambladorLabelDisney)
+                    .addComponent(removeEnsambladorDell)
+                    .addComponent(qttyEnsambladoresDisney)
+                    .addComponent(addEnsambladorDell))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
+                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel7)
+                    .addComponent(qttyProjectsManagersDell)
+                    .addComponent(jLabel5)
+                    .addComponent(qttyDirectoresDell))
+                .addGap(13, 13, 13)
+                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pmStatusLabelD)
+                    .addComponent(pmStatusDell))
+                .addGap(13, 13, 13)
+                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(directorStatusLabelD)
+                    .addComponent(directorStatusDell))
+                .addGap(13, 13, 13)
+                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(faultsLabelText1)
+                    .addComponent(faultsLabelDell))
+                .addGap(24, 24, 24))
+        );
+
+        DisneyDash.add(jPanel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 360, 540));
+        DisneyDash.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, -50, -1, -1));
+        DisneyDash.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, -40, -1, -1));
+        DisneyDash.add(dinseyFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1070, 600));
+
+        jTabbedPane1.addTab("Dell", DisneyDash);
+
+        NickVSDisney.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        Grafico.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout GraficoLayout = new javax.swing.GroupLayout(Grafico);
+        Grafico.setLayout(GraficoLayout);
+        GraficoLayout.setHorizontalGroup(
+            GraficoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        GraficoLayout.setVerticalGroup(
+            GraficoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        NickVSDisney.add(Grafico, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 70, 710, 400));
+
+        jLabel9.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel9.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setText("Dias totales transcurridos:");
+        NickVSDisney.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 40, -1, -1));
+
+        daysPassedLabelGrafico.setBackground(new java.awt.Color(0, 0, 0));
+        daysPassedLabelGrafico.setForeground(new java.awt.Color(255, 255, 255));
+        daysPassedLabelGrafico.setText("0");
+        NickVSDisney.add(daysPassedLabelGrafico, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 40, -1, -1));
+        NickVSDisney.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, -1, -1));
+        NickVSDisney.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 1080, 600));
+
+        jTabbedPane1.addTab("Apple_vs_Dell", NickVSDisney);
+
+        jPanel1.add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -195,95 +1896,422 @@ public class MainView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void configurationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_configurationButtonActionPerformed
+    private void removeTarjetaGraficaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeTarjetaGraficaActionPerformed
+        if (Integer.parseInt(GuionistasPlotTwistsNick.getText()) == 1){
+            JOptionPane.showMessageDialog(null, "NO SE PUEDE DEJAR UN DEPARTAMENTO SIN TRABAJADORES");
+        } else{
+            int nuevo = Integer.parseInt(GuionistasPlotTwistsNick.getText())-1;
+            GuionistasPlotTwistsNick.setText(String.valueOf(nuevo));
+        }
+    }//GEN-LAST:event_removeTarjetaGraficaActionPerformed
+
+    private void addFuenteAlimentacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addFuenteAlimentacionActionPerformed
+        if (calculateQuantityN() == 12){
+            JOptionPane.showMessageDialog(null, "SE HA SUPERADO LA CANTIDAD LIMITE DE TRABAJADORES!");
+        } else {
+            int nuevo = Integer.parseInt(DobladoresNick.getText())+1;
+            DobladoresNick.setText(String.valueOf(nuevo));
+        }
+    }//GEN-LAST:event_addFuenteAlimentacionActionPerformed
+
+    private void addRAMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addRAMActionPerformed
+        if (calculateQuantityN() == 12){
+            JOptionPane.showMessageDialog(null, "SE HA SUPERADO LA CANTIDAD LIMITE DE TRABAJADORES!");
+        } else {
+            int nuevo = Integer.parseInt(AnimadoresNick.getText())+1;
+            AnimadoresNick.setText(String.valueOf(nuevo));
+        }
+    }//GEN-LAST:event_addRAMActionPerformed
+
+    private void removeRAMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeRAMActionPerformed
+        if (Integer.parseInt(AnimadoresNick.getText()) == 1){
+            JOptionPane.showMessageDialog(null, "NO SE PUEDE DEJAR UN DEPARTAMENTO SIN TRABAJADORES");
+        } else{
+            int nuevo = Integer.parseInt(AnimadoresNick.getText())-1;
+            AnimadoresNick.setText(String.valueOf(nuevo));
+        }
+    }//GEN-LAST:event_removeRAMActionPerformed
+
+    private void addTarjetaGraficaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTarjetaGraficaActionPerformed
+        if (calculateQuantityN() == 12){
+            JOptionPane.showMessageDialog(null, "SE HA SUPERADO LA CANTIDAD LIMITE DE TRABAJADORES!");
+        } else {
+            int nuevo = Integer.parseInt(GuionistasPlotTwistsNick.getText())+1;
+            GuionistasPlotTwistsNick.setText(String.valueOf(nuevo));
+        }
+    }//GEN-LAST:event_addTarjetaGraficaActionPerformed
+
+    private void addEnsamblador1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEnsamblador1ActionPerformed
+        if (calculateQuantityN() == 12){
+            JOptionPane.showMessageDialog(null, "SE HA SUPERADO LA CANTIDAD LIMITE DE TRABAJADORES!");
+        } else {
+            int nuevo = Integer.parseInt(EnsambladoresNick.getText())+1;
+            EnsambladoresNick.setText(String.valueOf(nuevo));
+        }
+    }//GEN-LAST:event_addEnsamblador1ActionPerformed
+
+    private void removeFuenteAlimentacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeFuenteAlimentacionActionPerformed
+        if (Integer.parseInt(DobladoresNick.getText()) == 1){
+            JOptionPane.showMessageDialog(null, "NO SE PUEDE DEJAR UN DEPARTAMENTO SIN TRABAJADORES");
+        } else{
+            int nuevo = Integer.parseInt(DobladoresNick.getText())-1;
+            DobladoresNick.setText(String.valueOf(nuevo));
+        }
+    }//GEN-LAST:event_removeFuenteAlimentacionActionPerformed
+
+    private void removeCPUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeCPUActionPerformed
+        if (Integer.parseInt(EscenariosNick.getText()) == 1){
+            JOptionPane.showMessageDialog(null, "NO SE PUEDE DEJAR UN DEPARTAMENTO SIN TRABAJADORES");
+        } else{
+            int nuevo = Integer.parseInt(EscenariosNick.getText())-1;
+            EscenariosNick.setText(String.valueOf(nuevo));
+        }
+    }//GEN-LAST:event_removeCPUActionPerformed
+
+    private void removePlacaBaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removePlacaBaseActionPerformed
+        if (Integer.parseInt(GuionistasNick.getText()) == 1){
+            JOptionPane.showMessageDialog(null, "NO SE PUEDE DEJAR UN DEPARTAMENTO SIN TRABAJADORES");
+        } else{
+            int nuevo = Integer.parseInt(GuionistasNick.getText())-1;
+            GuionistasNick.setText(String.valueOf(nuevo));
+        }
+    }//GEN-LAST:event_removePlacaBaseActionPerformed
+
+    private void addPlacaBaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addPlacaBaseActionPerformed
+        if (calculateQuantityN() == 12){
+            JOptionPane.showMessageDialog(null, "SE HA SUPERADO LA CANTIDAD LIMITE DE TRABAJADORES!");
+        } else {
+            int nuevo = Integer.parseInt(GuionistasNick.getText())+1;
+            GuionistasNick.setText(String.valueOf(nuevo));
+        }
+    }//GEN-LAST:event_addPlacaBaseActionPerformed
+
+    private void addCPUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCPUActionPerformed
+        if (calculateQuantityN() == 12){
+            JOptionPane.showMessageDialog(null, "SE HA SUPERADO LA CANTIDAD LIMITE DE TRABAJADORES!");
+        } else {
+            int nuevo = Integer.parseInt(EscenariosNick.getText())+1;
+            EscenariosNick.setText(String.valueOf(nuevo));
+        }
+    }//GEN-LAST:event_addCPUActionPerformed
+
+    private void removeEnsamblador1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeEnsamblador1ActionPerformed
+        if (Integer.parseInt(EnsambladoresNick.getText()) == 1){
+            JOptionPane.showMessageDialog(null, "NO SE PUEDE DEJAR UN DEPARTAMENTO SIN TRABAJADORES");
+        } else{
+            int nuevo = Integer.parseInt(EnsambladoresNick.getText())-1;
+            EnsambladoresNick.setText(String.valueOf(nuevo));
+        }
+    }//GEN-LAST:event_removeEnsamblador1ActionPerformed
+
+    private void removePlacaBase2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removePlacaBase2ActionPerformed
+        if (Integer.parseInt(GuionistasDisney.getText()) == 1){
+            JOptionPane.showMessageDialog(null, "NO SE PUEDE DEJAR UN DEPARTAMENTO SIN TRABAJADORES");
+        } else{
+            int nuevo = Integer.parseInt(GuionistasDisney.getText())-1;
+            GuionistasDisney.setText(String.valueOf(nuevo));
+        }
+    }//GEN-LAST:event_removePlacaBase2ActionPerformed
+
+    private void removeEnsamblador2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeEnsamblador2ActionPerformed
+        if (Integer.parseInt(EnsambladoresDisney.getText()) == 1){
+            JOptionPane.showMessageDialog(null, "NO SE PUEDE DEJAR UN DEPARTAMENTO SIN TRABAJADORES");
+        } else{
+            int nuevo = Integer.parseInt(EnsambladoresDisney.getText())-1;
+            EnsambladoresDisney.setText(String.valueOf(nuevo));
+        }
+    }//GEN-LAST:event_removeEnsamblador2ActionPerformed
+
+    private void addEnsamblador2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEnsamblador2ActionPerformed
+        if (calculateQuantityD() == 13){
+            JOptionPane.showMessageDialog(null, "SE HA SUPERADO LA CANTIDAD LIMITE DE TRABAJADORES!");
+        } else {
+            int nuevo = Integer.parseInt(EnsambladoresDisney.getText())+1;
+            EnsambladoresDisney.setText(String.valueOf(nuevo));
+        }
+    }//GEN-LAST:event_addEnsamblador2ActionPerformed
+
+    private void addTarjetaGrafica2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTarjetaGrafica2ActionPerformed
+        if (calculateQuantityD() == 13){
+            JOptionPane.showMessageDialog(null, "SE HA SUPERADO LA CANTIDAD LIMITE DE TRABAJADORES!");
+        } else {
+            int nuevo = Integer.parseInt(GuionistasPlotTwistsDisney.getText())+1;
+            GuionistasPlotTwistsDisney.setText(String.valueOf(nuevo));
+        }
+    }//GEN-LAST:event_addTarjetaGrafica2ActionPerformed
+
+    private void removeTarjetaGrafica2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeTarjetaGrafica2ActionPerformed
+        if (Integer.parseInt(GuionistasPlotTwistsDisney.getText()) == 1){
+            JOptionPane.showMessageDialog(null, "NO SE PUEDE DEJAR UN DEPARTAMENTO SIN TRABAJADORES");
+        } else{
+            int nuevo = Integer.parseInt(GuionistasPlotTwistsDisney.getText())-1;
+            GuionistasPlotTwistsDisney.setText(String.valueOf(nuevo));
+        }
+    }//GEN-LAST:event_removeTarjetaGrafica2ActionPerformed
+
+    private void removeFuenteAlimentacion2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeFuenteAlimentacion2ActionPerformed
+        if (Integer.parseInt(DobladoresDisney.getText()) == 1){
+            JOptionPane.showMessageDialog(null, "NO SE PUEDE DEJAR UN DEPARTAMENTO SIN TRABAJADORES");
+        } else{
+            int nuevo = Integer.parseInt(DobladoresDisney.getText())-1;
+            DobladoresDisney.setText(String.valueOf(nuevo));
+        }
+    }//GEN-LAST:event_removeFuenteAlimentacion2ActionPerformed
+
+    private void removeRAM2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeRAM2ActionPerformed
+        if (Integer.parseInt(AnimadoresDisney.getText()) == 1){
+            JOptionPane.showMessageDialog(null, "NO SE PUEDE DEJAR UN DEPARTAMENTO SIN TRABAJADORES");
+        } else{
+            int nuevo = Integer.parseInt(AnimadoresDisney.getText())-1;
+            AnimadoresDisney.setText(String.valueOf(nuevo));
+        }
+    }//GEN-LAST:event_removeRAM2ActionPerformed
+
+    private void removeCPU2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeCPU2ActionPerformed
+        if (Integer.parseInt(EscenariosDisney.getText()) == 1){
+            JOptionPane.showMessageDialog(null, "NO SE PUEDE DEJAR UN DEPARTAMENTO SIN TRABAJADORES");
+        } else{
+            int nuevo = Integer.parseInt(EscenariosDisney.getText())-1;
+            EscenariosDisney.setText(String.valueOf(nuevo));
+        }
+    }//GEN-LAST:event_removeCPU2ActionPerformed
+
+    private void addFuenteAlimentacion2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addFuenteAlimentacion2ActionPerformed
+        if (calculateQuantityD() == 13){
+            JOptionPane.showMessageDialog(null, "SE HA SUPERADO LA CANTIDAD LIMITE DE TRABAJADORES!");
+        } else {
+            int nuevo = Integer.parseInt(DobladoresDisney.getText())+1;
+            DobladoresDisney.setText(String.valueOf(nuevo));
+        }
+    }//GEN-LAST:event_addFuenteAlimentacion2ActionPerformed
+
+    private void addRAM2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addRAM2ActionPerformed
+        if (calculateQuantityD() == 13) {
+            JOptionPane.showMessageDialog(null, "SE HA SUPERADO LA CANTIDAD LIMITE DE TRABAJADORES!");
+        } else {
+            int nuevo = Integer.parseInt(AnimadoresDisney.getText()) + 1;
+            AnimadoresDisney.setText(String.valueOf(nuevo));
+        }
+    }//GEN-LAST:event_addRAM2ActionPerformed
+
+    private void addCPU2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCPU2ActionPerformed
+        if (calculateQuantityD() == 13){
+            JOptionPane.showMessageDialog(null, "SE HA SUPERADO LA CANTIDAD LIMITE DE TRABAJADORES!");
+        } else {
+            int nuevo = Integer.parseInt(EscenariosDisney.getText())+1;
+            EscenariosDisney.setText(String.valueOf(nuevo));
+        }
+    }//GEN-LAST:event_addCPU2ActionPerformed
+
+    private void addPlacaBase2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addPlacaBase2ActionPerformed
+        if (calculateQuantityD() == 13){
+            JOptionPane.showMessageDialog(null, "SE HA SUPERADO LA CANTIDAD LIMITE DE TRABAJADORES!");
+        } else {
+            int nuevo = Integer.parseInt(GuionistasDisney.getText())+1;
+            GuionistasDisney.setText(String.valueOf(nuevo));
+        }
+    }//GEN-LAST:event_addPlacaBase2ActionPerformed
+
+    private void removeDiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeDiaActionPerformed
+        if(Integer.parseInt(dia.getText())==2000){
+            JOptionPane.showMessageDialog(null, "EL DIA DEBE DURAR MINIMO 2000MS");
+        } else {
+            int nuevo = Integer.parseInt(dia.getText())-1000;
+            dia.setText(String.valueOf(nuevo));
+        }
+    }//GEN-LAST:event_removeDiaActionPerformed
+
+    private void addDiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addDiaActionPerformed
+        int nuevo = Integer.parseInt(dia.getText())+1000;
+        dia.setText(String.valueOf(nuevo));
+    }//GEN-LAST:event_addDiaActionPerformed
+
+    private void removeAmmountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeAmmountActionPerformed
+        if(Integer.parseInt(ammount.getText())== 1){
+            JOptionPane.showMessageDialog(null, "SE DEBE TENER POR LO MENOS UN DIA COMO DEADLINE DE ENTREGA");
+        } else {
+            int nuevo = Integer.parseInt(ammount.getText())-1;
+            ammount.setText(String.valueOf(nuevo));
+        }
+    }//GEN-LAST:event_removeAmmountActionPerformed
+
+    private void addAmmountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addAmmountActionPerformed
+        int nuevo = Integer.parseInt(ammount.getText())+1;
+        ammount.setText(String.valueOf(nuevo));
+    }//GEN-LAST:event_addAmmountActionPerformed
+
+    private void txtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtActionPerformed
+        String quantities = GuionistasNick.getText() + ", " + EscenariosNick.getText() + ", " + AnimadoresNick.getText() + ", " + DobladoresNick.getText() + ", " + GuionistasPlotTwistsNick.getText() + ", " + EnsambladoresNick.getText() + " / " + GuionistasDisney.getText() + ", " + EscenariosDisney.getText() + ", " + AnimadoresDisney.getText() + ", " + DobladoresDisney.getText() + ", " + GuionistasPlotTwistsDisney.getText() + ", " + EnsambladoresDisney.getText();
+        String data = dia.getText() + " / " + ammount.getText();
+
+        // DATOS INICIALES
+        File fichero = new File("DatosIniciales.txt");
+        String contenido = "";
+
+        try{
+            PrintWriter salida = new PrintWriter(fichero);
+            salida.print(data);
+            salida.close();
+        }catch(Exception e){
+            System.out.println(e);
+        }
+
+        // CANTIDADES INICIALES
+
+        fichero = new File("InitialQuantity.txt");
+
+        try{
+            PrintWriter salida = new PrintWriter(fichero);
+            salida.print(quantities);
+            salida.close();
+        }catch(Exception e){
+            System.out.println(e);
+        }
+    }//GEN-LAST:event_txtActionPerformed
+
+    private void removeEnsambladorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeEnsambladorActionPerformed
         // TODO add your handling code here:
-        ConfigurationView configurationView = new ConfigurationView(this.dell, this.apple);
-        configurationView.setSize(800, 410);
-        configurationView.setLocation(0, 0);
-        
-        body.removeAll();
-        body.add(configurationView, BorderLayout.CENTER);
-        body.revalidate();
-        body.repaint();
-        
-    }//GEN-LAST:event_configurationButtonActionPerformed
+        nickelodeon.getEnsambladores().deleteWorker();
+        this.qttyEnsambladoresNick.setText(Integer.toString(nickelodeon.getEnsambladores().getQuantityWorkers()));
+    }//GEN-LAST:event_removeEnsambladorActionPerformed
 
-    private void dellButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dellButtonActionPerformed
-        DellView dellView = new DellView();
-        dellView.setSize(800, 410);
-        dellView.setLocation(0, 0);
-        
-        body.removeAll();
-        body.add(dellView, BorderLayout.CENTER);
-        body.revalidate();
-        body.repaint();
-    }//GEN-LAST:event_dellButtonActionPerformed
+    private void removeTarjetaGraficaAppleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeTarjetaGraficaAppleActionPerformed
+        // TODO add your handling code here:
+        nickelodeon.getGuionistasPlotTwists().deleteWorker();
+        this.qttyGuionistasPlotTwistsNick.setText(Integer.toString(nickelodeon.getGuionistasPlotTwists().getQuantityWorkers()));
+    }//GEN-LAST:event_removeTarjetaGraficaAppleActionPerformed
 
-    private void appleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_appleButtonActionPerformed
-        AppleView appleView = new AppleView();
-        appleView.setSize(800, 410);
-        appleView.setLocation(0, 0);
-        
-        body.removeAll();
-        body.add(appleView, BorderLayout.CENTER);
-        body.revalidate();
-        body.repaint();
-    }//GEN-LAST:event_appleButtonActionPerformed
+    private void removeFuenteAlimentacionAppleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeFuenteAlimentacionAppleActionPerformed
+        // TODO add your handling code here:
+        nickelodeon.getDobladores().deleteWorker();
+        this.qttyDobladoresNick.setText(Integer.toString(nickelodeon.getDobladores().getQuantityWorkers()));
+    }//GEN-LAST:event_removeFuenteAlimentacionAppleActionPerformed
 
-    private void exitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitMouseClicked
-        System.exit(0);
-    }//GEN-LAST:event_exitMouseClicked
+    private void removeRAMAppleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeRAMAppleActionPerformed
+        // TODO add your handling code here:
+        nickelodeon.getAnimadores().deleteWorker();
+        this.qttyAnimadoresNick.setText(Integer.toString(nickelodeon.getAnimadores().getQuantityWorkers()));
+    }//GEN-LAST:event_removeRAMAppleActionPerformed
 
-    private void headerMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_headerMousePressed
-        xMouse = evt.getX();
-        yMouse = evt.getY();
-    }//GEN-LAST:event_headerMousePressed
+    private void removeCPUAppleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeCPUAppleActionPerformed
+        // TODO add your handling code here:
+        nickelodeon.getEscenarios().deleteWorker();
+        this.qttyEscenariosNick.setText(Integer.toString(nickelodeon.getEscenarios().getQuantityWorkers()));
+    }//GEN-LAST:event_removeCPUAppleActionPerformed
 
-    private void headerMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_headerMouseDragged
-        int x = evt.getXOnScreen();
-        int y = evt.getYOnScreen();
-        this.setLocation(x - xMouse, y - yMouse);
-    }//GEN-LAST:event_headerMouseDragged
+    private void removePlacaBaseAppleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removePlacaBaseAppleActionPerformed
+        // TODO add your handling code here:
+        nickelodeon.getGuionistas().deleteWorker();
+        this.qttyGuionistasNick.setText(Integer.toString(nickelodeon.getGuionistas().getQuantityWorkers()));
+    }//GEN-LAST:event_removePlacaBaseAppleActionPerformed
 
-    private void exitMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitMouseEntered
-        Color color = new Color(255, 51, 51);
-        exit.setBackground(Color.red);
-    }//GEN-LAST:event_exitMouseEntered
+    private void addPlacaBaseAppleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addPlacaBaseAppleActionPerformed
+        // TODO add your handling code here:
+        nickelodeon.addWorkers(0);
+        this.qttyGuionistasNick.setText(Integer.toString(nickelodeon.getGuionistas().getQuantityWorkers()));
+    }//GEN-LAST:event_addPlacaBaseAppleActionPerformed
 
-    private void exitMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitMouseExited
-        Color color = new Color(242, 242, 242);
-        exit.setBackground(color);
-    }//GEN-LAST:event_exitMouseExited
+    private void addCPUAppleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCPUAppleActionPerformed
+        // TODO add your handling code here:
+        nickelodeon.addWorkers(1);
+        this.qttyEscenariosNick.setText(Integer.toString(nickelodeon.getEscenarios().getQuantityWorkers()));
+    }//GEN-LAST:event_addCPUAppleActionPerformed
 
-    private void configurationButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_configurationButtonMouseEntered
-        Color color = new Color(152, 234, 234);
-        configurationButton.setBackground(color);
-    }//GEN-LAST:event_configurationButtonMouseEntered
+    private void addEnsambladorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEnsambladorActionPerformed
+        // TODO add your handling code here:
+        nickelodeon.addWorkers(5);
+        this.qttyEnsambladoresNick.setText(Integer.toString(nickelodeon.getEnsambladores().getQuantityWorkers()));
+    }//GEN-LAST:event_addEnsambladorActionPerformed
 
-    private void configurationButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_configurationButtonMouseExited
-        Color color = new Color(204, 255, 255);
-        configurationButton.setBackground(color);
-    }//GEN-LAST:event_configurationButtonMouseExited
+    private void addTarjetaGraficaAppleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTarjetaGraficaAppleActionPerformed
+        // TODO add your handling code here:
+        nickelodeon.addWorkers(4);
+        this.qttyGuionistasPlotTwistsNick.setText(Integer.toString(nickelodeon.getGuionistasPlotTwists().getQuantityWorkers()));
+    }//GEN-LAST:event_addTarjetaGraficaAppleActionPerformed
 
-    private void dellButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dellButtonMouseEntered
-        Color color = new Color(152, 234, 234);
-        dellButton.setBackground(color);
-    }//GEN-LAST:event_dellButtonMouseEntered
+    private void addFuenteAlimentacionAppleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addFuenteAlimentacionAppleActionPerformed
+        // TODO add your handling code here:
+        nickelodeon.addWorkers(3);
+        this.qttyDobladoresNick.setText(Integer.toString(nickelodeon.getDobladores().getQuantityWorkers()));
+    }//GEN-LAST:event_addFuenteAlimentacionAppleActionPerformed
 
-    private void dellButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dellButtonMouseExited
-        Color color = new Color(204, 255, 255);
-        dellButton.setBackground(color);
-    }//GEN-LAST:event_dellButtonMouseExited
+    private void addRAMAppleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addRAMAppleActionPerformed
+        // TODO add your handling code here:
+        nickelodeon.addWorkers(2);
+        this.qttyAnimadoresNick.setText(Integer.toString(nickelodeon.getAnimadores().getQuantityWorkers()));
+    }//GEN-LAST:event_addRAMAppleActionPerformed
 
-    private void appleButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_appleButtonMouseEntered
-        Color color = new Color(152, 234, 234);
-        appleButton.setBackground(color);
-    }//GEN-LAST:event_appleButtonMouseEntered
+    private void removePlacaBaseDisneyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removePlacaBaseDisneyActionPerformed
+        // TODO add your handling code here:
+        disney.getGuionistas().deleteWorker();
+        this.qttyGuionistasDisney.setText(Integer.toString(disney.getGuionistas().getQuantityWorkers()));
+    }//GEN-LAST:event_removePlacaBaseDisneyActionPerformed
 
-    private void appleButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_appleButtonMouseExited
-        Color color = new Color(204, 255, 255);
-        appleButton.setBackground(color);
-    }//GEN-LAST:event_appleButtonMouseExited
+    private void addPlacaBaseDisneyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addPlacaBaseDisneyActionPerformed
+        // TODO add your handling code here:
+        disney.addWorkers(0);
+        this.qttyGuionistasDisney.setText(Integer.toString(disney.getGuionistas().getQuantityWorkers()));
+    }//GEN-LAST:event_addPlacaBaseDisneyActionPerformed
+
+    private void removeCPUDellActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeCPUDellActionPerformed
+        // TODO add your handling code here:
+        disney.getEscenarios().deleteWorker();
+        this.qttyEscenariosDisney.setText(Integer.toString(disney.getEscenarios().getQuantityWorkers()));
+    }//GEN-LAST:event_removeCPUDellActionPerformed
+
+    private void addCPUDellActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCPUDellActionPerformed
+        // TODO add your handling code here:
+        disney.addWorkers(1);
+        this.qttyEscenariosDisney.setText(Integer.toString(disney.getEscenarios().getQuantityWorkers()));
+    }//GEN-LAST:event_addCPUDellActionPerformed
+
+    private void removeRAMDellActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeRAMDellActionPerformed
+        // TODO add your handling code here:
+        disney.getAnimadores().deleteWorker();
+        this.qttyAnimadoresDisney.setText(Integer.toString(disney.getAnimadores().getQuantityWorkers()));
+    }//GEN-LAST:event_removeRAMDellActionPerformed
+
+    private void addRAMDellActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addRAMDellActionPerformed
+        // TODO add your handling code here:
+        disney.addWorkers(2);
+        this.qttyAnimadoresDisney.setText(Integer.toString(disney.getAnimadores().getQuantityWorkers()));
+    }//GEN-LAST:event_addRAMDellActionPerformed
+
+    private void removeFuenteAlimentacionDellActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeFuenteAlimentacionDellActionPerformed
+        // TODO add your handling code here:
+        disney.getDobladores().deleteWorker();
+        this.qttyDobladoresDisney.setText(Integer.toString(disney.getDobladores().getQuantityWorkers()));
+    }//GEN-LAST:event_removeFuenteAlimentacionDellActionPerformed
+
+    private void addFuenteAlimentacionDellActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addFuenteAlimentacionDellActionPerformed
+        // TODO add your handling code here:
+        disney.addWorkers(3);
+        this.qttyDobladoresDisney.setText(Integer.toString(disney.getDobladores().getQuantityWorkers()));
+    }//GEN-LAST:event_addFuenteAlimentacionDellActionPerformed
+
+    private void removeTarjetaGraficaDellActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeTarjetaGraficaDellActionPerformed
+        // TODO add your handling code here:
+        disney.getGuionistasPlotTwists().deleteWorker();
+        this.qttyGuionistasPlotTwistsDisney.setText(Integer.toString(disney.getGuionistasPlotTwists().getQuantityWorkers()));
+    }//GEN-LAST:event_removeTarjetaGraficaDellActionPerformed
+
+    private void addTarjetaGraficaDellActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTarjetaGraficaDellActionPerformed
+        // TODO add your handling code here:
+        disney.addWorkers(4);
+        this.qttyGuionistasPlotTwistsDisney.setText(Integer.toString(disney.getGuionistasPlotTwists().getQuantityWorkers()));
+    }//GEN-LAST:event_addTarjetaGraficaDellActionPerformed
+
+    private void removeEnsambladorDellActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeEnsambladorDellActionPerformed
+        // TODO add your handling code here:
+        disney.getEnsambladores().deleteWorker();
+        this.qttyEnsambladoresDisney.setText(Integer.toString(disney.getEnsambladores().getQuantityWorkers()));
+    }//GEN-LAST:event_removeEnsambladorDellActionPerformed
+
+    private void addEnsambladorDellActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEnsambladorDellActionPerformed
+        // TODO add your handling code here:
+        disney.addWorkers(5);
+        this.qttyEnsambladoresDisney.setText(Integer.toString(disney.getEnsambladores().getQuantityWorkers()));
+    }//GEN-LAST:event_addEnsambladorDellActionPerformed
 
     /**
      * @param args the command line arguments
@@ -328,14 +2356,247 @@ public class MainView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton appleButton;
-    private javax.swing.JPanel body;
+    private javax.swing.JLabel AnimadoresDisney;
+    private javax.swing.JLabel AnimadoresNick;
+    private javax.swing.JLabel CPUsMaxLabel;
+    private javax.swing.JLabel CPUsMaxLabelDell;
+    private javax.swing.JLabel CPUsSavedLabel;
+    private javax.swing.JLabel CPUsSavedLabelDell;
+    private javax.swing.JPanel ConfigurationDashboard;
+    private javax.swing.JPanel DisneyDash;
+    private javax.swing.JLabel DobladoresDisney;
+    private javax.swing.JLabel DobladoresNick;
+    private javax.swing.JLabel EnsambladoresDisney;
+    private javax.swing.JLabel EnsambladoresNick;
+    private javax.swing.JLabel EscenariosDisney;
+    private javax.swing.JLabel EscenariosNick;
+    private javax.swing.JLabel FuentesAlimentacionMaxLabel;
+    private javax.swing.JLabel FuentesAlimentacionMaxLabelDell;
+    private javax.swing.JLabel FuentesAlimentacionSavedLabel;
+    private javax.swing.JLabel FuentesAlimentacionSavedLabelDell;
+    private javax.swing.JPanel Grafico;
+    private javax.swing.JLabel GuionistasDisney;
+    private javax.swing.JLabel GuionistasNick;
+    private javax.swing.JLabel GuionistasPlotTwistsDisney;
+    private javax.swing.JLabel GuionistasPlotTwistsNick;
+    private javax.swing.JPanel NickVSDisney;
+    private javax.swing.JPanel NickelodeonDash;
+    private javax.swing.JLabel PCsEstandarReadyLabel;
+    private javax.swing.JLabel PCsEstandarReadyLabelDell;
+    private javax.swing.JLabel PcsGPUReadyLabel;
+    private javax.swing.JLabel PcsGPUReadyLabelDell;
+    private javax.swing.JLabel PlacasBasesMaxLabel;
+    private javax.swing.JLabel PlacasBasesMaxLabelDell;
+    private javax.swing.JLabel PlacasBasesSavedLabel;
+    private javax.swing.JLabel PlacasBasesSavedLabelDell;
+    private javax.swing.JLabel ProductoresFuentealimentaciónLabel1;
+    private javax.swing.JLabel ProductoresFuentealimentaciónLabel2;
+    private javax.swing.JLabel ProductoresFuentealimentaciónLabelApple;
+    private javax.swing.JLabel ProductoresFuentealimentaciónLabelDell;
+    private javax.swing.JLabel ProductoresMemoriaRAMLabel1;
+    private javax.swing.JLabel ProductoresMemoriaRAMLabel2;
+    private javax.swing.JLabel ProductoresMemoriaRAMLabelApple;
+    private javax.swing.JLabel ProductoresMemoriaRAMLabelDell;
+    private javax.swing.JLabel ProductoresPlacaBaseLabel1;
+    private javax.swing.JLabel ProductoresPlacaBaseLabel2;
+    private javax.swing.JLabel ProductoresPlacaBaseLabelApple;
+    private javax.swing.JLabel ProductoresPlacaBaseLabelDell;
+    private javax.swing.JLabel ProductoresdeCPUsLabel1;
+    private javax.swing.JLabel ProductoresdeCPUsLabel2;
+    private javax.swing.JLabel ProductoresdeCPUsLabel3;
+    private javax.swing.JLabel ProductoresdeCPUsLabelApple;
+    private javax.swing.JLabel ProductoresdeCPUsLabelDell;
+    private javax.swing.JLabel ProductorestarjetasgráficasLabel1;
+    private javax.swing.JLabel ProductorestarjetasgráficasLabel2;
+    private javax.swing.JLabel ProductorestarjetasgráficasLabelApple;
+    private javax.swing.JLabel ProductorestarjetasgráficasLabelDell;
+    private javax.swing.JLabel RAMMaxLabel;
+    private javax.swing.JLabel RAMMaxLabelDell;
+    private javax.swing.JLabel RamsSavedLabel;
+    private javax.swing.JLabel RamsSavedLabelDell;
+    private javax.swing.JLabel TarjetasGraficasMaxLabel4;
+    private javax.swing.JLabel TarjetasGraficasMaxLabelDell;
+    private javax.swing.JLabel TarjetasGraficasSavedLabel;
+    private javax.swing.JLabel TarjetasGraficasSavedLabelDell;
+    private javax.swing.JButton addAmmount;
+    private javax.swing.JButton addCPU;
+    private javax.swing.JButton addCPU2;
+    private javax.swing.JButton addCPUApple;
+    private javax.swing.JButton addCPUDell;
+    private javax.swing.JButton addDia;
+    private javax.swing.JButton addEnsamblador;
+    private javax.swing.JButton addEnsamblador1;
+    private javax.swing.JButton addEnsamblador2;
+    private javax.swing.JButton addEnsambladorDell;
+    private javax.swing.JButton addFuenteAlimentacion;
+    private javax.swing.JButton addFuenteAlimentacion2;
+    private javax.swing.JButton addFuenteAlimentacionApple;
+    private javax.swing.JButton addFuenteAlimentacionDell;
+    private javax.swing.JButton addPlacaBase;
+    private javax.swing.JButton addPlacaBase2;
+    private javax.swing.JButton addPlacaBaseApple;
+    private javax.swing.JButton addPlacaBaseDisney;
+    private javax.swing.JButton addRAM;
+    private javax.swing.JButton addRAM2;
+    private javax.swing.JButton addRAMApple;
+    private javax.swing.JButton addRAMDell;
+    private javax.swing.JButton addTarjetaGrafica;
+    private javax.swing.JButton addTarjetaGrafica2;
+    private javax.swing.JButton addTarjetaGraficaApple;
+    private javax.swing.JButton addTarjetaGraficaDell;
+    private javax.swing.JLabel ammount;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JButton configurationButton;
-    private javax.swing.JButton dellButton;
-    private javax.swing.JPanel exit;
-    private javax.swing.JPanel header;
+    private javax.swing.JLabel costosLabel;
+    private javax.swing.JLabel costosLabelDell;
+    private javax.swing.JLabel costosLabelText;
+    private javax.swing.JLabel costosLabelText1;
+    private javax.swing.JLabel costosLabelText2;
+    private javax.swing.JLabel costosLabelText3;
+    private javax.swing.JLabel dayDuration;
+    private javax.swing.JLabel daysPassedLabeDell;
+    private javax.swing.JLabel daysPassedLabelGrafico;
+    private javax.swing.JLabel daysPassedLabelN;
+    private javax.swing.JLabel deadline;
+    private javax.swing.JLabel deadlineLabel;
+    private javax.swing.JLabel deadlineLabelDell;
+    private javax.swing.JLabel deadlineLabelText;
+    private javax.swing.JLabel deadlineLabelText1;
+    private javax.swing.JLabel dia;
+    private javax.swing.JLabel dinseyFondo;
+    private javax.swing.JLabel directorStatus;
+    private javax.swing.JLabel directorStatusDell;
+    private javax.swing.JLabel directorStatusLabel;
+    private javax.swing.JLabel directorStatusLabelD;
+    private javax.swing.JLabel discountedLabel;
+    private javax.swing.JLabel discountedLabelDell;
+    private javax.swing.JLabel discountedLabelText;
+    private javax.swing.JLabel discountedLabelText1;
+    private javax.swing.JLabel ensambladorLabel;
+    private javax.swing.JLabel ensambladorLabel1;
+    private javax.swing.JLabel ensambladorLabel2;
+    private javax.swing.JLabel ensambladorLabelDisney;
+    private javax.swing.JLabel faultsLabel;
+    private javax.swing.JLabel faultsLabelDell;
+    private javax.swing.JLabel faultsLabelText;
+    private javax.swing.JLabel faultsLabelText1;
+    private javax.swing.JLabel gananciaLabelText;
+    private javax.swing.JLabel gananciaLabelText1;
+    private javax.swing.JLabel gananciasLabel;
+    private javax.swing.JLabel gananciasLabelDell;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel12;
+    private javax.swing.JPanel jPanel14;
+    private javax.swing.JPanel jPanel15;
+    private javax.swing.JPanel jPanel16;
+    private javax.swing.JPanel jPanel17;
+    private javax.swing.JPanel jPanel19;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JLabel pmStatus;
+    private javax.swing.JLabel pmStatusDell;
+    private javax.swing.JLabel pmStatusLabel;
+    private javax.swing.JLabel pmStatusLabelD;
+    private javax.swing.JLabel qttyAnimadoresDisney;
+    private javax.swing.JLabel qttyAnimadoresNick;
+    private javax.swing.JLabel qttyCPUsMaxApple;
+    private javax.swing.JLabel qttyCPUsMaxDell;
+    private javax.swing.JLabel qttyCPUsSavedApple;
+    private javax.swing.JLabel qttyCPUsSavedDell;
+    private javax.swing.JLabel qttyDirectoresApple;
+    private javax.swing.JLabel qttyDirectoresDell;
+    private javax.swing.JLabel qttyDobladoresDisney;
+    private javax.swing.JLabel qttyDobladoresNick;
+    private javax.swing.JLabel qttyEnsambladoresDisney;
+    private javax.swing.JLabel qttyEnsambladoresNick;
+    private javax.swing.JLabel qttyEscenariosDisney;
+    private javax.swing.JLabel qttyEscenariosNick;
+    private javax.swing.JLabel qttyFuentesAlimentacionMaxApple;
+    private javax.swing.JLabel qttyFuentesAlimentacionMaxDell;
+    private javax.swing.JLabel qttyFuentesAlimentacionSavedApple;
+    private javax.swing.JLabel qttyFuentesAlimentacionSavedDell;
+    private javax.swing.JLabel qttyGPUsPCsReadyApple;
+    private javax.swing.JLabel qttyGPUsPCsReadyDell;
+    private javax.swing.JLabel qttyGuionistasDisney;
+    private javax.swing.JLabel qttyGuionistasNick;
+    private javax.swing.JLabel qttyGuionistasPlotTwistsDisney;
+    private javax.swing.JLabel qttyGuionistasPlotTwistsNick;
+    private javax.swing.JLabel qttyPlacasBasesMaxApple;
+    private javax.swing.JLabel qttyPlacasBasesMaxDell;
+    private javax.swing.JLabel qttyPlacasBasesSavedApple;
+    private javax.swing.JLabel qttyPlacasBasesSavedDell;
+    private javax.swing.JLabel qttyProjectsManagersApple;
+    private javax.swing.JLabel qttyProjectsManagersDell;
+    private javax.swing.JLabel qttyRAMMaxApple;
+    private javax.swing.JLabel qttyRAMMaxDell;
+    private javax.swing.JLabel qttyRAMSavedApple;
+    private javax.swing.JLabel qttyRAMSavedDell;
+    private javax.swing.JLabel qttyStandardPCsReadyApple;
+    private javax.swing.JLabel qttyStandardPCsReadyDell;
+    private javax.swing.JLabel qttyTarjetasGraficasMaxApple;
+    private javax.swing.JLabel qttyTarjetasGraficasMaxDell;
+    private javax.swing.JLabel qttyTarjetasGraficasSavedApple;
+    private javax.swing.JLabel qttyTarjetasGraficasSavedDell;
+    private javax.swing.JButton removeAmmount;
+    private javax.swing.JButton removeCPU;
+    private javax.swing.JButton removeCPU2;
+    private javax.swing.JButton removeCPUApple;
+    private javax.swing.JButton removeCPUDell;
+    private javax.swing.JButton removeDia;
+    private javax.swing.JButton removeEnsamblador;
+    private javax.swing.JButton removeEnsamblador1;
+    private javax.swing.JButton removeEnsamblador2;
+    private javax.swing.JButton removeEnsambladorDell;
+    private javax.swing.JButton removeFuenteAlimentacion;
+    private javax.swing.JButton removeFuenteAlimentacion2;
+    private javax.swing.JButton removeFuenteAlimentacionApple;
+    private javax.swing.JButton removeFuenteAlimentacionDell;
+    private javax.swing.JButton removePlacaBase;
+    private javax.swing.JButton removePlacaBase2;
+    private javax.swing.JButton removePlacaBaseApple;
+    private javax.swing.JButton removePlacaBaseDisney;
+    private javax.swing.JButton removeRAM;
+    private javax.swing.JButton removeRAM2;
+    private javax.swing.JButton removeRAMApple;
+    private javax.swing.JButton removeRAMDell;
+    private javax.swing.JButton removeTarjetaGrafica;
+    private javax.swing.JButton removeTarjetaGrafica2;
+    private javax.swing.JButton removeTarjetaGraficaApple;
+    private javax.swing.JButton removeTarjetaGraficaDell;
+    private javax.swing.JButton txt;
+    private javax.swing.JLabel utilidadesLabel;
+    private javax.swing.JLabel utilidadesLabelDell;
     // End of variables declaration//GEN-END:variables
 }
