@@ -30,6 +30,7 @@ public class ConfigurationView extends javax.swing.JPanel {
         this.workersCount = 0; 
         this.values = null;
         initComponents();
+        this.messageLabel.setText("");
     }
     
     public ConfigurationView(Company dell, Company apple, String[] values) {
@@ -39,6 +40,7 @@ public class ConfigurationView extends javax.swing.JPanel {
         this.values = values;
         
         initComponents();
+        this.messageLabel.setText("");
         numWorkers.setText(values[0]);
         workersMotherboards.setText(values[1]);
         workersCPU.setText(values[2]);
@@ -98,6 +100,10 @@ public class ConfigurationView extends javax.swing.JPanel {
         daysDuration = new javax.swing.JTextField();
         saveConfiguration = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
+        startSimulation = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
+        simulationDuration = new javax.swing.JTextField();
+        messageLabel = new javax.swing.JLabel();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -265,7 +271,7 @@ public class ConfigurationView extends javax.swing.JPanel {
 
         daysDuration.setBackground(new java.awt.Color(204, 204, 204));
         daysDuration.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
-        content.add(daysDuration, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 70, 150, -1));
+        content.add(daysDuration, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 70, 190, -1));
 
         saveConfiguration.setText("Guardar");
         saveConfiguration.addActionListener(new java.awt.event.ActionListener() {
@@ -273,10 +279,28 @@ public class ConfigurationView extends javax.swing.JPanel {
                 saveConfigurationActionPerformed(evt);
             }
         });
-        content.add(saveConfiguration, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 300, -1, -1));
+        content.add(saveConfiguration, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 160, -1, -1));
 
         jLabel9.setText("Configuracion");
         content.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 10, -1, -1));
+
+        startSimulation.setText("Empezar Simulacion");
+        startSimulation.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                startSimulationActionPerformed(evt);
+            }
+        });
+        content.add(startSimulation, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 220, -1, -1));
+
+        jLabel10.setText("Duracion de la simulacion (dias):");
+        content.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 110, -1, -1));
+
+        simulationDuration.setBackground(new java.awt.Color(204, 204, 204));
+        simulationDuration.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        content.add(simulationDuration, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 110, 190, -1));
+
+        messageLabel.setText("message Label");
+        content.add(messageLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 270, -1, -1));
 
         add(content, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 410));
     }// </editor-fold>//GEN-END:initComponents
@@ -418,30 +442,6 @@ public class ConfigurationView extends javax.swing.JPanel {
         values[5] = workersGPU.getText();
         values[6] = numAssemblers.getText();                
         
-        Company dellCompany = new Company(
-                "Dell",
-                Integer.parseInt(values[0]),
-                Integer.parseInt(values[1]),
-                Integer.parseInt(values[2]),
-                Integer.parseInt(values[3]),
-                Integer.parseInt(values[4]),
-                Integer.parseInt(values[5]),
-                Integer.parseInt(values[6]),
-                sem
-        );
-        
-        Company appleCompany = new Company(
-                "Apple",
-                Integer.parseInt(values[0]),
-                Integer.parseInt(values[1]),
-                Integer.parseInt(values[2]),
-                Integer.parseInt(values[3]),
-                Integer.parseInt(values[4]),
-                Integer.parseInt(values[5]),
-                Integer.parseInt(values[6]),
-                sem
-        );
-        
         String currentDir = System.getProperty("user.dir");        
         String path = Paths.get(currentDir, "src", "txtFiles", "config.txt").toString();    
         
@@ -453,17 +453,28 @@ public class ConfigurationView extends javax.swing.JPanel {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
-        
-        this.dell = dellCompany;
-        this.apple = appleCompany;
     }//GEN-LAST:event_saveConfigurationActionPerformed
+
+    private void startSimulationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startSimulationActionPerformed
+        String[] values = new String[7];        
+        
+        values[0] = numWorkers.getText();
+        values[1] = workersMotherboards.getText();
+        values[2] = workersCPU.getText();
+        values[3] = workersRAM.getText();
+        values[4] = workersPowerSupply.getText();
+        values[5] = workersGPU.getText();
+        values[6] = numAssemblers.getText(); 
+        
+        
+    }//GEN-LAST:event_startSimulationActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel content;
     private javax.swing.JTextField daysDuration;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -472,6 +483,7 @@ public class ConfigurationView extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel messageLabel;
     private javax.swing.JButton minusAssemblers;
     private javax.swing.JButton minusCPU;
     private javax.swing.JButton minusGPU;
@@ -489,6 +501,8 @@ public class ConfigurationView extends javax.swing.JPanel {
     private javax.swing.JButton plusRAM;
     private javax.swing.JButton plusWorkers;
     private javax.swing.JButton saveConfiguration;
+    private javax.swing.JTextField simulationDuration;
+    private javax.swing.JButton startSimulation;
     private javax.swing.JLabel workersCPU;
     private javax.swing.JLabel workersGPU;
     private javax.swing.JLabel workersMotherboards;

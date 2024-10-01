@@ -13,240 +13,199 @@ import javax.swing.JLabel;
  */
 public class Wharehouse {
     
-    public int motherboardComponent; // = private int guiones
-    public int cpuComponent; //private int escenarios
-    public int ramComponent; //   private int animaciones;
-    public int powerSupplyComponent; //private int doblajes;
-    public int gpuComponent; //    private int plotwist;
-    public int pcGPU; //   private int guionPlotTwist;
-    public int motherboard;
-    public int cpu;
-    public int ram;
-    public int powerSupply;
-    public int gpu; 
-    public int counterGPU; //    private int counterForPT;
-    public int computers; //private int capitulos;
-    public int [] necessities; //recursos necesarios para producir una computadora.
-    private Company company;
-    private JLabel [] labels;
-
-    public Wharehouse(int [] necessities,Company company ) {
-        this.necessities = necessities; 
-        this.company= company; 
-        this.motherboard = 0;
-        this.cpu = 0;
-        this.ram = 0;
-        this.powerSupply = 0;
-        this.gpu = 0;
-        this.counterGPU = 0; 
-        this.motherboardComponent = 0; 
-        this.cpuComponent = 0; 
-        this.ramComponent = 0; 
-        this.gpuComponent = 0; 
-        this.pcGPU = 0; 
-        this.powerSupplyComponent = 0; 
-        this.computers = 0; 
-        
+    //Atributos
+    private int motherboards; 
+    private int cpus; 
+    private int rams; 
+    private int powerSupplys; 
+    private int gpus;
+    private int computers;
+    private int gpuComputers; 
+    private int daysCounter;
+    private int hoursCounter;
+    private int daysToDispatch;
+    private int daysDuration;
+    private int[] necessities; 
+    private int computersSelled;
+    
+    //Constructor
+    public Wharehouse(int[] necessities, int daysToDispatch, int daysDuration) {
+        this.motherboards = 0;
+        this.cpus = 0;
+        this.rams = 0;
+        this.powerSupplys = 0;
+        this.gpus = 0;
+        this.computers = 0;
+        this.gpuComputers = 0;
+        this.daysCounter = 0;
+        this.hoursCounter = 0;
+        this.daysToDispatch = daysToDispatch;
+        this.daysDuration = daysDuration;
+        this.necessities = necessities;
+        this.computersSelled = 0;
     }
     
-    public void addPC(int quantityAssemblers){
-        int quantityComputers = quantityAssemblers; //se puede ver cuantas computadoras se pueden hacer, por la cantidad de ensambladores que hay. 
-        //placa base
-        int quantity = calculatePossibleComponent(this.motherboard,0); 
-        if(quantity < quantityComputers){
-            quantityComputers = quantity; 
+    //==========================Metodos==========================
+    
+    
+    
+    //==========================Getters y Setters==========================
+    public int getMotherboards() {
+        return motherboards;
+    }
+
+    public void addMotherboard() {
+        if(this.motherboards < necessities[0]){
+            this.motherboards++;
         }
-        //cpu
-        quantity = calculatePossibleComponent(this.cpu,1); 
-        if(quantity < quantityComputers){
-            quantityComputers = quantity; 
-        }
-        //ram
-        quantity = calculatePossibleComponent(this.ram,2);
-        if(quantity < quantityComputers){
-            quantityComputers = quantity; 
-        }
-        //powerSupply
-        quantity = calculatePossibleComponent(this.powerSupply,3); 
-        if(quantity < quantityComputers){
-            quantityComputers = quantity; 
-        }
-        
-        motherboard -= (necessities[0] * quantityComputers); 
-        this.labels[0].setText(Integer.toString(this.getMotherboard())); 
-        cpu -= (necessities[1] * quantityComputers); 
-        this.labels[1].setText(Integer.toString(this.getCpu()));
-        ram -= (necessities[2] * quantityComputers); 
-        this.labels[2].setText(Integer.toString(this.getRam())); 
-        powerSupply -= (necessities[3] * quantityComputers); 
-        this.labels[3].setText(Integer.toString(this.getPowerSupply()));
-        
-        while(counterGPU >= necessities[5] && pcGPU >= necessities[4] && quantityComputers > 0){
-            gpuComponent +=1; 
-            pcGPU -= necessities[4]; 
-            counterGPU -= necessities[5]; 
-            quantityComputers -= 1; 
-            
-        }
-        this.labels[4].setText(Integer.toString(pcGPU)); 
-        computers += quantityComputers; 
-        counterGPU += quantityComputers; 
-        
-        this.labels[5].setText(Integer.toString(computers)); 
-        this.labels[6].setText(Integer.toString(pcGPU)); 
     }
     
-    public int calculatePossibleComponent(int value,int type){
-        int cantidad = value; 
-        int quantity = 0; 
-        while(cantidad > 0){
-            int restante = cantidad - necessities[type];
-            if (restante >= 0){
-                quantity += 1; 
-            }
-            cantidad = restante; 
-        }
-        return quantity; 
+    public void removeMotherboard(int quantity){
+        this.motherboards = this.motherboards - quantity;
     }
 
+    public int getCpus() {
+        return cpus;
+    }
+
+    public void addCpu() {
+        if(this.cpus < necessities[1]){
+            this.cpus++;
+        }
+    }
     
-    public int getMotherboard() {
-        return motherboard;
+    public void removeCpu(int quantity){
+        this.cpus = this.cpus = quantity;
     }
 
-    public void addMotherboard(int quantity) {
-        if(this.motherboard > 25){
-            JOptionPane.showMessageDialog(null, "Almacen de placas bases lleno!!");
-        }
-        else{
-            this.motherboard += quantity;            
-        }
+    public int getRams() {
+        return rams;
     }
 
-    public int getCpu() {
-        return cpu;
-    }
-
-    public void addCpu(int quantity) {
-        if(this.cpu > 20){
-            JOptionPane.showMessageDialog(null, "Almacen de procesadores lleno!!");
-        }
-        else{
-            this.cpu += quantity;        
+    public void addRam() {
+        if(this.rams < necessities[2]){
+            this.rams++;
         }
     }
-
-    public int getRam() {
-        return ram;
+    
+    public void removeRam(int quantity){
+        this.rams = this.rams - quantity;
     }
 
-    public void addRam(int quantity) {
-        if(this.ram > 55){
-            JOptionPane.showMessageDialog(null, "Almacen de memoria ram lleno!!");
-        }
-        else{
-            this.ram += quantity;            
-        }
+    public int getPowerSupplys() {
+        return powerSupplys;
     }
 
-    public int getPowerSupply() {
-        return powerSupply;
-    }
-
-    public void addPowerSupply(int quantity) {
-        if(this.powerSupply > 35){
-            JOptionPane.showMessageDialog(null, "Almacen de fuentes de poder lleno!!");
-        }
-        else{
-            this.powerSupply += quantity;          
+    public void addPowerSupply() {
+        if(this.powerSupplys < necessities[3]){
+            this.powerSupplys++;
         }
     }
-
-    public int getGpu() {
-        return gpu;
+    
+    public void removePowerSupply(int quantity){
+        this.powerSupplys = this.powerSupplys = quantity;
     }
 
-    public void addGpu(int quantity) {
-        if(this.gpu > 10){
-            JOptionPane.showMessageDialog(null, "Almacen de tarjetas graficas lleno!!");
+    public int getGpus() {
+        return gpus;
+    }
+
+    public void addGpu() {
+        if(this.gpus < necessities[4]){
+            this.gpus++;
         }
-        else{
-            this.gpu += quantity;            
-        }
     }
-
-    public int getMotherboardComponent() {
-        return motherboardComponent;
-    }
-
-    public void setMotherboardComponent(int motherboardComponent) {
-        this.motherboardComponent = motherboardComponent;
-    }
-
-    public int getCpuComponent() {
-        return cpuComponent;
-    }
-
-    public void setCpuComponent(int cpuComponent) {
-        this.cpuComponent = cpuComponent;
-    }
-
-    public int getRamComponent() {
-        return ramComponent;
-    }
-
-    public void setRamComponent(int ramComponent) {
-        this.ramComponent = ramComponent;
-    }
-
-    public int getPowerSupplyComponent() {
-        return powerSupplyComponent;
-    }
-
-    public void setPowerSupplyComponent(int powerSupplyComponent) {
-        this.powerSupplyComponent = powerSupplyComponent;
-    }
-
-    public int getGpuComponent() {
-        return gpuComponent;
-    }
-
-    public void setGpuComponent(int gpuComponent) {
-        this.gpuComponent = gpuComponent;
-    }
-
-    public int getPcGPU() {
-        return pcGPU;
-    }
-
-    public void setPcGPU(int pcGPU) {
-        this.pcGPU = pcGPU;
-    }
-
-    public int getCounterGPU() {
-        return counterGPU;
-    }
-
-    public void setCounterGPU(int counterGPU) {
-        this.counterGPU = counterGPU;
+    
+    public void removeGpu(int quantity){
+        this.gpus = this.gpus - quantity;
     }
 
     public int getComputers() {
         return computers;
     }
 
-    public void setComputers(int computers) {
-        this.computers = computers;
+    public void addComputer() {
+        this.computers++;
     }
     
-    
-    public JLabel[] getLabels() {
-        return labels;
+    public void removeComputers(int quantity){
+        this.computers = this.computers - quantity;
     }
 
-    public void setLabels(JLabel[] labels) {
-        this.labels = labels;
+    public int getGpuComputers() {
+        return gpuComputers;
     }
+
+    public void addGpuComputer() {
+        this.gpuComputers++;
+    }
+    
+    public void removeGpuComputers(int quantity){
+        this.gpuComputers = this.gpuComputers - quantity;
+    }
+
+    public int[] getNecessities() {
+        return necessities;
+    }
+
+    public void setNecessities(int[] necessities) {
+        this.necessities = necessities;
+    }
+
+    public int getDaysCounter() {
+        return daysCounter;
+    }
+
+    public void setDaysCounter(int daysCounter) {
+        this.daysCounter = daysCounter;
+    }
+    
+    public void addDay(){
+        this.daysCounter++;
+    }
+
+    public int getDaysToDispatch() {
+        return daysToDispatch;
+    }
+
+    public void setDaysToDispatch(int daysToDispatch) {
+        this.daysToDispatch = daysToDispatch;
+    }
+
+    public int getHoursCounter() {
+        return hoursCounter;
+    }
+
+    public void setHoursCounter(int hoursCounter) {
+        this.hoursCounter = hoursCounter;
+    }
+    
+    public void addHour(){
+        this.hoursCounter++;
+    }
+
+    public int getDaysDuration() {
+        return daysDuration;
+    }
+
+    public void setDaysDuration(int daysDuration) {
+        this.daysDuration = daysDuration;
+    }
+
+    public int getComputersSelled() {
+        return computersSelled;
+    }
+
+    public void setComputersSelled(int computersSelled) {
+        this.computersSelled = computersSelled;
+    }
+    
+    
+    
+    
+    
+            
+    
     
     
 }
