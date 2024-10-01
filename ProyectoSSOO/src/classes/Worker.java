@@ -4,59 +4,69 @@
  */
 package classes;
 import java.util.concurrent.Semaphore;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author orveodiluca
  */
 public class Worker extends Thread {
-    private int type; //0 = placaBase, 1 = cpu, 2 = memoriaRam, 3 = fuentesAlimentacion, 4 = GPU. 
-    private int workerProfit; //Se usuará para el acumalado del salario del worker. 
-    private int salaryPerHour;
-    private int quantityWorkers; //Cantidad de trabajadores.     
-    public int days;
-    public int daysCount;
-    public int daysDuration; //Duracion de los dias de los trabajadores. 
-    public int daysTofinishWork; 
-    public Wharehouse wharehouse; 
-    private Semaphore sem;       
     
-    public Worker(int type, int dayDuration, int quantity, Wharehouse wharehouse, Semaphore sem, int daysTofinish){
+    //Constantes
+    public final int MOTHERBOARD_WORKER = 0;
+    public final int CPU_WORKER = 1;
+    public final int RAM_WORKER = 2;
+    public final int POWERSUPPLY_WORKER = 3;
+    public final int GPU_WORKER = 4;
+    
+    //Atributos
+    private int type;
+    private int salaryPerHour;  
+    private int daysPerComponent;
+    private Wharehouse wharehouse;
+    private int profit;   
+    private Semaphore mutex;
+    
+    //Constructor
+    public Worker(int type, int daysPerComponent, Wharehouse wharehouse, Semaphore mutex){
         this.type = type; 
-        this.quantityWorkers = quantity; 
-        this.daysTofinishWork = daysTofinish; 
-        this.quantityWorkers = quantity; 
         switch (type) {
-            case 0: //Productor de placa base
+            case MOTHERBOARD_WORKER: 
                 this.salaryPerHour = 20;
                 break;
                 
-            case 1: //Productor de CPU
+            case CPU_WORKER: 
                 this.salaryPerHour = 26;
                 break;
                 
-            case 2: //Productor de RAM
+            case RAM_WORKER: 
                 this.salaryPerHour = 40;
                 break;
                 
-            case 3: //Productor de fuente de alimentacion 
+            case POWERSUPPLY_WORKER: 
                 this.salaryPerHour = 16;
                 break;
                 
-            case 4: //Productor de GPU
+            case GPU_WORKER: 
                 this.salaryPerHour = 34;
                 break;            
                 
             default:
                 this.salaryPerHour = 0;
                 break;
-        }
-        this.workerProfit = 0;
-        this.days = 0;
-        this.daysCount = 0;
-        this.daysDuration = dayDuration;
-        this.sem = sem;   
-        this.wharehouse = wharehouse; 
+        } 
+        this.daysPerComponent = daysPerComponent;
+        this.wharehouse = wharehouse;
+        this.profit = 0;  
+        this.mutex = mutex;
+    }
+    
+    
+    
+    //==============================Metodos============================
+    public void charge(){
+        this.profit += this.salaryPerHour;
     }
     
     
@@ -64,73 +74,49 @@ public class Worker extends Thread {
     public void run(){
         boolean run = true;
         while(run){
-            try{
-                work();
-                paysalary();
-                sleep(this.daysDuration); 
-                System.out.println("Dia: " + this.days);
-                System.out.println("Ganancia del trabajdor: " + this.workerProfit);
-                System.out.println("Placas base: " + this.wharehouse.getMotherboard());
+            try {
+                Thread.sleep(wharehouse.getDaysDuration()/24);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Worker.class.getName()).log(Level.SEVERE, null, ex);
             }
-            catch(Exception e){
-                System.out.println(e);
+            this.charge();
+            if(wharehouse.getDaysCounter() % this.daysPerComponent == 0){
+                this.storeComponent();
             }
+            System.out.println("Dias -> " + wharehouse.getDaysCounter());
+            System.out.println("Motherboards -> " + wharehouse.getMotherboards());
+            System.out.println("Cpu -> " + wharehouse.getCpus());
+            System.out.println("Ram -> " + wharehouse.getRams());
+            System.out.println("Power Supply -> " + wharehouse.getPowerSupplys());
+            System.out.println("GPU -> " + wharehouse.getGpus() + "\n");
+            
         }
     }
     
-    public void paysalary(){ //se calcula el salario que tiene el trabajador. 
-        this.setWorkerProfit(this.getWorkerProfit() + (this.getSalaryPerHour() * 24 ) * this.getQuantityWorkers()); 
-    }
     
-    public void work(){
-        this.setDays(this.getDays() + 1);
-        this.daysCount++;
-        if(this.daysCount == this.getDaysTofinishWork()){ // 4
-            try{
-                this.sem.acquire(); 
-                switch (type) {
-                    case 0: //placa base
-                        this.wharehouse.addMotherboard(this.quantityWorkers);                        
-                        break;
-                        
-                    case 1: //CPU
-                        this.wharehouse.addCpu(this.quantityWorkers);                        
-                        break;
-                    
-                    case 2: //RAM
-                        this.wharehouse.addRam(this.quantityWorkers);                        
-                        break;
-                       
-                    case 3: //powerSupply
-                        this.wharehouse.addPowerSupply(this.quantityWorkers);                        
-                        break;
-                    
-                    case 4: //GPU
-                        this.wharehouse.addGpu(this.quantityWorkers);                        
-                        break;                                                                                
-                }
-                this.sem.release();                
-                this.daysCount = 0;
-            }catch(Exception e){
-                System.out.println(e);
-            }
+    public void storeComponent(){
+        switch (type) {
+            case MOTHERBOARD_WORKER -> this.wharehouse.addMotherboard();
+                
+            case CPU_WORKER -> this.wharehouse.addCpu();
+                
+            case RAM_WORKER -> this.wharehouse.addRam();
+                
+            case POWERSUPPLY_WORKER -> this.wharehouse.addPowerSupply();
+                
+            case GPU_WORKER -> this.wharehouse.addGpu();                            
         }
     }
-
+    
+    
+        
+    //======================Getters y Setters=======================
     public int getType() {
         return type;
     }
 
     public void setType(int type) {
         this.type = type;
-    }
-
-    public int getWorkerProfit() {
-        return workerProfit;
-    }
-
-    public void setWorkerProfit(int workerProfit) {
-        this.workerProfit = workerProfit;
     }
 
     public int getSalaryPerHour() {
@@ -141,36 +127,20 @@ public class Worker extends Thread {
         this.salaryPerHour = salaryPerHour;
     }
 
-    public int getQuantityWorkers() {
-        return quantityWorkers;
+    public int getDaysPerComponent() {
+        return daysPerComponent;
     }
 
-    public void setQuantityWorkers(int quantityWorkers) {
-        this.quantityWorkers = quantityWorkers;
+    public void setDaysPerComponent(int daysPerComponent) {
+        this.daysPerComponent = daysPerComponent;
     }
 
-    public int getDays() {
-        return days;
+    public int getProfit() {
+        return profit;
     }
 
-    public void setDays(int days) {
-        this.days = days;
-    }
-
-    public int getDaysDuration() {
-        return daysDuration;
-    }
-
-    public void setDaysDuration(int daysDuration) {
-        this.daysDuration = daysDuration;
-    }
-
-    public int getDaysTofinishWork() {
-        return daysTofinishWork;
-    }
-
-    public void setDaysTofinishWork(int daysTofinishWork) {
-        this.daysTofinishWork = daysTofinishWork;
+    public void setProfit(int profit) {
+        this.profit = profit;
     }
 
     public Wharehouse getWharehouse() {
@@ -181,13 +151,25 @@ public class Worker extends Thread {
         this.wharehouse = wharehouse;
     }
 
-    public Semaphore getSem() {
-        return sem;
+    public Semaphore getMutex() {
+        return mutex;
     }
 
-    public void setSem(Semaphore sem) {
-        this.sem = sem;
+    public void setMutex(Semaphore mutex) {
+        this.mutex = mutex;
     }
+    
+    
+    
+    
+
+
+    
+    
+    
+    
+    
+    
   
 }
 
