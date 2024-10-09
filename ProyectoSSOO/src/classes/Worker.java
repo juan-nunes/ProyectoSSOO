@@ -3,114 +3,193 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package classes;
+
 import java.util.concurrent.Semaphore;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
  *
- * @author orveodiluca
+ * @author juann
  */
-public class Worker extends Thread {
-    
-    //Constantes
-    public final int MOTHERBOARD_WORKER = 0;
-    public final int CPU_WORKER = 1;
-    public final int RAM_WORKER = 2;
-    public final int POWERSUPPLY_WORKER = 3;
-    public final int GPU_WORKER = 4;
+public class Worker extends Employee{
     
     //Atributos
     private int type;
-    private int salaryPerHour;  
-    private int daysPerComponent;
-    private Wharehouse wharehouse;
-    private int profit;   
-    private Semaphore mutex;
+    private Float daysPerComponent;
+    private Float componentsPerDay;
     
+    //Constantes
+    public static final int MOTHERBOARD_WORKER = 0;
+    public static final int CPU_WORKER = 1;
+    public static final int RAM_WORKER = 2;
+    public static final int POWERSUPPLY_WORKER = 3;
+    public static final int GPU_WORKER = 4;
+        
     //Constructor
-    public Worker(int type, int daysPerComponent, Wharehouse wharehouse, Semaphore mutex){
-        this.type = type; 
-        switch (type) {
-            case MOTHERBOARD_WORKER: 
-                this.salaryPerHour = 20;
-                break;
-                
-            case CPU_WORKER: 
-                this.salaryPerHour = 26;
-                break;
-                
-            case RAM_WORKER: 
-                this.salaryPerHour = 40;
-                break;
-                
-            case POWERSUPPLY_WORKER: 
-                this.salaryPerHour = 16;
-                break;
-                
-            case GPU_WORKER: 
-                this.salaryPerHour = 34;
-                break;            
-                
-            default:
-                this.salaryPerHour = 0;
-                break;
-        } 
-        this.daysPerComponent = daysPerComponent;
-        this.wharehouse = wharehouse;
-        this.profit = 0;  
-        this.mutex = mutex;
+    public Worker(int ID, int type, float daysPerComponent, Wharehouse wh, Semaphore mutex) {
+        super(ID, wh, mutex);
+        this.type = type;       
+        if(daysPerComponent >= 1){
+            this.daysPerComponent = daysPerComponent;            
+            this.componentsPerDay = null;
+        }
+        else{
+            this.daysPerComponent = null;
+            this.componentsPerDay = 1/daysPerComponent;
+        }
+        
+        switch(type){
+            case MOTHERBOARD_WORKER -> setSalaryPerHour(20);
+            
+            case CPU_WORKER -> setSalaryPerHour(26);             
+            
+            case RAM_WORKER -> setSalaryPerHour(40);                            
+            
+            case POWERSUPPLY_WORKER -> setSalaryPerHour(16);                            
+            
+            case GPU_WORKER -> setSalaryPerHour(34);                            
+        }
     }
     
-    
-    
-    //==============================Metodos============================
-    public void charge(){
-        this.profit += this.salaryPerHour;
-    }
-    
-    
-    @Override
+    //===============Metodos=================
     public void run(){
-        boolean run = true;
-        while(run){
-            try {
-                Thread.sleep(wharehouse.getDaysDuration()/24);
+        int days = 0;
+        while(true){
+            try {                
+                collectSalary();
+                
+                //Caso en el que el trabajador tarda 1 dia o mas en crear el componente
+                getMutex().acquire();
+                if(daysPerComponent != null){
+                    if(days == daysPerComponent){                        
+                        storeComponent();
+                        days = 1;
+                    }
+                    else days++;
+                }
+
+                //Caso en el que el trabajador tarda menos de 1 dia en crear el componente
+                else if(componentsPerDay != null){   
+                    int quantity = (int) componentsPerDay.floatValue();
+                    storeComponent(quantity);
+                }
+                getMutex().release();
+                
+                int[] components = getWh().getComponents();                
+                                    
+                
+                Thread.sleep(Company.dayDuration);
             } catch (InterruptedException ex) {
                 Logger.getLogger(Worker.class.getName()).log(Level.SEVERE, null, ex);
             }
-            this.charge();
-            if(wharehouse.getDaysCounter() % this.daysPerComponent == 0){
-                this.storeComponent();
-            }
-            System.out.println("Dias -> " + wharehouse.getDaysCounter());
-            System.out.println("Motherboards -> " + wharehouse.getMotherboards());
-            System.out.println("Cpu -> " + wharehouse.getCpus());
-            System.out.println("Ram -> " + wharehouse.getRams());
-            System.out.println("Power Supply -> " + wharehouse.getPowerSupplys());
-            System.out.println("GPU -> " + wharehouse.getGpus() + "\n");
-            
         }
     }
     
     
     public void storeComponent(){
+        int[] components = getWh().getComponents();
         switch (type) {
-            case MOTHERBOARD_WORKER -> this.wharehouse.addMotherboard();
-                
-            case CPU_WORKER -> this.wharehouse.addCpu();
-                
-            case RAM_WORKER -> this.wharehouse.addRam();
-                
-            case POWERSUPPLY_WORKER -> this.wharehouse.addPowerSupply();
-                
-            case GPU_WORKER -> this.wharehouse.addGpu();                            
+            case MOTHERBOARD_WORKER -> {
+                if(components[0] < 25){
+                    components[0] += 1;
+                }
+            }
+            
+            case CPU_WORKER -> {
+                if(components[1] < 20){
+                    components[1] += 1;
+                }
+            }
+            
+            case RAM_WORKER -> {
+                if(components[2] < 55){
+                    components[2] += 1;
+                }
+            }
+            
+            case POWERSUPPLY_WORKER -> {
+                if(components[3] < 35){
+                    components[3] += 1;
+                }
+            }
+            
+            case GPU_WORKER -> {
+                if(components[4] < 10){
+                    components[4] += 1;
+                }
+            }                
         }
+        
+        getWh().setComponents(components);
+    }   
+    
+    
+    public void storeComponent(int quantity){
+        int[] components = getWh().getComponents();
+        switch (type) {
+            case MOTHERBOARD_WORKER -> {
+                if(components[0] < 25){
+                    if((components[0] += quantity) > 25){
+                        components[0] = 25;
+                    }
+                    else{
+                        components[0] += quantity;                        
+                    }
+                }
+            }
+            
+            case CPU_WORKER -> {
+                if(components[1] < 20){
+                    if((components[1] += quantity) > 20){
+                        components[1] = 20;
+                    }
+                    else{
+                        components[1] += quantity;                        
+                    }
+                }
+            }
+            
+            case RAM_WORKER -> {
+                if(components[2] < 55){
+                    if((components[2] += quantity) > 55){
+                        components[2] = 55;
+                    }
+                    else{
+                        components[2] += quantity;                        
+                    }
+                }
+            }
+            
+            case POWERSUPPLY_WORKER -> {
+                if(components[3] < 35){
+                    if((components[3] += quantity) > 35){
+                        components[3] = 35;
+                    }
+                    else{
+                        components[3] += quantity;                        
+                    }
+                }
+            }
+            
+            case GPU_WORKER -> {
+                if(components[4] < 10){
+                    if((components[4] += quantity) > 10){
+                        components[4] = 10;
+                    }
+                    else{
+                        components[4] += quantity;                        
+                    }
+                }
+            }                
+        }
+        
+        getWh().setComponents(components);
     }
     
     
-        
-    //======================Getters y Setters=======================
+       
+    //===================Getters and Setters===================
     public int getType() {
         return type;
     }
@@ -119,57 +198,28 @@ public class Worker extends Thread {
         this.type = type;
     }
 
-    public int getSalaryPerHour() {
-        return salaryPerHour;
-    }
-
-    public void setSalaryPerHour(int salaryPerHour) {
-        this.salaryPerHour = salaryPerHour;
-    }
-
-    public int getDaysPerComponent() {
+    public Float getDaysPerComponent() {
         return daysPerComponent;
     }
 
-    public void setDaysPerComponent(int daysPerComponent) {
+    public void setDaysPerComponent(Float daysPerComponent) {
         this.daysPerComponent = daysPerComponent;
     }
 
-    public int getProfit() {
-        return profit;
+    public Float getComponentsPerDay() {
+        return componentsPerDay;
     }
 
-    public void setProfit(int profit) {
-        this.profit = profit;
-    }
-
-    public Wharehouse getWharehouse() {
-        return wharehouse;
-    }
-
-    public void setWharehouse(Wharehouse wharehouse) {
-        this.wharehouse = wharehouse;
-    }
-
-    public Semaphore getMutex() {
-        return mutex;
-    }
-
-    public void setMutex(Semaphore mutex) {
-        this.mutex = mutex;
+    public void setComponentsPerDay(Float componentsPerDay) {
+        this.componentsPerDay = componentsPerDay;
     }
     
     
     
-    
-
 
     
+
     
     
     
-    
-    
-  
 }
-

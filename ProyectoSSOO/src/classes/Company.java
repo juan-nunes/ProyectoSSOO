@@ -9,65 +9,64 @@ import java.util.concurrent.Semaphore;
 
 /**
  *
- * @author orveodiluca
+ * @author juann
  */
-public class Company{
+public class Company extends Thread{
     
     //Atributos
     private String nameCompany; 
-    private int employeesCantity;      
+    private int limitWorkers;          
     private List<Worker> workers;
-    private List<Assembler> employeesAssemblers; 
-    private ProyectManager pm;
+    private List<Assembler> assemblers; 
+    private ProyectManager proyectManager;
     private Director director;
-    private Wharehouse wharehouse;    
-    private int daysToCreateGPUComputer;
-    private int daysDuration; //milisegundos
-    private int daysToDispatch;
-    private int[] necessities;
+    private Wharehouse wharehouse;   
+    private int lastLicenseDigit;
+    public static int dayDuration;
+    public static int daysToDispatch;
     private int profit;
-    private int pcPrice;
-    private int gpuPcPrice;    
-    
-    
-    //Constructor
-    public Company(String nameCompany, int employeesCantity, Wharehouse wharehouse, int daysDuration, int daysToDispatch, int[] necessities,             
-            int daysToCreateGPUComputer, int pcPrice, int gpuPcPrice) {
+    private int computerPrice;
+    private int gpuComputerPrice; 
+    private Semaphore mutexEmployees;
+    private Semaphore mutex;
+
+    public Company(String nameCompany, int limitWorkers, Wharehouse wharehouse, int lastLicenseDigit, int dayDuration,
+            int daysToDispatch, int computerPrice, int gpuComputerPrice, Semaphore mutexEmployees, Semaphore mutex) {
         this.nameCompany = nameCompany;
-        this.employeesCantity = employeesCantity;
+        this.limitWorkers = limitWorkers;        
         this.workers = new List<>();
-        this.employeesAssemblers = new List<>();
-        this.wharehouse = wharehouse;
-        this.pm = new ProyectManager(wharehouse);
-        this.daysToCreateGPUComputer = daysToCreateGPUComputer;
-        this.pcPrice = pcPrice;
-        this.director = new Director(wharehouse);
-        this.gpuPcPrice = gpuPcPrice;
+        this.assemblers = new List<>();
+        this.proyectManager = new ProyectManager(0, wharehouse, mutexEmployees);
+        this.director = new Director(0, wharehouse, mutexEmployees, proyectManager, this);
+        this.wharehouse = wharehouse; 
+        this.lastLicenseDigit = lastLicenseDigit;
+        Company.dayDuration = dayDuration;
+        Company.daysToDispatch = daysToDispatch;
         this.profit = 0;
-        this.daysDuration = daysDuration;
-        this.daysToDispatch = daysToDispatch;
-        this.necessities = necessities;
+        this.computerPrice = computerPrice;
+        this.gpuComputerPrice = gpuComputerPrice;
+        this.mutexEmployees = mutexEmployees;
+        this.mutex = mutex;
     }
     
-    //============================Metodos============================
-  
-        
-    public void startSimulation(){
-        for (int i = 0; i < workers.getSize(); i++) {
-            Worker auxWorker = workers.get(i);
-            auxWorker.start();
+    
+    public void run(){
+        while(true){
+            
         }
-        for (int i = 0; i < employeesAssemblers.getSize(); i++) {
-            Assembler assembler = employeesAssemblers.get(i);
-            assembler.start();
-        }
-        pm.start();
-        director.start();
     }
-        
     
     
-    //============================Getters y Setters============================
+//    public void createWorkers(int[] arrayEmployees){
+//        for (int i = 0; i < arrayEmployees.length; i++) {
+//            int quantity = arrayEmployees[i];
+//            for (int j = 0; j < quantity; j++) {
+//                Worker newWorker = new Worker(j, i);
+//            }
+//        }
+//    }
+    
+
     public String getNameCompany() {
         return nameCompany;
     }
@@ -76,12 +75,12 @@ public class Company{
         this.nameCompany = nameCompany;
     }
 
-    public int getEmployeesCantity() {
-        return employeesCantity;
+    public int getLimitWorkers() {
+        return limitWorkers;
     }
 
-    public void setEmployeesCantity(int employeesCantity) {
-        this.employeesCantity = employeesCantity;
+    public void setLimitWorkers(int limitWorkers) {
+        this.limitWorkers = limitWorkers;
     }
 
     public List<Worker> getWorkers() {
@@ -92,20 +91,20 @@ public class Company{
         this.workers = workers;
     }
 
-    public List<Assembler> getEmployeesAssemblers() {
-        return employeesAssemblers;
+    public List<Assembler> getAssemblers() {
+        return assemblers;
     }
 
-    public void setEmployeesAssemblers(List<Assembler> employeesAssemblers) {
-        this.employeesAssemblers = employeesAssemblers;
+    public void setAssemblers(List<Assembler> assemblers) {
+        this.assemblers = assemblers;
     }
 
-    public ProyectManager getPm() {
-        return pm;
+    public ProyectManager getProyectManager() {
+        return proyectManager;
     }
 
-    public void setPm(ProyectManager pm) {
-        this.pm = pm;
+    public void setProyectManager(ProyectManager proyectManager) {
+        this.proyectManager = proyectManager;
     }
 
     public Director getDirector() {
@@ -124,13 +123,13 @@ public class Company{
         this.wharehouse = wharehouse;
     }
 
-    public int getDaysToCreateGPUComputer() {
-        return daysToCreateGPUComputer;
+    public int getLastLicenseDigit() {
+        return lastLicenseDigit;
     }
 
-    public void setDaysToCreateGPUComputer(int daysToCreateGPUComputer) {
-        this.daysToCreateGPUComputer = daysToCreateGPUComputer;
-    }
+    public void setLastLicenseDigit(int lastLicenseDigit) {
+        this.lastLicenseDigit = lastLicenseDigit;
+    }        
 
     public int getProfit() {
         return profit;
@@ -140,50 +139,30 @@ public class Company{
         this.profit = profit;
     }
 
-    public int getPcPrice() {
-        return pcPrice;
+    public int getComputerPrice() {
+        return computerPrice;
     }
 
-    public void setPcPrice(int pcPrice) {
-        this.pcPrice = pcPrice;
+    public void setComputerPrice(int computerPrice) {
+        this.computerPrice = computerPrice;
     }
 
-    public int getGpuPcPrice() {
-        return gpuPcPrice;
+    public int getGpuComputerPrice() {
+        return gpuComputerPrice;
     }
 
-    public void setGpuPcPrice(int gpuPcPrice) {
-        this.gpuPcPrice = gpuPcPrice;
+    public void setGpuComputerPrice(int gpuComputerPrice) {
+        this.gpuComputerPrice = gpuComputerPrice;
     }
 
-    public int getDaysDuration() {
-        return daysDuration;
+    public Semaphore getMutex() {
+        return mutex;
     }
 
-    public void setDaysDuration(int daysDuration) {
-        this.daysDuration = daysDuration;
-    }
-
-    public int getDaysToDispatch() {
-        return daysToDispatch;
-    }
-
-    public void setDaysToDispatch(int daysToDispatch) {
-        this.daysToDispatch = daysToDispatch;
-    }
-
-    public int[] getNecessities() {
-        return necessities;
-    }
-
-    public void setNecessities(int[] necessities) {
-        this.necessities = necessities;
+    public void setMutex(Semaphore mutex) {
+        this.mutex = mutex;
     }
     
-    
-    
-    
-
     
     
     
