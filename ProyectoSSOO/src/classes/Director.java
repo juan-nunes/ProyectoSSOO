@@ -4,77 +4,116 @@
  */
 package classes;
 
+import java.util.concurrent.Semaphore;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
  *
- * @author orveodiluca
+ * @author juann
  */
-public class Director extends Thread{    
+public class Director extends Employee{
     
-    //Atributos
-    private int salaryPerHour;    
-    private int profit;
-    private Wharehouse wharehouse;    
-
-
+    //Atributos     
+    private ProyectManager pm;
+    private Company company;
+    
     //Constructor
-    public Director(Wharehouse wharehouse) {
-        this.salaryPerHour = 60;
-        this.profit = 0;
-        this.wharehouse = wharehouse;
+    public Director(int ID, Wharehouse wh, Semaphore mutex, ProyectManager pm, Company company) {
+        super(ID, wh, mutex);        
+        this.pm = pm;
+        this.company = company;
     }
     
-    //=========================Metodos=========================
+    //======================Metodos=====================
+    
     @Override
     public void run(){
-        boolean run = true;
-        while(run){
-            if(canDispatch()){
-                try {
-                    Thread.sleep(wharehouse.getDaysDuration()/24);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(Director.class.getName()).log(Level.SEVERE, null, ex);
+        int days = 0;
+        float hours = 0f;
+        boolean passDay = false;
+        
+        int min = 0;
+        int max = 48;
+        int randomHour = (int) (Math.random() * (max - min + 1)) + min;
+        while(true){
+            try {
+                
+                
+                hours += 0.5;
+                if(hours == 24){
+                    days++;
+                    hours = 0;
+                    passDay = true;
                 }
-                int computers = wharehouse.getComputers();
-                wharehouse.removeComputers(computers);
-                wharehouse.setComputersSelled(wharehouse.getComputersSelled() + computers);
+                if(passDay){
+                    randomHour = (int) (Math.random() * (max - min + 1)) + min; 
+                    passDay = false;
+                }
+                
+                getMutex().acquire();
+                if(days < Company.daysToDispatch){
+                    float trueRandomHour = randomHour/2;
+//                  System.out.println(hours + " " + randomHour/2);
+                    if(hours == trueRandomHour){
+                        System.out.println("REVISANDO AL PMMMMMM");
+                        statusVerificationPM();
+                    }
+                }
+                else{
+                    sellComputers();
+                    days = 0;
+                }
+                getMutex().release();
+                                
+                
+                Thread.sleep((Company.dayDuration/24)/2);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Director.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
     
-    public boolean canDispatch(){
-        return wharehouse.getDaysCounter() >= wharehouse.getDaysToDispatch();
+    public void sellComputers(){
+        int[] computers = getWh().getComputers();
+        int[] computersSelled = getWh().getComputersSelled();
+        
+        computersSelled[0] = computers[0];
+        computersSelled[1] = computers[1];
+        
+        computers[0] = 0;
+        computers[1] = 0;   
+        
+        getWh().setComputers(computers);        
+    }
+    
+    
+    public void statusVerificationPM(){  
+        if(!company.getProyectManager().isWorking()){
+            pm.setProfit(pm.getProfit() - 100);
+        }        
+    }
+    
+    
+    //===================Getters and Setters===================
+    public ProyectManager getPm() {
+        return pm;
+    }
+
+    public void setPm(ProyectManager pm) {
+        this.pm = pm;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
     }
     
     
     
-    
-    //=========================Getters y Setters=========================
-    public int getSalaryPerHour() {
-        return salaryPerHour;
-    }
-
-    public void setSalaryPerHour(int salaryPerHour) {
-        this.salaryPerHour = salaryPerHour;
-    }
-
-    public int getProfit() {
-        return profit;
-    }
-
-    public void setProfit(int profit) {
-        this.profit = profit;
-    }
-
-    public Wharehouse getWharehouse() {
-        return wharehouse;
-    }
-
-    public void setWharehouse(Wharehouse wharehouse) {
-        this.wharehouse = wharehouse;
-    }
     
     
 }

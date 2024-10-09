@@ -10,40 +10,59 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author orveodiluca
+ * @author juann
  */
-public class ProyectManager extends Thread{
+public class ProyectManager extends Employee {
     
     //Atributos
-    private int salaryPerHour;
     private boolean isWorking;
-    private int profit;
-    private double hoursCounter;
-    private Wharehouse wharehouse;    
+    private int days = 0;
+    private float hours = 0;      
     
     //Constructor
-    public ProyectManager(Wharehouse wharehouse) {
-        this.salaryPerHour = 40;
+    public ProyectManager(int ID, Wharehouse wh, Semaphore mutex) {
+        super(ID, wh, mutex);
         this.isWorking = true;
-        this.profit = 0;
-        this.hoursCounter = 0;        
     }
     
-    //=======================Metodos=======================
-    @Override
+    //====================Metodos====================
     public void run(){
-        boolean run = true;
-        while(run){
+        boolean passDay = true; //Para testear
+        while(true){
             try {
-                Thread.sleep((wharehouse.getDaysDuration()/24)/2); //Media hora
-                if(this.hoursCounter <= 16){
-                    this.isWorking = !this.isWorking;                    
+                
+                //Codigo del hilo
+                collectSalary();
+                
+                addHalfHour();
+                if(hours <= 16){
+                    isWorking = !isWorking;
                 }
-                else if (this.hoursCounter >= 24){
-                    this.hoursCounter = 0;
-                    wharehouse.addDay();
+                else if(hours > 16 && !isWorking){
+                    isWorking = true;
                 }
-                this.hoursCounter += 0.5;
+                if(hours == 24){
+                    addDay();
+                    hours = 0;
+                    passDay = true;
+                }
+                
+                //Codigo del test
+                if(passDay){
+                    int[] components = getWh().getComponents();                
+                    int[] computers = getWh().getComputers();                
+                    int[] computersSelled = getWh().getComputersSelled();                
+                    
+                    String str = "Dia: " + days + " | Hora: " + hours + "\n";
+                    str += "motherboard: " + components[0] + " | cpu: " + components[1] + " | ram: " + components[2];
+                    str += " | powersupply: " + components[3] + " | gpu: " + components[4] + "\n";
+                    str += "computers: " + computers[0] + " | gpuComputers: " + computers[1] + "\n";
+                    str += "computadoras vendidas: " + computersSelled[0] + " Computadoras con gpu vendidas: " + computersSelled[1] + "\n";
+                    System.out.println(str);
+                    passDay = false;
+                }
+                Thread.sleep((Company.dayDuration/24)/2);
+                
                 
             } catch (InterruptedException ex) {
                 Logger.getLogger(ProyectManager.class.getName()).log(Level.SEVERE, null, ex);
@@ -51,26 +70,19 @@ public class ProyectManager extends Thread{
         }
     }
     
-    public void countDay(){
-        this.wharehouse.addDay();
+    
+    public void addDay(){
+        days++;
     }
     
-    public void countHour(){
-        this.wharehouse.addHour();
+    public void addHalfHour(){
+        hours += 0.5;
     }
     
+
     
-    //=======================Getters y Setters=======================
-
-    public int getSalaryPerHour() {
-        return salaryPerHour;
-    }
-
-    public void setSalaryPerHour(int salaryPerHour) {
-        this.salaryPerHour = salaryPerHour;
-    }
-
-    public boolean isIsWorking() {
+    //===================Getters and Setters===================
+    public boolean isWorking() {
         return isWorking;
     }
 
@@ -78,15 +90,12 @@ public class ProyectManager extends Thread{
         this.isWorking = isWorking;
     }
 
-    public int getProfit() {
-        return profit;
-    }
 
-    public void setProfit(int profit) {
-        this.profit = profit;
-    }
+
     
     
+
+
     
     
     

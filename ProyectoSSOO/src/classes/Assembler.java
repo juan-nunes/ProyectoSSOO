@@ -10,130 +10,93 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author orveodiluca
+ * @author juann
  */
-public class Assembler extends Thread{
-    
-    //Atributos
-    private int salaryPerHour; 
-    private int daysPerComputer;  
-    private int motherboardsNecesary;
-    private int cpuNecesary;
-    private int ramNecesary;
-    private int powerSupplyNecesary; 
-    private Wharehouse wharehouse;
-    private int profit;
-    private Semaphore mutex;
+public class Assembler extends Employee {
     
     //Constructor
-    public Assembler(Wharehouse wharehouse, int motherboardsNecesary, int cpuNecesary, int ramNecesary, int powerSupplyNecesary,
-            Semaphore mutex){
-        this.salaryPerHour = 50; 
-        this.daysPerComputer = 2; 
-        this.motherboardsNecesary = motherboardsNecesary;
-        this.cpuNecesary = cpuNecesary;
-        this.ramNecesary = ramNecesary;
-        this.powerSupplyNecesary = powerSupplyNecesary;
-        this.wharehouse = wharehouse;
-        this.profit = 0; 
-        this.mutex = mutex;
+    public Assembler(int ID, Wharehouse wh, Semaphore mutex) {
+        super(ID, wh, mutex);
     }
     
-    //=========================Metodos=========================
-    @Override
+    //===============Metodos=================
     public void run(){
-        boolean run = true;
-        while(run){
+        int computers = 0;
+        while(true){            
             try {
-                Thread.sleep(wharehouse.getDaysDuration()/24);
+                collectSalary();
+                
+                getMutex().acquire();
+                if(canAssemble()){                    
+                    if(computers == getWh().getComputersToCreateGPUComputer()){
+                        storeGPUComputer();
+                        computers = 0;
+                    }
+                    else{
+                        storeComputer();                    
+                    }
+                    computers++;
+                }
+                getMutex().release();
+                
+                Thread.sleep(Company.dayDuration);
             } catch (InterruptedException ex) {
                 Logger.getLogger(Assembler.class.getName()).log(Level.SEVERE, null, ex);
             }
-            if(this.wharehouse.getMotherboards() >= motherboardsNecesary && this.wharehouse.getCpus() >= cpuNecesary &&
-               this.wharehouse.getRams() >= ramNecesary && this.wharehouse.getPowerSupplys() >= powerSupplyNecesary){
-                this.wharehouse.removeMotherboard(motherboardsNecesary);
-                this.wharehouse.removeCpu(cpuNecesary);
-                this.wharehouse.removeRam(ramNecesary);                
-                this.wharehouse.removePowerSupply(powerSupplyNecesary);                
-                this.wharehouse.addComputer();
-            }
+            
         }
     }
     
-    public void addComputer(){
-        wharehouse.addComputer();
-    }
+    
+    public void storeComputer(){ 
+        int[] components = getWh().getComponents();
+        int[] requeriments = getWh().getRequirements();
         
-    
-    
-    //=========================Getters y Setters=========================
-
-    public int getSalaryPerHour() {
-        return salaryPerHour;
-    }
-
-    public void setSalaryPerHour(int salaryPerHour) {
-        this.salaryPerHour = salaryPerHour;
-    }
-
-    public int getDaysPerComputer() {
-        return daysPerComputer;
-    }
-
-    public void setDaysPerComputer(int daysPerComputer) {
-        this.daysPerComputer = daysPerComputer;
-    }
-
-    public int getProfit() {
-        return profit;
-    }
-
-    public void setProfit(int profit) {
-        this.profit = profit;
-    }
-
-    public Wharehouse getWharehouse() {
-        return wharehouse;
-    }
-
-    public void setWharehouse(Wharehouse wharehouse) {
-        this.wharehouse = wharehouse;
-    }
-
-    public int getMotherboardsNecesary() {
-        return motherboardsNecesary;
-    }
-
-    public void setMotherboardsNecesary(int motherboardsNecesary) {
-        this.motherboardsNecesary = motherboardsNecesary;
-    }
-
-    public int getCpuNecesary() {
-        return cpuNecesary;
-    }
-
-    public void setCpuNecesary(int cpuNecesary) {
-        this.cpuNecesary = cpuNecesary;
-    }
-
-    public int getRamNecesary() {
-        return ramNecesary;
-    }
-
-    public void setRamNecesary(int ramNecesary) {
-        this.ramNecesary = ramNecesary;
-    }
-
-    public int getPowerSupplyNecesary() {
-        return powerSupplyNecesary;
-    }
-
-    public void setPowerSupplyNecesary(int powerSupplyNecesary) {
-        this.powerSupplyNecesary = powerSupplyNecesary;
+        if(canAssemble()){
+            for (int i = 0; i < components.length - 1; i++) {
+                components[i] -= requeriments[i];              
+            }
+            
+            int[] computers = getWh().getComputers();
+            computers[0]++;
+            
+            getWh().setComponents(components);
+            getWh().setComputers(computers);
+        }
     }
     
+    public void storeGPUComputer(){
+        int[] components = getWh().getComponents();
+        int[] requeriments = getWh().getRequirements();
+
+        if(canAssemble()){
+            for (int i = 0; i < components.length - 1; i++) {
+                components[i] -= requeriments[i];              
+            }
+            
+            int[] computers = getWh().getComputers();
+            computers[1]++;
+            
+            getWh().setComponents(components);
+            getWh().setComputers(computers);
+        }
+    }
     
+    public boolean canAssemble(){
+        int[] components = getWh().getComponents();
+        int[] requeriments = getWh().getRequirements();
+        
+        boolean canAssemble = true;
+        for (int i = 0; i < components.length; i++) {
+            if(components[i] < requeriments[i]){
+                canAssemble = false;
+            }
+        }
+        
+        return canAssemble;
+    }
     
+    //===================Getters and Setters===================
     
     
     
