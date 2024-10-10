@@ -4,13 +4,24 @@
  */
 package GUI;
 
+import classes.Assembler;
 import classes.Company;
+import classes.Director;
+import classes.ProyectManager;
+import classes.Wharehouse;
+import classes.Worker;
+import classes.Employee;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.concurrent.Semaphore;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -19,16 +30,32 @@ import javax.swing.JOptionPane;
  */
 public class MainView extends javax.swing.JFrame {
     
-    int xMouse, yMouse;
-    Company dell, apple;    
-    ConfigurationView configurationView;
-    
+    int xMouse, yMouse; 
+    int[] requeriments1 = {2, 1, 4, 4, 2};    
+    int[] requeriments2 = {1, 5, 6, 5, 1};
+    Semaphore companyMutex = new Semaphore(1);
+    Semaphore employeeMutex = new Semaphore(1);
+    Worker w1Apple; 
+    Worker w2Apple;
+    Worker w3Apple;
+    Worker w4Apple;
+    Worker w5Apple; 
+    Assembler as1Apple;
+    ProyectManager pm1Apple;
+    Director d1Apple;
+    Worker w1Dell; 
+    Worker w2Dell;
+    Worker w3Dell; 
+    Worker w4Dell;
+    Worker w5Dell; 
+    Assembler as2Dell; 
+    ProyectManager pm2Dell;
+    Director d2Dell;
+
     public MainView() {
         initComponents();
-        this.dell = null;
-        this.apple = null;
-        
-        String[] values = new String[7];
+        //Cargar TXT
+        String[] values = new String[18];
         String currentDir = System.getProperty("user.dir");        
         String path = Paths.get(currentDir, "src", "txtFiles", "config.txt").toString(); 
         
@@ -42,9 +69,57 @@ public class MainView extends javax.swing.JFrame {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
-        
+    
+    Wharehouse wh1 = new Wharehouse(5,requeriments1); 
+    Wharehouse wh2 = new Wharehouse(7,requeriments2); 
+    Company apple = new Company("Apple",15,wh1,3,Integer.parseInt(dia.getText()),Integer.parseInt(ammount.getText()),100,150,employeeMutex,companyMutex);
+    Company dell = new Company("Dell",19,wh2,7,Integer.parseInt(dia.getText()),Integer.parseInt(ammount.getText()),80,120,employeeMutex,companyMutex); 
+    //Apple
+    for (int i = 0; i < Integer.parseInt(ProductoresBaseApple.getText()); i++) {
+        w1Apple = new Worker(i,Worker.MOTHERBOARD_WORKER,3,wh1,employeeMutex);
     }
+    for (int i = 0; i < Integer.parseInt(CPUApple.getText()); i++) {
+        w2Apple = new Worker(i,Worker.CPU_WORKER,3,wh1,employeeMutex);  
+    }
+    for (int i = 0; i < Integer.parseInt(RAMApple.getText()); i++) {
+        w3Apple = new Worker(i,Worker.RAM_WORKER,1/2,wh1,employeeMutex);  
+    }
+    for (int i = 0; i < Integer.parseInt(FuenteAlimentacionApple.getText()); i++) {
+        w4Apple = new Worker(i,Worker.POWERSUPPLY_WORKER,1/3,wh1,employeeMutex);  
+    }
+    for (int i = 0; i < Integer.parseInt(GPUApple.getText()); i++) {
+        w5Apple = new Worker(i,Worker.GPU_WORKER,3,wh1,employeeMutex);  
+    }
+    for (int i = 0; i < Integer.parseInt(AssemblerApple.getText()); i++) {
+        as1Apple = new Assembler(i,wh1,employeeMutex);
+    }
+    pm1Apple = new ProyectManager(1, wh1, employeeMutex);
+    d1Apple = new Director(0, wh1, employeeMutex, pm1Apple, apple); 
+    
+    //Dell
+    for (int i = 0; i < Integer.parseInt(ProductoresBaseDell.getText()); i++) {
+        w1Dell = new Worker(i,Worker.MOTHERBOARD_WORKER,4,wh2,employeeMutex);
+    }
+    for (int i = 0; i < Integer.parseInt(CPUDell.getText()); i++) {
+        w2Dell = new Worker(i,Worker.CPU_WORKER,4,wh2,employeeMutex);
+    }
+    for (int i = 0; i < Integer.parseInt(RAMDell.getText()); i++) {
+        w3Dell = new Worker(i,Worker.RAM_WORKER,1,wh2,employeeMutex);
+    }
+    for (int i = 0; i < Integer.parseInt(FuenteAlimentacionDell.getText()); i++) {
+        w4Dell = new Worker(i,Worker.POWERSUPPLY_WORKER,1/5,wh2,employeeMutex);
+    }
+    for (int i = 0; i < Integer.parseInt(GPUDell.getText()); i++) {
+        w5Dell = new Worker(i,Worker.GPU_WORKER,2,wh2,employeeMutex);
+    }
+    for (int i = 0; i < Integer.parseInt(AssemblerDell.getText()); i++) {
+        as2Dell = new Assembler(i,wh2,employeeMutex); 
+    }
+     pm2Dell = new ProyectManager(1, wh2, employeeMutex);
+     d2Dell = new Director(0, wh2, employeeMutex, pm2Dell, dell); 
+
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -69,11 +144,11 @@ public class MainView extends javax.swing.JFrame {
         removeAmmount = new javax.swing.JButton();
         ammount = new javax.swing.JLabel();
         addAmmount = new javax.swing.JButton();
-        txt = new javax.swing.JButton();
+        Start = new javax.swing.JButton();
         jPanel9 = new javax.swing.JPanel();
         jLabel18 = new javax.swing.JLabel();
         ProductoresPlacaBaseLabel1 = new javax.swing.JLabel();
-        GuionistasNick = new javax.swing.JLabel();
+        ProductoresBaseApple = new javax.swing.JLabel();
         removePlacaBase = new javax.swing.JButton();
         ProductoresMemoriaRAMLabel1 = new javax.swing.JLabel();
         removeRAM = new javax.swing.JButton();
@@ -84,37 +159,37 @@ public class MainView extends javax.swing.JFrame {
         removeTarjetaGrafica = new javax.swing.JButton();
         addTarjetaGrafica = new javax.swing.JButton();
         ProductorestarjetasgráficasLabel1 = new javax.swing.JLabel();
-        GuionistasPlotTwistsNick = new javax.swing.JLabel();
+        GPUApple = new javax.swing.JLabel();
         addPlacaBase = new javax.swing.JButton();
         addCPU = new javax.swing.JButton();
-        EscenariosNick = new javax.swing.JLabel();
+        CPUApple = new javax.swing.JLabel();
         addRAM = new javax.swing.JButton();
-        AnimadoresNick = new javax.swing.JLabel();
-        DobladoresNick = new javax.swing.JLabel();
+        RAMApple = new javax.swing.JLabel();
+        FuenteAlimentacionApple = new javax.swing.JLabel();
         ensambladorLabel1 = new javax.swing.JLabel();
         addEnsamblador1 = new javax.swing.JButton();
-        EnsambladoresNick = new javax.swing.JLabel();
+        AssemblerApple = new javax.swing.JLabel();
         removeEnsamblador1 = new javax.swing.JButton();
         jPanel11 = new javax.swing.JPanel();
         ProductoresPlacaBaseLabel2 = new javax.swing.JLabel();
         addPlacaBase2 = new javax.swing.JButton();
-        GuionistasDisney = new javax.swing.JLabel();
+        ProductoresBaseDell = new javax.swing.JLabel();
         removePlacaBase2 = new javax.swing.JButton();
         ProductoresdeCPUsLabel3 = new javax.swing.JLabel();
         addCPU2 = new javax.swing.JButton();
-        EscenariosDisney = new javax.swing.JLabel();
+        CPUDell = new javax.swing.JLabel();
         removeCPU2 = new javax.swing.JButton();
         addRAM2 = new javax.swing.JButton();
-        AnimadoresDisney = new javax.swing.JLabel();
+        RAMDell = new javax.swing.JLabel();
         removeRAM2 = new javax.swing.JButton();
         addFuenteAlimentacion2 = new javax.swing.JButton();
-        DobladoresDisney = new javax.swing.JLabel();
+        FuenteAlimentacionDell = new javax.swing.JLabel();
         removeFuenteAlimentacion2 = new javax.swing.JButton();
         addTarjetaGrafica2 = new javax.swing.JButton();
-        GuionistasPlotTwistsDisney = new javax.swing.JLabel();
+        GPUDell = new javax.swing.JLabel();
         removeTarjetaGrafica2 = new javax.swing.JButton();
         addEnsamblador2 = new javax.swing.JButton();
-        EnsambladoresDisney = new javax.swing.JLabel();
+        AssemblerDell = new javax.swing.JLabel();
         removeEnsamblador2 = new javax.swing.JButton();
         ProductoresMemoriaRAMLabel2 = new javax.swing.JLabel();
         ProductoresFuentealimentaciónLabel2 = new javax.swing.JLabel();
@@ -124,6 +199,9 @@ public class MainView extends javax.swing.JFrame {
         jLabel17 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         ProductoresdeCPUsLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        txt1 = new javax.swing.JButton();
         NickelodeonDash = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         PlacasBasesMaxLabel = new javax.swing.JLabel();
@@ -139,45 +217,6 @@ public class MainView extends javax.swing.JFrame {
         qttyFuentesAlimentacionMaxApple = new javax.swing.JLabel();
         TarjetasGraficasMaxLabel4 = new javax.swing.JLabel();
         qttyTarjetasGraficasMaxApple = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
-        faultsLabelText = new javax.swing.JLabel();
-        faultsLabel = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        qttyProjectsManagersApple = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        qttyDirectoresApple = new javax.swing.JLabel();
-        pmStatusLabel = new javax.swing.JLabel();
-        pmStatus = new javax.swing.JLabel();
-        directorStatusLabel = new javax.swing.JLabel();
-        directorStatus = new javax.swing.JLabel();
-        ensambladorLabel = new javax.swing.JLabel();
-        ProductoresPlacaBaseLabelApple = new javax.swing.JLabel();
-        ProductoresdeCPUsLabelApple = new javax.swing.JLabel();
-        ProductoresMemoriaRAMLabelApple = new javax.swing.JLabel();
-        ProductoresFuentealimentaciónLabelApple = new javax.swing.JLabel();
-        ProductorestarjetasgráficasLabelApple = new javax.swing.JLabel();
-        removeEnsamblador = new javax.swing.JButton();
-        removeTarjetaGraficaApple = new javax.swing.JButton();
-        removeFuenteAlimentacionApple = new javax.swing.JButton();
-        removeRAMApple = new javax.swing.JButton();
-        removeCPUApple = new javax.swing.JButton();
-        removePlacaBaseApple = new javax.swing.JButton();
-        qttyGuionistasNick = new javax.swing.JLabel();
-        addPlacaBaseApple = new javax.swing.JButton();
-        addCPUApple = new javax.swing.JButton();
-        qttyEscenariosNick = new javax.swing.JLabel();
-        qttyAnimadoresNick = new javax.swing.JLabel();
-        qttyDobladoresNick = new javax.swing.JLabel();
-        qttyGuionistasPlotTwistsNick = new javax.swing.JLabel();
-        qttyEnsambladoresNick = new javax.swing.JLabel();
-        addEnsamblador = new javax.swing.JButton();
-        addTarjetaGraficaApple = new javax.swing.JButton();
-        addFuenteAlimentacionApple = new javax.swing.JButton();
-        addRAMApple = new javax.swing.JButton();
-        jPanel5 = new javax.swing.JPanel();
-        jLabel14 = new javax.swing.JLabel();
-        jPanel7 = new javax.swing.JPanel();
-        jPanel8 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
@@ -185,7 +224,6 @@ public class MainView extends javax.swing.JFrame {
         qttyStandardPCsReadyApple = new javax.swing.JLabel();
         qttyGPUsPCsReadyApple = new javax.swing.JLabel();
         PcsGPUReadyLabel = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
         PlacasBasesSavedLabel = new javax.swing.JLabel();
         qttyPlacasBasesSavedApple = new javax.swing.JLabel();
         qttyRAMSavedApple = new javax.swing.JLabel();
@@ -208,6 +246,45 @@ public class MainView extends javax.swing.JFrame {
         discountedLabel = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        faultsLabelText = new javax.swing.JLabel();
+        faultsLabel = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        qttyProjectsManagersApple = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        qttyDirectoresApple = new javax.swing.JLabel();
+        pmStatusLabel = new javax.swing.JLabel();
+        pmStatus = new javax.swing.JLabel();
+        directorStatusLabel = new javax.swing.JLabel();
+        directorStatus = new javax.swing.JLabel();
+        ensambladorLabel = new javax.swing.JLabel();
+        guionistasLabel = new javax.swing.JLabel();
+        escenariosLabel = new javax.swing.JLabel();
+        animadorLabel = new javax.swing.JLabel();
+        doblajeLabel = new javax.swing.JLabel();
+        plotTwistLabel = new javax.swing.JLabel();
+        removeEnsamblador = new javax.swing.JButton();
+        removeTarjetaGraficaApple = new javax.swing.JButton();
+        removeFuenteAlimentacionApple = new javax.swing.JButton();
+        removeRAMApple = new javax.swing.JButton();
+        removeCPUApple = new javax.swing.JButton();
+        removePlacaBaseApple = new javax.swing.JButton();
+        qttyProductoresBaseApple = new javax.swing.JLabel();
+        addPlacaBaseApple = new javax.swing.JButton();
+        addCPUApple = new javax.swing.JButton();
+        qttyCPUApple = new javax.swing.JLabel();
+        qttyRamApple = new javax.swing.JLabel();
+        qttyFuenteAlimentacionApple = new javax.swing.JLabel();
+        qttyGPUApple = new javax.swing.JLabel();
+        qttyEnsambladoresApple = new javax.swing.JLabel();
+        addEnsambladorApple = new javax.swing.JButton();
+        addTarjetaGraficaApple = new javax.swing.JButton();
+        addFuenteAlimentacionApple = new javax.swing.JButton();
+        addRAMApple = new javax.swing.JButton();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel14 = new javax.swing.JLabel();
+        jPanel7 = new javax.swing.JPanel();
+        jPanel8 = new javax.swing.JPanel();
         DisneyDash = new javax.swing.JPanel();
         jPanel17 = new javax.swing.JPanel();
         gananciaLabelText1 = new javax.swing.JLabel();
@@ -251,43 +328,6 @@ public class MainView extends javax.swing.JFrame {
         jLabel22 = new javax.swing.JLabel();
         jPanel16 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
-        jPanel14 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
-        qttyProjectsManagersDell = new javax.swing.JLabel();
-        pmStatusLabelD = new javax.swing.JLabel();
-        directorStatusLabelD = new javax.swing.JLabel();
-        qttyDirectoresDell = new javax.swing.JLabel();
-        pmStatusDell = new javax.swing.JLabel();
-        directorStatusDell = new javax.swing.JLabel();
-        faultsLabelText1 = new javax.swing.JLabel();
-        faultsLabelDell = new javax.swing.JLabel();
-        ProductoresPlacaBaseLabelDell = new javax.swing.JLabel();
-        ProductoresdeCPUsLabelDell = new javax.swing.JLabel();
-        ProductoresMemoriaRAMLabelDell = new javax.swing.JLabel();
-        ProductoresFuentealimentaciónLabelDell = new javax.swing.JLabel();
-        ProductorestarjetasgráficasLabelDell = new javax.swing.JLabel();
-        ensambladorLabelDisney = new javax.swing.JLabel();
-        qttyGuionistasDisney = new javax.swing.JLabel();
-        qttyEscenariosDisney = new javax.swing.JLabel();
-        qttyAnimadoresDisney = new javax.swing.JLabel();
-        qttyDobladoresDisney = new javax.swing.JLabel();
-        qttyGuionistasPlotTwistsDisney = new javax.swing.JLabel();
-        qttyEnsambladoresDisney = new javax.swing.JLabel();
-        removePlacaBaseDisney = new javax.swing.JButton();
-        addPlacaBaseDisney = new javax.swing.JButton();
-        removeCPUDell = new javax.swing.JButton();
-        addCPUDell = new javax.swing.JButton();
-        removeRAMDell = new javax.swing.JButton();
-        addRAMDell = new javax.swing.JButton();
-        removeFuenteAlimentacionDell = new javax.swing.JButton();
-        addFuenteAlimentacionDell = new javax.swing.JButton();
-        removeTarjetaGraficaDell = new javax.swing.JButton();
-        addTarjetaGraficaDell = new javax.swing.JButton();
-        removeEnsambladorDell = new javax.swing.JButton();
-        addEnsambladorDell = new javax.swing.JButton();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel20 = new javax.swing.JLabel();
-        jPanel19 = new javax.swing.JPanel();
         jLabel21 = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
         dinseyFondo = new javax.swing.JLabel();
@@ -363,16 +403,16 @@ public class MainView extends javax.swing.JFrame {
         });
         ConfigurationDashboard.add(addAmmount, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 330, -1, -1));
 
-        txt.setBackground(new java.awt.Color(51, 51, 51));
-        txt.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        txt.setForeground(new java.awt.Color(204, 204, 204));
-        txt.setText("Guardar");
-        txt.addActionListener(new java.awt.event.ActionListener() {
+        Start.setBackground(new java.awt.Color(51, 51, 51));
+        Start.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        Start.setForeground(new java.awt.Color(204, 204, 204));
+        Start.setText("Iniciar");
+        Start.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtActionPerformed(evt);
+                StartActionPerformed(evt);
             }
         });
-        ConfigurationDashboard.add(txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 460, -1, -1));
+        ConfigurationDashboard.add(Start, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 490, 120, -1));
 
         jPanel9.setBackground(new java.awt.Color(51, 51, 51));
 
@@ -381,8 +421,8 @@ public class MainView extends javax.swing.JFrame {
         ProductoresPlacaBaseLabel1.setForeground(new java.awt.Color(204, 204, 204));
         ProductoresPlacaBaseLabel1.setText("Productores de placa base:");
 
-        GuionistasNick.setForeground(new java.awt.Color(255, 255, 255));
-        GuionistasNick.setText("0");
+        ProductoresBaseApple.setForeground(new java.awt.Color(255, 255, 255));
+        ProductoresBaseApple.setText("0");
 
         removePlacaBase.setText("-");
         removePlacaBase.addActionListener(new java.awt.event.ActionListener() {
@@ -442,8 +482,8 @@ public class MainView extends javax.swing.JFrame {
         ProductorestarjetasgráficasLabel1.setForeground(new java.awt.Color(204, 204, 204));
         ProductorestarjetasgráficasLabel1.setText("Productores de tarjetas gráficas:");
 
-        GuionistasPlotTwistsNick.setForeground(new java.awt.Color(255, 255, 255));
-        GuionistasPlotTwistsNick.setText("0");
+        GPUApple.setForeground(new java.awt.Color(255, 255, 255));
+        GPUApple.setText("0");
 
         addPlacaBase.setText("+");
         addPlacaBase.addActionListener(new java.awt.event.ActionListener() {
@@ -459,8 +499,8 @@ public class MainView extends javax.swing.JFrame {
             }
         });
 
-        EscenariosNick.setForeground(new java.awt.Color(255, 255, 255));
-        EscenariosNick.setText("0");
+        CPUApple.setForeground(new java.awt.Color(255, 255, 255));
+        CPUApple.setText("0");
 
         addRAM.setText("+");
         addRAM.addActionListener(new java.awt.event.ActionListener() {
@@ -469,11 +509,11 @@ public class MainView extends javax.swing.JFrame {
             }
         });
 
-        AnimadoresNick.setForeground(new java.awt.Color(255, 255, 255));
-        AnimadoresNick.setText("0");
+        RAMApple.setForeground(new java.awt.Color(255, 255, 255));
+        RAMApple.setText("0");
 
-        DobladoresNick.setForeground(new java.awt.Color(255, 255, 255));
-        DobladoresNick.setText("0");
+        FuenteAlimentacionApple.setForeground(new java.awt.Color(255, 255, 255));
+        FuenteAlimentacionApple.setText("0");
 
         ensambladorLabel1.setForeground(new java.awt.Color(204, 204, 204));
         ensambladorLabel1.setText("Ensambladores:");
@@ -485,8 +525,8 @@ public class MainView extends javax.swing.JFrame {
             }
         });
 
-        EnsambladoresNick.setForeground(new java.awt.Color(255, 255, 255));
-        EnsambladoresNick.setText("0");
+        AssemblerApple.setForeground(new java.awt.Color(255, 255, 255));
+        AssemblerApple.setText("0");
 
         removeEnsamblador1.setText("-");
         removeEnsamblador1.addActionListener(new java.awt.event.ActionListener() {
@@ -507,7 +547,7 @@ public class MainView extends javax.swing.JFrame {
                             .addGroup(jPanel9Layout.createSequentialGroup()
                                 .addComponent(removeCPU)
                                 .addGap(18, 18, 18)
-                                .addComponent(EscenariosNick))
+                                .addComponent(CPUApple))
                             .addGroup(jPanel9Layout.createSequentialGroup()
                                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel18)
@@ -516,7 +556,7 @@ public class MainView extends javax.swing.JFrame {
                                         .addGap(45, 45, 45)
                                         .addComponent(removePlacaBase)))
                                 .addGap(18, 18, 18)
-                                .addComponent(GuionistasNick)))
+                                .addComponent(ProductoresBaseApple)))
                         .addGap(29, 29, 29))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -525,38 +565,35 @@ public class MainView extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(removeEnsamblador1)
                                 .addGap(18, 18, 18)
-                                .addComponent(EnsambladoresNick))
+                                .addComponent(AssemblerApple)
+                                .addGap(3, 3, 3))
                             .addGroup(jPanel9Layout.createSequentialGroup()
                                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(ProductoresMemoriaRAMLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(ProductorestarjetasgráficasLabel1)
-                                    .addComponent(ProductoresFuentealimentaciónLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(ProductoresFuentealimentaciónLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(ProductorestarjetasgráficasLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
                                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel9Layout.createSequentialGroup()
-                                        .addComponent(removeTarjetaGrafica)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(GuionistasPlotTwistsNick, javax.swing.GroupLayout.PREFERRED_SIZE, 7, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel9Layout.createSequentialGroup()
-                                        .addGap(0, 0, Short.MAX_VALUE)
-                                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addGroup(jPanel9Layout.createSequentialGroup()
-                                                .addComponent(removeRAM)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(AnimadoresNick))
-                                            .addGroup(jPanel9Layout.createSequentialGroup()
-                                                .addComponent(removeFuenteAlimentacion)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(DobladoresNick, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
-                        .addGap(27, 27, 27)))
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(addTarjetaGrafica)
+                                    .addComponent(removeRAM, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(removeFuenteAlimentacion, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(removeTarjetaGrafica, javax.swing.GroupLayout.Alignment.TRAILING))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(FuenteAlimentacionApple, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(RAMApple))))
+                        .addGap(2, 2, 2)
+                        .addComponent(GPUApple, javax.swing.GroupLayout.PREFERRED_SIZE, 7, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(15, 15, 15)))
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(addPlacaBase)
                     .addComponent(addCPU)
                     .addComponent(addRAM)
-                    .addComponent(addFuenteAlimentacion)
-                    .addComponent(addEnsamblador1))
-                .addContainerGap(27, Short.MAX_VALUE))
+                    .addComponent(addEnsamblador1)
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addGap(11, 11, 11)
+                        .addComponent(addFuenteAlimentacion))
+                    .addComponent(addTarjetaGrafica, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -564,44 +601,44 @@ public class MainView extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ProductoresPlacaBaseLabel1)
-                    .addComponent(GuionistasNick)
+                    .addComponent(ProductoresBaseApple)
                     .addComponent(removePlacaBase)
                     .addComponent(addPlacaBase))
                 .addGap(29, 29, 29)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(removeCPU)
                     .addComponent(addCPU)
-                    .addComponent(EscenariosNick))
+                    .addComponent(CPUApple))
                 .addGap(27, 27, 27)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ProductoresMemoriaRAMLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(removeRAM)
                     .addComponent(addRAM)
-                    .addComponent(AnimadoresNick))
+                    .addComponent(RAMApple))
                 .addGap(26, 26, 26)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(removeFuenteAlimentacion)
                     .addComponent(ProductoresFuentealimentaciónLabel1)
                     .addComponent(addFuenteAlimentacion)
-                    .addComponent(DobladoresNick))
+                    .addComponent(FuenteAlimentacionApple))
                 .addGap(27, 27, 27)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(removeTarjetaGrafica)
                     .addComponent(addTarjetaGrafica)
                     .addComponent(ProductorestarjetasgráficasLabel1)
-                    .addComponent(GuionistasPlotTwistsNick))
+                    .addComponent(GPUApple))
                 .addGap(27, 27, 27)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ensambladorLabel1)
                     .addComponent(addEnsamblador1)
-                    .addComponent(EnsambladoresNick, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(AssemblerApple, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(removeEnsamblador1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
                 .addComponent(jLabel18)
                 .addGap(17, 17, 17))
         );
 
-        ConfigurationDashboard.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 340, 320));
+        ConfigurationDashboard.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 350, 370));
 
         jPanel11.setBackground(new java.awt.Color(51, 51, 51));
 
@@ -615,8 +652,8 @@ public class MainView extends javax.swing.JFrame {
             }
         });
 
-        GuionistasDisney.setForeground(new java.awt.Color(255, 255, 255));
-        GuionistasDisney.setText("0");
+        ProductoresBaseDell.setForeground(new java.awt.Color(255, 255, 255));
+        ProductoresBaseDell.setText("0");
 
         removePlacaBase2.setText("-");
         removePlacaBase2.addActionListener(new java.awt.event.ActionListener() {
@@ -635,8 +672,8 @@ public class MainView extends javax.swing.JFrame {
             }
         });
 
-        EscenariosDisney.setForeground(new java.awt.Color(255, 255, 255));
-        EscenariosDisney.setText("0");
+        CPUDell.setForeground(new java.awt.Color(255, 255, 255));
+        CPUDell.setText("0");
 
         removeCPU2.setText("-");
         removeCPU2.addActionListener(new java.awt.event.ActionListener() {
@@ -652,8 +689,8 @@ public class MainView extends javax.swing.JFrame {
             }
         });
 
-        AnimadoresDisney.setForeground(new java.awt.Color(255, 255, 255));
-        AnimadoresDisney.setText("0");
+        RAMDell.setForeground(new java.awt.Color(255, 255, 255));
+        RAMDell.setText("0");
 
         removeRAM2.setText("-");
         removeRAM2.addActionListener(new java.awt.event.ActionListener() {
@@ -669,8 +706,8 @@ public class MainView extends javax.swing.JFrame {
             }
         });
 
-        DobladoresDisney.setForeground(new java.awt.Color(255, 255, 255));
-        DobladoresDisney.setText("0");
+        FuenteAlimentacionDell.setForeground(new java.awt.Color(255, 255, 255));
+        FuenteAlimentacionDell.setText("0");
 
         removeFuenteAlimentacion2.setText("-");
         removeFuenteAlimentacion2.addActionListener(new java.awt.event.ActionListener() {
@@ -686,8 +723,8 @@ public class MainView extends javax.swing.JFrame {
             }
         });
 
-        GuionistasPlotTwistsDisney.setForeground(new java.awt.Color(255, 255, 255));
-        GuionistasPlotTwistsDisney.setText("0");
+        GPUDell.setForeground(new java.awt.Color(255, 255, 255));
+        GPUDell.setText("0");
 
         removeTarjetaGrafica2.setText("-");
         removeTarjetaGrafica2.addActionListener(new java.awt.event.ActionListener() {
@@ -703,8 +740,8 @@ public class MainView extends javax.swing.JFrame {
             }
         });
 
-        EnsambladoresDisney.setForeground(new java.awt.Color(255, 255, 255));
-        EnsambladoresDisney.setText("0");
+        AssemblerDell.setForeground(new java.awt.Color(255, 255, 255));
+        AssemblerDell.setText("0");
 
         removeEnsamblador2.setText("-");
         removeEnsamblador2.addActionListener(new java.awt.event.ActionListener() {
@@ -756,12 +793,12 @@ public class MainView extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(GuionistasDisney, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(EscenariosDisney, javax.swing.GroupLayout.Alignment.TRAILING))
-                    .addComponent(AnimadoresDisney, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(DobladoresDisney)
-                    .addComponent(GuionistasPlotTwistsDisney)
-                    .addComponent(EnsambladoresDisney))
+                        .addComponent(ProductoresBaseDell, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(CPUDell, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(RAMDell, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(FuenteAlimentacionDell)
+                    .addComponent(GPUDell)
+                    .addComponent(AssemblerDell))
                 .addGap(26, 26, 26)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(addEnsamblador2)
@@ -779,41 +816,41 @@ public class MainView extends javax.swing.JFrame {
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ProductoresPlacaBaseLabel2)
                     .addComponent(addPlacaBase2)
-                    .addComponent(GuionistasDisney)
+                    .addComponent(ProductoresBaseDell)
                     .addComponent(removePlacaBase2))
                 .addGap(25, 25, 25)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ProductoresdeCPUsLabel3)
                     .addComponent(addCPU2)
-                    .addComponent(EscenariosDisney)
+                    .addComponent(CPUDell)
                     .addComponent(removeCPU2))
                 .addGap(27, 27, 27)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addRAM2)
-                    .addComponent(AnimadoresDisney)
+                    .addComponent(RAMDell)
                     .addComponent(removeRAM2)
                     .addComponent(ProductoresMemoriaRAMLabel2))
                 .addGap(27, 27, 27)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addFuenteAlimentacion2)
-                    .addComponent(DobladoresDisney)
+                    .addComponent(FuenteAlimentacionDell)
                     .addComponent(removeFuenteAlimentacion2)
                     .addComponent(ProductoresFuentealimentaciónLabel2))
                 .addGap(27, 27, 27)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addTarjetaGrafica2)
-                    .addComponent(GuionistasPlotTwistsDisney)
+                    .addComponent(GPUDell)
                     .addComponent(removeTarjetaGrafica2)
                     .addComponent(ProductorestarjetasgráficasLabel2))
                 .addGap(27, 27, 27)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addEnsamblador2)
-                    .addComponent(EnsambladoresDisney)
+                    .addComponent(AssemblerDell)
                     .addComponent(removeEnsamblador2))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(78, Short.MAX_VALUE))
         );
 
-        ConfigurationDashboard.add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 140, 320, 310));
+        ConfigurationDashboard.add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 140, 320, 370));
 
         jPanel10.setBackground(new java.awt.Color(51, 51, 51));
 
@@ -860,6 +897,23 @@ public class MainView extends javax.swing.JFrame {
         ProductoresdeCPUsLabel2.setForeground(new java.awt.Color(204, 204, 204));
         ProductoresdeCPUsLabel2.setText("Productores de CPUs:");
         ConfigurationDashboard.add(ProductoresdeCPUsLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, -1, -1));
+
+        jLabel3.setText("Dell");
+        ConfigurationDashboard.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 120, 170, -1));
+
+        jLabel4.setText("Apple");
+        ConfigurationDashboard.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 107, 160, 30));
+
+        txt1.setBackground(new java.awt.Color(51, 51, 51));
+        txt1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        txt1.setForeground(new java.awt.Color(204, 204, 204));
+        txt1.setText("Guardar");
+        txt1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt1ActionPerformed(evt);
+            }
+        });
+        ConfigurationDashboard.add(txt1, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 430, -1, -1));
 
         jTabbedPane1.addTab("ConfigurationDashboard", ConfigurationDashboard);
 
@@ -918,224 +972,6 @@ public class MainView extends javax.swing.JFrame {
         qttyTarjetasGraficasMaxApple.setText("10");
         NickelodeonDash.add(qttyTarjetasGraficasMaxApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 430, -1, -1));
 
-        jPanel2.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        faultsLabelText.setText("Faltas del Project Manager:");
-        jPanel2.add(faultsLabelText, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 510, -1, -1));
-
-        faultsLabel.setText("0");
-        jPanel2.add(faultsLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 510, -1, -1));
-
-        jLabel3.setText("Projects Managers:");
-        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 400, -1, -1));
-
-        qttyProjectsManagersApple.setText("1");
-        jPanel2.add(qttyProjectsManagersApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 400, -1, -1));
-
-        jLabel4.setText("Directores Ejecutivos:");
-        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 400, -1, -1));
-
-        qttyDirectoresApple.setText("1");
-        jPanel2.add(qttyDirectoresApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 400, -1, -1));
-
-        pmStatusLabel.setText("Project Manager Status:");
-        jPanel2.add(pmStatusLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 440, -1, -1));
-
-        pmStatus.setText("...");
-        jPanel2.add(pmStatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 440, -1, -1));
-
-        directorStatusLabel.setText("Director Status:");
-        jPanel2.add(directorStatusLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 480, -1, -1));
-
-        directorStatus.setText("...");
-        jPanel2.add(directorStatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 480, -1, -1));
-
-        ensambladorLabel.setText("Ensambladores:");
-        jPanel2.add(ensambladorLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 330, -1, -1));
-
-        ProductoresPlacaBaseLabelApple.setText("Productores de placa base:");
-        jPanel2.add(ProductoresPlacaBaseLabelApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, -1, -1));
-
-        ProductoresdeCPUsLabelApple.setText("Productores de CPUs:");
-        jPanel2.add(ProductoresdeCPUsLabelApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, -1, -1));
-
-        ProductoresMemoriaRAMLabelApple.setText("Productores Memoria RAM:");
-        jPanel2.add(ProductoresMemoriaRAMLabelApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, -1, -1));
-
-        ProductoresFuentealimentaciónLabelApple.setText("Productores Fuente de alimentación:");
-        jPanel2.add(ProductoresFuentealimentaciónLabelApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 230, 170, -1));
-
-        ProductorestarjetasgráficasLabelApple.setText("Productores de tarjetas gráficas:");
-        jPanel2.add(ProductorestarjetasgráficasLabelApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, 160, -1));
-
-        removeEnsamblador.setText("-");
-        removeEnsamblador.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                removeEnsambladorActionPerformed(evt);
-            }
-        });
-        jPanel2.add(removeEnsamblador, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 330, -1, -1));
-
-        removeTarjetaGraficaApple.setText("-");
-        removeTarjetaGraficaApple.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                removeTarjetaGraficaAppleActionPerformed(evt);
-            }
-        });
-        jPanel2.add(removeTarjetaGraficaApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 280, -1, -1));
-
-        removeFuenteAlimentacionApple.setText("-");
-        removeFuenteAlimentacionApple.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                removeFuenteAlimentacionAppleActionPerformed(evt);
-            }
-        });
-        jPanel2.add(removeFuenteAlimentacionApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 230, -1, -1));
-
-        removeRAMApple.setText("-");
-        removeRAMApple.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                removeRAMAppleActionPerformed(evt);
-            }
-        });
-        jPanel2.add(removeRAMApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 180, -1, -1));
-
-        removeCPUApple.setText("-");
-        removeCPUApple.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                removeCPUAppleActionPerformed(evt);
-            }
-        });
-        jPanel2.add(removeCPUApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 130, -1, -1));
-
-        removePlacaBaseApple.setText("-");
-        removePlacaBaseApple.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                removePlacaBaseAppleActionPerformed(evt);
-            }
-        });
-        jPanel2.add(removePlacaBaseApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 80, -1, -1));
-
-        qttyGuionistasNick.setText("0");
-        jPanel2.add(qttyGuionistasNick, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 80, -1, -1));
-
-        addPlacaBaseApple.setText("+");
-        addPlacaBaseApple.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addPlacaBaseAppleActionPerformed(evt);
-            }
-        });
-        jPanel2.add(addPlacaBaseApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 80, -1, -1));
-
-        addCPUApple.setText("+");
-        addCPUApple.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addCPUAppleActionPerformed(evt);
-            }
-        });
-        jPanel2.add(addCPUApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 130, -1, -1));
-
-        qttyEscenariosNick.setText("0");
-        jPanel2.add(qttyEscenariosNick, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 130, -1, -1));
-
-        qttyAnimadoresNick.setText("0");
-        jPanel2.add(qttyAnimadoresNick, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 180, -1, -1));
-
-        qttyDobladoresNick.setText("0");
-        jPanel2.add(qttyDobladoresNick, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 230, -1, -1));
-
-        qttyGuionistasPlotTwistsNick.setText("0");
-        jPanel2.add(qttyGuionistasPlotTwistsNick, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 280, -1, -1));
-
-        qttyEnsambladoresNick.setText("0");
-        jPanel2.add(qttyEnsambladoresNick, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 330, -1, -1));
-
-        addEnsamblador.setText("+");
-        addEnsamblador.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addEnsambladorActionPerformed(evt);
-            }
-        });
-        jPanel2.add(addEnsamblador, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 330, -1, -1));
-
-        addTarjetaGraficaApple.setText("+");
-        addTarjetaGraficaApple.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addTarjetaGraficaAppleActionPerformed(evt);
-            }
-        });
-        jPanel2.add(addTarjetaGraficaApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 280, -1, -1));
-
-        addFuenteAlimentacionApple.setText("+");
-        addFuenteAlimentacionApple.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addFuenteAlimentacionAppleActionPerformed(evt);
-            }
-        });
-        jPanel2.add(addFuenteAlimentacionApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 230, -1, -1));
-
-        addRAMApple.setText("+");
-        addRAMApple.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addRAMAppleActionPerformed(evt);
-            }
-        });
-        jPanel2.add(addRAMApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 180, -1, -1));
-
-        jPanel5.setBackground(new java.awt.Color(232, 114, 0));
-
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
-        jPanel2.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 330, -1));
-
-        jLabel14.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel14.setFont(new java.awt.Font("Segoe UI Black", 3, 24)); // NOI18N
-        jLabel14.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel14.setText("Trabajadores");
-        jPanel2.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 0, 190, -1));
-
-        jPanel7.setBackground(new java.awt.Color(19, 139, 30));
-
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
-        jPanel2.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, -1, -1));
-
-        jPanel8.setBackground(new java.awt.Color(102, 102, 102));
-
-        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
-        jPanel8.setLayout(jPanel8Layout);
-        jPanel8Layout.setHorizontalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 330, Short.MAX_VALUE)
-        );
-        jPanel8Layout.setVerticalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 10, Short.MAX_VALUE)
-        );
-
-        jPanel2.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 330, 10));
-
-        NickelodeonDash.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 350, 540));
-
         jPanel3.setBackground(new java.awt.Color(255, 51, 51));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -1174,9 +1010,6 @@ public class MainView extends javax.swing.JFrame {
         PcsGPUReadyLabel.setForeground(new java.awt.Color(255, 255, 255));
         PcsGPUReadyLabel.setText("Computadoras con GPU Listas:");
         jPanel3.add(PcsGPUReadyLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 370, -1, -1));
-
-        jLabel16.setText("jLabel16");
-        jPanel3.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 300, 190, 130));
 
         PlacasBasesSavedLabel.setForeground(new java.awt.Color(255, 255, 255));
         PlacasBasesSavedLabel.setText("Placas bases en el Almacen");
@@ -1267,7 +1100,225 @@ public class MainView extends javax.swing.JFrame {
         NickelodeonDash.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 200, 210, 350));
 
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        NickelodeonDash.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 1030, 600));
+        NickelodeonDash.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 580, 1030, 20));
+
+        jPanel2.setBackground(new java.awt.Color(255, 255, 204));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        faultsLabelText.setText("Faltas del Project Manager:");
+        jPanel2.add(faultsLabelText, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 510, -1, -1));
+
+        faultsLabel.setText("0");
+        jPanel2.add(faultsLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 510, -1, -1));
+
+        jLabel5.setText("Projects Managers:");
+        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 400, -1, -1));
+
+        qttyProjectsManagersApple.setText("1");
+        jPanel2.add(qttyProjectsManagersApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 400, -1, -1));
+
+        jLabel7.setText("Directores Ejecutivos:");
+        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 400, -1, -1));
+
+        qttyDirectoresApple.setText("1");
+        jPanel2.add(qttyDirectoresApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 400, -1, -1));
+
+        pmStatusLabel.setText("Project Manager Status:");
+        jPanel2.add(pmStatusLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 440, -1, -1));
+
+        pmStatus.setText("...");
+        jPanel2.add(pmStatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 440, -1, -1));
+
+        directorStatusLabel.setText("Director Status:");
+        jPanel2.add(directorStatusLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 480, -1, -1));
+
+        directorStatus.setText("...");
+        jPanel2.add(directorStatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 480, -1, -1));
+
+        ensambladorLabel.setText("Ensambladores:");
+        jPanel2.add(ensambladorLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 330, -1, -1));
+
+        guionistasLabel.setText("Productores de placa base:");
+        jPanel2.add(guionistasLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, -1, -1));
+
+        escenariosLabel.setText("Productores de CPUs:");
+        jPanel2.add(escenariosLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, -1, -1));
+
+        animadorLabel.setText("Productores Memoria RAM:");
+        jPanel2.add(animadorLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, -1, -1));
+
+        doblajeLabel.setText("Productores Fuente de alimentación:");
+        jPanel2.add(doblajeLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 230, 150, -1));
+
+        plotTwistLabel.setText("Productores de tarjetas gráficas:");
+        jPanel2.add(plotTwistLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, 140, -1));
+
+        removeEnsamblador.setText("-");
+        removeEnsamblador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeEnsambladorActionPerformed(evt);
+            }
+        });
+        jPanel2.add(removeEnsamblador, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 330, -1, -1));
+
+        removeTarjetaGraficaApple.setText("-");
+        removeTarjetaGraficaApple.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeTarjetaGraficaAppleActionPerformed(evt);
+            }
+        });
+        jPanel2.add(removeTarjetaGraficaApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 280, -1, -1));
+
+        removeFuenteAlimentacionApple.setText("-");
+        removeFuenteAlimentacionApple.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeFuenteAlimentacionAppleActionPerformed(evt);
+            }
+        });
+        jPanel2.add(removeFuenteAlimentacionApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 230, -1, -1));
+
+        removeRAMApple.setText("-");
+        removeRAMApple.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeRAMAppleActionPerformed(evt);
+            }
+        });
+        jPanel2.add(removeRAMApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 180, -1, -1));
+
+        removeCPUApple.setText("-");
+        removeCPUApple.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeCPUAppleActionPerformed(evt);
+            }
+        });
+        jPanel2.add(removeCPUApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 130, -1, -1));
+
+        removePlacaBaseApple.setText("-");
+        removePlacaBaseApple.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removePlacaBaseAppleActionPerformed(evt);
+            }
+        });
+        jPanel2.add(removePlacaBaseApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 80, -1, -1));
+
+        qttyProductoresBaseApple.setText("0");
+        jPanel2.add(qttyProductoresBaseApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 80, -1, -1));
+
+        addPlacaBaseApple.setText("+");
+        addPlacaBaseApple.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addPlacaBaseAppleActionPerformed(evt);
+            }
+        });
+        jPanel2.add(addPlacaBaseApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 80, -1, -1));
+
+        addCPUApple.setText("+");
+        addCPUApple.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addCPUAppleActionPerformed(evt);
+            }
+        });
+        jPanel2.add(addCPUApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 130, -1, -1));
+
+        qttyCPUApple.setText("0");
+        jPanel2.add(qttyCPUApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 130, -1, -1));
+
+        qttyRamApple.setText("0");
+        jPanel2.add(qttyRamApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 180, -1, -1));
+
+        qttyFuenteAlimentacionApple.setText("0");
+        jPanel2.add(qttyFuenteAlimentacionApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 230, -1, -1));
+
+        qttyGPUApple.setText("0");
+        jPanel2.add(qttyGPUApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 280, -1, -1));
+
+        qttyEnsambladoresApple.setText("0");
+        jPanel2.add(qttyEnsambladoresApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 330, -1, -1));
+
+        addEnsambladorApple.setText("+");
+        addEnsambladorApple.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addEnsambladorAppleActionPerformed(evt);
+            }
+        });
+        jPanel2.add(addEnsambladorApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 330, -1, -1));
+
+        addTarjetaGraficaApple.setText("+");
+        addTarjetaGraficaApple.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addTarjetaGraficaAppleActionPerformed(evt);
+            }
+        });
+        jPanel2.add(addTarjetaGraficaApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 280, -1, -1));
+
+        addFuenteAlimentacionApple.setText("+");
+        addFuenteAlimentacionApple.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addFuenteAlimentacionAppleActionPerformed(evt);
+            }
+        });
+        jPanel2.add(addFuenteAlimentacionApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 230, -1, -1));
+
+        addRAMApple.setText("+");
+        addRAMApple.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addRAMAppleActionPerformed(evt);
+            }
+        });
+        jPanel2.add(addRAMApple, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 180, -1, -1));
+
+        jPanel5.setBackground(new java.awt.Color(232, 114, 0));
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        jPanel2.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 330, -1));
+
+        jLabel14.setBackground(new java.awt.Color(232, 114, 0));
+        jLabel14.setFont(new java.awt.Font("Segoe UI Black", 3, 24)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(232, 114, 0));
+        jLabel14.setText("Trabajadores");
+        jPanel2.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 0, 190, -1));
+
+        jPanel7.setBackground(new java.awt.Color(19, 139, 30));
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        jPanel2.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, -1, -1));
+
+        jPanel8.setBackground(new java.awt.Color(232, 114, 0));
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 330, Short.MAX_VALUE)
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 10, Short.MAX_VALUE)
+        );
+
+        jPanel2.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 330, 10));
+
+        NickelodeonDash.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 350, 540));
 
         jTabbedPane1.addTab("Apple", NickelodeonDash);
 
@@ -1490,358 +1541,6 @@ public class MainView extends javax.swing.JFrame {
         jPanel15.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 310, -1, -1));
 
         DisneyDash.add(jPanel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 150, 340, 420));
-
-        jPanel14.setBackground(new java.awt.Color(7, 37, 57));
-
-        jLabel5.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Directores Ejecutivos:");
-
-        qttyProjectsManagersDell.setBackground(new java.awt.Color(255, 255, 255));
-        qttyProjectsManagersDell.setForeground(new java.awt.Color(255, 255, 255));
-        qttyProjectsManagersDell.setText("1");
-
-        pmStatusLabelD.setBackground(new java.awt.Color(255, 255, 255));
-        pmStatusLabelD.setForeground(new java.awt.Color(255, 255, 255));
-        pmStatusLabelD.setText("Project Manager Status:");
-
-        directorStatusLabelD.setBackground(new java.awt.Color(255, 255, 255));
-        directorStatusLabelD.setForeground(new java.awt.Color(255, 255, 255));
-        directorStatusLabelD.setText("Director Status:");
-
-        qttyDirectoresDell.setBackground(new java.awt.Color(255, 255, 255));
-        qttyDirectoresDell.setForeground(new java.awt.Color(255, 255, 255));
-        qttyDirectoresDell.setText("1");
-
-        pmStatusDell.setBackground(new java.awt.Color(255, 255, 255));
-        pmStatusDell.setForeground(new java.awt.Color(255, 255, 255));
-        pmStatusDell.setText("...");
-
-        directorStatusDell.setBackground(new java.awt.Color(255, 255, 255));
-        directorStatusDell.setForeground(new java.awt.Color(255, 255, 255));
-        directorStatusDell.setText("...");
-
-        faultsLabelText1.setBackground(new java.awt.Color(255, 255, 255));
-        faultsLabelText1.setForeground(new java.awt.Color(255, 255, 255));
-        faultsLabelText1.setText("Faltas del Project Manager:");
-
-        faultsLabelDell.setBackground(new java.awt.Color(255, 255, 255));
-        faultsLabelDell.setForeground(new java.awt.Color(255, 255, 255));
-        faultsLabelDell.setText("0");
-
-        ProductoresPlacaBaseLabelDell.setBackground(new java.awt.Color(255, 255, 255));
-        ProductoresPlacaBaseLabelDell.setForeground(new java.awt.Color(255, 255, 255));
-        ProductoresPlacaBaseLabelDell.setText("Productores de placa base:");
-
-        ProductoresdeCPUsLabelDell.setBackground(new java.awt.Color(255, 255, 255));
-        ProductoresdeCPUsLabelDell.setForeground(new java.awt.Color(255, 255, 255));
-        ProductoresdeCPUsLabelDell.setText("Productores de CPUs:");
-
-        ProductoresMemoriaRAMLabelDell.setBackground(new java.awt.Color(255, 255, 255));
-        ProductoresMemoriaRAMLabelDell.setForeground(new java.awt.Color(255, 255, 255));
-        ProductoresMemoriaRAMLabelDell.setText("Productores Memoria RAM:");
-
-        ProductoresFuentealimentaciónLabelDell.setBackground(new java.awt.Color(255, 255, 255));
-        ProductoresFuentealimentaciónLabelDell.setForeground(new java.awt.Color(255, 255, 255));
-        ProductoresFuentealimentaciónLabelDell.setText("Productores Fuente de alimentación:");
-
-        ProductorestarjetasgráficasLabelDell.setBackground(new java.awt.Color(255, 255, 255));
-        ProductorestarjetasgráficasLabelDell.setForeground(new java.awt.Color(255, 255, 255));
-        ProductorestarjetasgráficasLabelDell.setText("Productores de tarjetas gráficas:");
-
-        ensambladorLabelDisney.setBackground(new java.awt.Color(255, 255, 255));
-        ensambladorLabelDisney.setForeground(new java.awt.Color(255, 255, 255));
-        ensambladorLabelDisney.setText("Ensambladores:");
-
-        qttyGuionistasDisney.setBackground(new java.awt.Color(255, 255, 255));
-        qttyGuionistasDisney.setForeground(new java.awt.Color(255, 255, 255));
-        qttyGuionistasDisney.setText("0");
-
-        qttyEscenariosDisney.setBackground(new java.awt.Color(255, 255, 255));
-        qttyEscenariosDisney.setForeground(new java.awt.Color(255, 255, 255));
-        qttyEscenariosDisney.setText("0");
-
-        qttyAnimadoresDisney.setBackground(new java.awt.Color(255, 255, 255));
-        qttyAnimadoresDisney.setForeground(new java.awt.Color(255, 255, 255));
-        qttyAnimadoresDisney.setText("0");
-
-        qttyDobladoresDisney.setBackground(new java.awt.Color(255, 255, 255));
-        qttyDobladoresDisney.setForeground(new java.awt.Color(255, 255, 255));
-        qttyDobladoresDisney.setText("0");
-
-        qttyGuionistasPlotTwistsDisney.setBackground(new java.awt.Color(255, 255, 255));
-        qttyGuionistasPlotTwistsDisney.setForeground(new java.awt.Color(255, 255, 255));
-        qttyGuionistasPlotTwistsDisney.setText("0");
-
-        qttyEnsambladoresDisney.setBackground(new java.awt.Color(255, 255, 255));
-        qttyEnsambladoresDisney.setForeground(new java.awt.Color(255, 255, 255));
-        qttyEnsambladoresDisney.setText("0");
-
-        removePlacaBaseDisney.setText("-");
-        removePlacaBaseDisney.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                removePlacaBaseDisneyActionPerformed(evt);
-            }
-        });
-
-        addPlacaBaseDisney.setText("+");
-        addPlacaBaseDisney.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addPlacaBaseDisneyActionPerformed(evt);
-            }
-        });
-
-        removeCPUDell.setText("-");
-        removeCPUDell.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                removeCPUDellActionPerformed(evt);
-            }
-        });
-
-        addCPUDell.setText("+");
-        addCPUDell.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addCPUDellActionPerformed(evt);
-            }
-        });
-
-        removeRAMDell.setText("-");
-        removeRAMDell.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                removeRAMDellActionPerformed(evt);
-            }
-        });
-
-        addRAMDell.setText("+");
-        addRAMDell.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addRAMDellActionPerformed(evt);
-            }
-        });
-
-        removeFuenteAlimentacionDell.setText("-");
-        removeFuenteAlimentacionDell.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                removeFuenteAlimentacionDellActionPerformed(evt);
-            }
-        });
-
-        addFuenteAlimentacionDell.setText("+");
-        addFuenteAlimentacionDell.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addFuenteAlimentacionDellActionPerformed(evt);
-            }
-        });
-
-        removeTarjetaGraficaDell.setText("-");
-        removeTarjetaGraficaDell.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                removeTarjetaGraficaDellActionPerformed(evt);
-            }
-        });
-
-        addTarjetaGraficaDell.setText("+");
-        addTarjetaGraficaDell.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addTarjetaGraficaDellActionPerformed(evt);
-            }
-        });
-
-        removeEnsambladorDell.setText("-");
-        removeEnsambladorDell.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                removeEnsambladorDellActionPerformed(evt);
-            }
-        });
-
-        addEnsambladorDell.setText("+");
-        addEnsambladorDell.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addEnsambladorDellActionPerformed(evt);
-            }
-        });
-
-        jLabel7.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setText("Projects Managers:");
-
-        jLabel20.setBackground(new java.awt.Color(147, 193, 252));
-        jLabel20.setFont(new java.awt.Font("Segoe UI Black", 3, 24)); // NOI18N
-        jLabel20.setForeground(new java.awt.Color(147, 193, 252));
-        jLabel20.setText("Trabajadores");
-
-        jPanel19.setBackground(new java.awt.Color(147, 193, 252));
-
-        javax.swing.GroupLayout jPanel19Layout = new javax.swing.GroupLayout(jPanel19);
-        jPanel19.setLayout(jPanel19Layout);
-        jPanel19Layout.setHorizontalGroup(
-            jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 330, Short.MAX_VALUE)
-        );
-        jPanel19Layout.setVerticalGroup(
-            jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 10, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
-        jPanel14.setLayout(jPanel14Layout);
-        jPanel14Layout.setHorizontalGroup(
-            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel14Layout.createSequentialGroup()
-                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel14Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel14Layout.createSequentialGroup()
-                                .addGap(80, 80, 80)
-                                .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jPanel19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel14Layout.createSequentialGroup()
-                                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(jPanel14Layout.createSequentialGroup()
-                                        .addComponent(ProductoresMemoriaRAMLabelDell)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(removeRAMDell))
-                                    .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(jPanel14Layout.createSequentialGroup()
-                                            .addComponent(ProductoresPlacaBaseLabelDell, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(removePlacaBaseDisney))
-                                        .addGroup(jPanel14Layout.createSequentialGroup()
-                                            .addComponent(ProductoresdeCPUsLabelDell)
-                                            .addGap(50, 50, 50)
-                                            .addComponent(removeCPUDell))))
-                                .addGap(28, 28, 28)
-                                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel14Layout.createSequentialGroup()
-                                        .addComponent(qttyGuionistasDisney)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(addPlacaBaseDisney))
-                                    .addGroup(jPanel14Layout.createSequentialGroup()
-                                        .addComponent(qttyEscenariosDisney)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(addCPUDell))
-                                    .addGroup(jPanel14Layout.createSequentialGroup()
-                                        .addComponent(qttyAnimadoresDisney)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(addRAMDell))
-                                    .addGroup(jPanel14Layout.createSequentialGroup()
-                                        .addComponent(qttyDobladoresDisney)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(addFuenteAlimentacionDell))
-                                    .addGroup(jPanel14Layout.createSequentialGroup()
-                                        .addComponent(qttyGuionistasPlotTwistsDisney)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(addTarjetaGraficaDell))))))
-                    .addGroup(jPanel14Layout.createSequentialGroup()
-                        .addGap(15, 15, 15)
-                        .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel14Layout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addGap(8, 8, 8)
-                                .addComponent(qttyProjectsManagersDell)
-                                .addGap(13, 13, 13)
-                                .addComponent(jLabel5)
-                                .addGap(13, 13, 13)
-                                .addComponent(qttyDirectoresDell))
-                            .addGroup(jPanel14Layout.createSequentialGroup()
-                                .addComponent(pmStatusLabelD)
-                                .addGap(11, 11, 11)
-                                .addComponent(pmStatusDell))
-                            .addGroup(jPanel14Layout.createSequentialGroup()
-                                .addComponent(directorStatusLabelD)
-                                .addGap(60, 60, 60)
-                                .addComponent(directorStatusDell))
-                            .addGroup(jPanel14Layout.createSequentialGroup()
-                                .addComponent(faultsLabelText1)
-                                .addGap(11, 11, 11)
-                                .addComponent(faultsLabelDell))))
-                    .addGroup(jPanel14Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(ProductoresFuentealimentaciónLabelDell, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(removeFuenteAlimentacionDell))
-                    .addGroup(jPanel14Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(ProductorestarjetasgráficasLabelDell, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(removeTarjetaGraficaDell))
-                    .addGroup(jPanel14Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(ensambladorLabelDisney)
-                        .addGap(88, 88, 88)
-                        .addComponent(removeEnsambladorDell)
-                        .addGap(28, 28, 28)
-                        .addComponent(qttyEnsambladoresDisney)
-                        .addGap(18, 18, 18)
-                        .addComponent(addEnsambladorDell)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel14Layout.setVerticalGroup(
-            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel14Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel20)
-                .addGap(10, 10, 10)
-                .addComponent(jPanel19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(22, 22, 22)
-                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ProductoresPlacaBaseLabelDell)
-                    .addComponent(removePlacaBaseDisney)
-                    .addComponent(qttyGuionistasDisney)
-                    .addComponent(addPlacaBaseDisney))
-                .addGap(21, 21, 21)
-                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ProductoresdeCPUsLabelDell)
-                    .addComponent(removeCPUDell)
-                    .addComponent(qttyEscenariosDisney)
-                    .addComponent(addCPUDell))
-                .addGap(28, 28, 28)
-                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(removeRAMDell)
-                    .addComponent(qttyAnimadoresDisney)
-                    .addComponent(addRAMDell)
-                    .addComponent(ProductoresMemoriaRAMLabelDell))
-                .addGap(30, 30, 30)
-                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ProductoresFuentealimentaciónLabelDell)
-                    .addComponent(removeFuenteAlimentacionDell)
-                    .addComponent(qttyDobladoresDisney)
-                    .addComponent(addFuenteAlimentacionDell))
-                .addGap(24, 24, 24)
-                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ProductorestarjetasgráficasLabelDell)
-                    .addComponent(removeTarjetaGraficaDell)
-                    .addComponent(qttyGuionistasPlotTwistsDisney)
-                    .addComponent(addTarjetaGraficaDell))
-                .addGap(24, 24, 24)
-                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ensambladorLabelDisney)
-                    .addComponent(removeEnsambladorDell)
-                    .addComponent(qttyEnsambladoresDisney)
-                    .addComponent(addEnsambladorDell))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
-                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7)
-                    .addComponent(qttyProjectsManagersDell)
-                    .addComponent(jLabel5)
-                    .addComponent(qttyDirectoresDell))
-                .addGap(13, 13, 13)
-                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pmStatusLabelD)
-                    .addComponent(pmStatusDell))
-                .addGap(13, 13, 13)
-                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(directorStatusLabelD)
-                    .addComponent(directorStatusDell))
-                .addGap(13, 13, 13)
-                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(faultsLabelText1)
-                    .addComponent(faultsLabelDell))
-                .addGap(24, 24, 24))
-        );
-
-        DisneyDash.add(jPanel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 360, 540));
         DisneyDash.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, -50, -1, -1));
         DisneyDash.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, -40, -1, -1));
         DisneyDash.add(dinseyFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1070, 600));
@@ -1897,137 +1596,137 @@ public class MainView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void removeTarjetaGraficaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeTarjetaGraficaActionPerformed
-        if (Integer.parseInt(GuionistasPlotTwistsNick.getText()) == 1){
+        if (Integer.parseInt(GPUApple.getText()) == 1){
             JOptionPane.showMessageDialog(null, "NO SE PUEDE DEJAR UN DEPARTAMENTO SIN TRABAJADORES");
         } else{
-            int nuevo = Integer.parseInt(GuionistasPlotTwistsNick.getText())-1;
-            GuionistasPlotTwistsNick.setText(String.valueOf(nuevo));
+            int nuevo = Integer.parseInt(GPUApple.getText())-1;
+            GPUApple.setText(String.valueOf(nuevo));
         }
     }//GEN-LAST:event_removeTarjetaGraficaActionPerformed
 
     private void addFuenteAlimentacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addFuenteAlimentacionActionPerformed
-        if (calculateQuantityN() == 12){
+        if (calculateQuantityA() == 15){
             JOptionPane.showMessageDialog(null, "SE HA SUPERADO LA CANTIDAD LIMITE DE TRABAJADORES!");
         } else {
-            int nuevo = Integer.parseInt(DobladoresNick.getText())+1;
-            DobladoresNick.setText(String.valueOf(nuevo));
+            int nuevo = Integer.parseInt(FuenteAlimentacionApple.getText())+1;
+            FuenteAlimentacionApple.setText(String.valueOf(nuevo));
         }
     }//GEN-LAST:event_addFuenteAlimentacionActionPerformed
 
     private void addRAMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addRAMActionPerformed
-        if (calculateQuantityN() == 12){
+        if (calculateQuantityA() == 15){
             JOptionPane.showMessageDialog(null, "SE HA SUPERADO LA CANTIDAD LIMITE DE TRABAJADORES!");
         } else {
-            int nuevo = Integer.parseInt(AnimadoresNick.getText())+1;
-            AnimadoresNick.setText(String.valueOf(nuevo));
+            int nuevo = Integer.parseInt(RAMApple.getText())+1;
+            RAMApple.setText(String.valueOf(nuevo));
         }
     }//GEN-LAST:event_addRAMActionPerformed
 
     private void removeRAMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeRAMActionPerformed
-        if (Integer.parseInt(AnimadoresNick.getText()) == 1){
+        if (Integer.parseInt(RAMApple.getText()) == 1){
             JOptionPane.showMessageDialog(null, "NO SE PUEDE DEJAR UN DEPARTAMENTO SIN TRABAJADORES");
         } else{
-            int nuevo = Integer.parseInt(AnimadoresNick.getText())-1;
-            AnimadoresNick.setText(String.valueOf(nuevo));
+            int nuevo = Integer.parseInt(RAMApple.getText())-1;
+            RAMApple.setText(String.valueOf(nuevo));
         }
     }//GEN-LAST:event_removeRAMActionPerformed
 
     private void addTarjetaGraficaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTarjetaGraficaActionPerformed
-        if (calculateQuantityN() == 12){
+        if (calculateQuantityA() == 15){
             JOptionPane.showMessageDialog(null, "SE HA SUPERADO LA CANTIDAD LIMITE DE TRABAJADORES!");
         } else {
-            int nuevo = Integer.parseInt(GuionistasPlotTwistsNick.getText())+1;
-            GuionistasPlotTwistsNick.setText(String.valueOf(nuevo));
+            int nuevo = Integer.parseInt(GPUApple.getText())+1;
+            GPUApple.setText(String.valueOf(nuevo));
         }
     }//GEN-LAST:event_addTarjetaGraficaActionPerformed
 
     private void addEnsamblador1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEnsamblador1ActionPerformed
-        if (calculateQuantityN() == 12){
+        if (calculateQuantityA() == 15){
             JOptionPane.showMessageDialog(null, "SE HA SUPERADO LA CANTIDAD LIMITE DE TRABAJADORES!");
         } else {
-            int nuevo = Integer.parseInt(EnsambladoresNick.getText())+1;
-            EnsambladoresNick.setText(String.valueOf(nuevo));
+            int nuevo = Integer.parseInt(AssemblerApple.getText())+1;
+            AssemblerApple.setText(String.valueOf(nuevo));
         }
     }//GEN-LAST:event_addEnsamblador1ActionPerformed
 
     private void removeFuenteAlimentacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeFuenteAlimentacionActionPerformed
-        if (Integer.parseInt(DobladoresNick.getText()) == 1){
+        if (Integer.parseInt(FuenteAlimentacionApple.getText()) == 1){
             JOptionPane.showMessageDialog(null, "NO SE PUEDE DEJAR UN DEPARTAMENTO SIN TRABAJADORES");
         } else{
-            int nuevo = Integer.parseInt(DobladoresNick.getText())-1;
-            DobladoresNick.setText(String.valueOf(nuevo));
+            int nuevo = Integer.parseInt(FuenteAlimentacionApple.getText())-1;
+            FuenteAlimentacionApple.setText(String.valueOf(nuevo));
         }
     }//GEN-LAST:event_removeFuenteAlimentacionActionPerformed
 
     private void removeCPUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeCPUActionPerformed
-        if (Integer.parseInt(EscenariosNick.getText()) == 1){
+        if (Integer.parseInt(CPUApple.getText()) == 1){
             JOptionPane.showMessageDialog(null, "NO SE PUEDE DEJAR UN DEPARTAMENTO SIN TRABAJADORES");
         } else{
-            int nuevo = Integer.parseInt(EscenariosNick.getText())-1;
-            EscenariosNick.setText(String.valueOf(nuevo));
+            int nuevo = Integer.parseInt(CPUApple.getText())-1;
+            CPUApple.setText(String.valueOf(nuevo));
         }
     }//GEN-LAST:event_removeCPUActionPerformed
 
     private void removePlacaBaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removePlacaBaseActionPerformed
-        if (Integer.parseInt(GuionistasNick.getText()) == 1){
+        if (Integer.parseInt(ProductoresBaseApple.getText()) == 1){
             JOptionPane.showMessageDialog(null, "NO SE PUEDE DEJAR UN DEPARTAMENTO SIN TRABAJADORES");
         } else{
-            int nuevo = Integer.parseInt(GuionistasNick.getText())-1;
-            GuionistasNick.setText(String.valueOf(nuevo));
+            int nuevo = Integer.parseInt(ProductoresBaseApple.getText())-1;
+            ProductoresBaseApple.setText(String.valueOf(nuevo));
         }
     }//GEN-LAST:event_removePlacaBaseActionPerformed
 
     private void addPlacaBaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addPlacaBaseActionPerformed
-        if (calculateQuantityN() == 12){
+        if (calculateQuantityA() == 15){
             JOptionPane.showMessageDialog(null, "SE HA SUPERADO LA CANTIDAD LIMITE DE TRABAJADORES!");
         } else {
-            int nuevo = Integer.parseInt(GuionistasNick.getText())+1;
-            GuionistasNick.setText(String.valueOf(nuevo));
+            int nuevo = Integer.parseInt(ProductoresBaseApple.getText())+1;
+            ProductoresBaseApple.setText(String.valueOf(nuevo));
         }
     }//GEN-LAST:event_addPlacaBaseActionPerformed
 
     private void addCPUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCPUActionPerformed
-        if (calculateQuantityN() == 12){
+        if (calculateQuantityA() == 15){
             JOptionPane.showMessageDialog(null, "SE HA SUPERADO LA CANTIDAD LIMITE DE TRABAJADORES!");
         } else {
-            int nuevo = Integer.parseInt(EscenariosNick.getText())+1;
-            EscenariosNick.setText(String.valueOf(nuevo));
+            int nuevo = Integer.parseInt(CPUApple.getText())+1;
+            CPUApple.setText(String.valueOf(nuevo));
         }
     }//GEN-LAST:event_addCPUActionPerformed
 
     private void removeEnsamblador1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeEnsamblador1ActionPerformed
-        if (Integer.parseInt(EnsambladoresNick.getText()) == 1){
+        if (Integer.parseInt(AssemblerApple.getText()) == 1){
             JOptionPane.showMessageDialog(null, "NO SE PUEDE DEJAR UN DEPARTAMENTO SIN TRABAJADORES");
         } else{
-            int nuevo = Integer.parseInt(EnsambladoresNick.getText())-1;
-            EnsambladoresNick.setText(String.valueOf(nuevo));
+            int nuevo = Integer.parseInt(AssemblerApple.getText())-1;
+            AssemblerApple.setText(String.valueOf(nuevo));
         }
     }//GEN-LAST:event_removeEnsamblador1ActionPerformed
 
     private void removePlacaBase2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removePlacaBase2ActionPerformed
-        if (Integer.parseInt(GuionistasDisney.getText()) == 1){
+        if (Integer.parseInt(ProductoresBaseDell.getText()) == 1){
             JOptionPane.showMessageDialog(null, "NO SE PUEDE DEJAR UN DEPARTAMENTO SIN TRABAJADORES");
         } else{
-            int nuevo = Integer.parseInt(GuionistasDisney.getText())-1;
-            GuionistasDisney.setText(String.valueOf(nuevo));
+            int nuevo = Integer.parseInt(ProductoresBaseDell.getText())-1;
+            ProductoresBaseDell.setText(String.valueOf(nuevo));
         }
     }//GEN-LAST:event_removePlacaBase2ActionPerformed
 
     private void removeEnsamblador2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeEnsamblador2ActionPerformed
-        if (Integer.parseInt(EnsambladoresDisney.getText()) == 1){
+        if (Integer.parseInt(AssemblerDell.getText()) == 1){
             JOptionPane.showMessageDialog(null, "NO SE PUEDE DEJAR UN DEPARTAMENTO SIN TRABAJADORES");
         } else{
-            int nuevo = Integer.parseInt(EnsambladoresDisney.getText())-1;
-            EnsambladoresDisney.setText(String.valueOf(nuevo));
+            int nuevo = Integer.parseInt(AssemblerDell.getText())-1;
+            AssemblerDell.setText(String.valueOf(nuevo));
         }
     }//GEN-LAST:event_removeEnsamblador2ActionPerformed
 
     private void addEnsamblador2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEnsamblador2ActionPerformed
-        if (calculateQuantityD() == 13){
+        if (calculateQuantityD() == 19){
             JOptionPane.showMessageDialog(null, "SE HA SUPERADO LA CANTIDAD LIMITE DE TRABAJADORES!");
         } else {
-            int nuevo = Integer.parseInt(EnsambladoresDisney.getText())+1;
-            EnsambladoresDisney.setText(String.valueOf(nuevo));
+            int nuevo = Integer.parseInt(AssemblerDell.getText())+1;
+            AssemblerDell.setText(String.valueOf(nuevo));
         }
     }//GEN-LAST:event_addEnsamblador2ActionPerformed
 
@@ -2035,80 +1734,80 @@ public class MainView extends javax.swing.JFrame {
         if (calculateQuantityD() == 13){
             JOptionPane.showMessageDialog(null, "SE HA SUPERADO LA CANTIDAD LIMITE DE TRABAJADORES!");
         } else {
-            int nuevo = Integer.parseInt(GuionistasPlotTwistsDisney.getText())+1;
-            GuionistasPlotTwistsDisney.setText(String.valueOf(nuevo));
+            int nuevo = Integer.parseInt(GPUDell.getText())+1;
+            GPUDell.setText(String.valueOf(nuevo));
         }
     }//GEN-LAST:event_addTarjetaGrafica2ActionPerformed
 
     private void removeTarjetaGrafica2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeTarjetaGrafica2ActionPerformed
-        if (Integer.parseInt(GuionistasPlotTwistsDisney.getText()) == 1){
+        if (Integer.parseInt(GPUDell.getText()) == 1){
             JOptionPane.showMessageDialog(null, "NO SE PUEDE DEJAR UN DEPARTAMENTO SIN TRABAJADORES");
         } else{
-            int nuevo = Integer.parseInt(GuionistasPlotTwistsDisney.getText())-1;
-            GuionistasPlotTwistsDisney.setText(String.valueOf(nuevo));
+            int nuevo = Integer.parseInt(GPUDell.getText())-1;
+            GPUDell.setText(String.valueOf(nuevo));
         }
     }//GEN-LAST:event_removeTarjetaGrafica2ActionPerformed
 
     private void removeFuenteAlimentacion2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeFuenteAlimentacion2ActionPerformed
-        if (Integer.parseInt(DobladoresDisney.getText()) == 1){
+        if (Integer.parseInt(FuenteAlimentacionDell.getText()) == 1){
             JOptionPane.showMessageDialog(null, "NO SE PUEDE DEJAR UN DEPARTAMENTO SIN TRABAJADORES");
         } else{
-            int nuevo = Integer.parseInt(DobladoresDisney.getText())-1;
-            DobladoresDisney.setText(String.valueOf(nuevo));
+            int nuevo = Integer.parseInt(FuenteAlimentacionDell.getText())-1;
+            FuenteAlimentacionDell.setText(String.valueOf(nuevo));
         }
     }//GEN-LAST:event_removeFuenteAlimentacion2ActionPerformed
 
     private void removeRAM2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeRAM2ActionPerformed
-        if (Integer.parseInt(AnimadoresDisney.getText()) == 1){
+        if (Integer.parseInt(RAMDell.getText()) == 1){
             JOptionPane.showMessageDialog(null, "NO SE PUEDE DEJAR UN DEPARTAMENTO SIN TRABAJADORES");
         } else{
-            int nuevo = Integer.parseInt(AnimadoresDisney.getText())-1;
-            AnimadoresDisney.setText(String.valueOf(nuevo));
+            int nuevo = Integer.parseInt(RAMDell.getText())-1;
+            RAMDell.setText(String.valueOf(nuevo));
         }
     }//GEN-LAST:event_removeRAM2ActionPerformed
 
     private void removeCPU2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeCPU2ActionPerformed
-        if (Integer.parseInt(EscenariosDisney.getText()) == 1){
+        if (Integer.parseInt(CPUDell.getText()) == 1){
             JOptionPane.showMessageDialog(null, "NO SE PUEDE DEJAR UN DEPARTAMENTO SIN TRABAJADORES");
         } else{
-            int nuevo = Integer.parseInt(EscenariosDisney.getText())-1;
-            EscenariosDisney.setText(String.valueOf(nuevo));
+            int nuevo = Integer.parseInt(CPUDell.getText())-1;
+            CPUDell.setText(String.valueOf(nuevo));
         }
     }//GEN-LAST:event_removeCPU2ActionPerformed
 
     private void addFuenteAlimentacion2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addFuenteAlimentacion2ActionPerformed
-        if (calculateQuantityD() == 13){
+        if (calculateQuantityD() == 19){
             JOptionPane.showMessageDialog(null, "SE HA SUPERADO LA CANTIDAD LIMITE DE TRABAJADORES!");
         } else {
-            int nuevo = Integer.parseInt(DobladoresDisney.getText())+1;
-            DobladoresDisney.setText(String.valueOf(nuevo));
+            int nuevo = Integer.parseInt(FuenteAlimentacionDell.getText())+1;
+            FuenteAlimentacionDell.setText(String.valueOf(nuevo));
         }
     }//GEN-LAST:event_addFuenteAlimentacion2ActionPerformed
 
     private void addRAM2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addRAM2ActionPerformed
-        if (calculateQuantityD() == 13) {
+        if (calculateQuantityD() == 19) {
             JOptionPane.showMessageDialog(null, "SE HA SUPERADO LA CANTIDAD LIMITE DE TRABAJADORES!");
         } else {
-            int nuevo = Integer.parseInt(AnimadoresDisney.getText()) + 1;
-            AnimadoresDisney.setText(String.valueOf(nuevo));
+            int nuevo = Integer.parseInt(RAMDell.getText()) + 1;
+            RAMDell.setText(String.valueOf(nuevo));
         }
     }//GEN-LAST:event_addRAM2ActionPerformed
 
     private void addCPU2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCPU2ActionPerformed
-        if (calculateQuantityD() == 13){
+        if (calculateQuantityD() == 19){
             JOptionPane.showMessageDialog(null, "SE HA SUPERADO LA CANTIDAD LIMITE DE TRABAJADORES!");
         } else {
-            int nuevo = Integer.parseInt(EscenariosDisney.getText())+1;
-            EscenariosDisney.setText(String.valueOf(nuevo));
+            int nuevo = Integer.parseInt(CPUDell.getText())+1;
+            CPUDell.setText(String.valueOf(nuevo));
         }
     }//GEN-LAST:event_addCPU2ActionPerformed
 
     private void addPlacaBase2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addPlacaBase2ActionPerformed
-        if (calculateQuantityD() == 13){
+        if (calculateQuantityD() == 19){
             JOptionPane.showMessageDialog(null, "SE HA SUPERADO LA CANTIDAD LIMITE DE TRABAJADORES!");
         } else {
-            int nuevo = Integer.parseInt(GuionistasDisney.getText())+1;
-            GuionistasDisney.setText(String.valueOf(nuevo));
+            int nuevo = Integer.parseInt(ProductoresBaseDell.getText())+1;
+            ProductoresBaseDell.setText(String.valueOf(nuevo));
         }
     }//GEN-LAST:event_addPlacaBase2ActionPerformed
 
@@ -2140,178 +1839,103 @@ public class MainView extends javax.swing.JFrame {
         ammount.setText(String.valueOf(nuevo));
     }//GEN-LAST:event_addAmmountActionPerformed
 
-    private void txtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtActionPerformed
-        String quantities = GuionistasNick.getText() + ", " + EscenariosNick.getText() + ", " + AnimadoresNick.getText() + ", " + DobladoresNick.getText() + ", " + GuionistasPlotTwistsNick.getText() + ", " + EnsambladoresNick.getText() + " / " + GuionistasDisney.getText() + ", " + EscenariosDisney.getText() + ", " + AnimadoresDisney.getText() + ", " + DobladoresDisney.getText() + ", " + GuionistasPlotTwistsDisney.getText() + ", " + EnsambladoresDisney.getText();
-        String data = dia.getText() + " / " + ammount.getText();
+    private void StartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StartActionPerformed
+        w1Apple.start();
+        pm1Apple.start();
+        d1Apple.start();
+        w2Apple.start();
+        w3Apple.start();
+        w4Apple.start();
+        w5Apple.start();
+        as1Apple.start(); 
+        
+        w1Dell.start();
+        pm2Dell.start(); 
+        d2Dell.start(); 
+        w2Dell.start();
+        w3Dell.start();
+        w4Dell.start(); 
+        w5Dell.start();
+        as2Dell.start();
+        
+        
+    }//GEN-LAST:event_StartActionPerformed
 
-        // DATOS INICIALES
-        File fichero = new File("DatosIniciales.txt");
-        String contenido = "";
-
-        try{
-            PrintWriter salida = new PrintWriter(fichero);
-            salida.print(data);
-            salida.close();
-        }catch(Exception e){
-            System.out.println(e);
-        }
-
-        // CANTIDADES INICIALES
-
-        fichero = new File("InitialQuantity.txt");
-
-        try{
-            PrintWriter salida = new PrintWriter(fichero);
-            salida.print(quantities);
-            salida.close();
-        }catch(Exception e){
-            System.out.println(e);
-        }
-    }//GEN-LAST:event_txtActionPerformed
-
-    private void removeEnsambladorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeEnsambladorActionPerformed
+    private void txt1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt1ActionPerformed
         // TODO add your handling code here:
-        nickelodeon.getEnsambladores().deleteWorker();
-        this.qttyEnsambladoresNick.setText(Integer.toString(nickelodeon.getEnsambladores().getQuantityWorkers()));
-    }//GEN-LAST:event_removeEnsambladorActionPerformed
-
-    private void removeTarjetaGraficaAppleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeTarjetaGraficaAppleActionPerformed
-        // TODO add your handling code here:
-        nickelodeon.getGuionistasPlotTwists().deleteWorker();
-        this.qttyGuionistasPlotTwistsNick.setText(Integer.toString(nickelodeon.getGuionistasPlotTwists().getQuantityWorkers()));
-    }//GEN-LAST:event_removeTarjetaGraficaAppleActionPerformed
-
-    private void removeFuenteAlimentacionAppleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeFuenteAlimentacionAppleActionPerformed
-        // TODO add your handling code here:
-        nickelodeon.getDobladores().deleteWorker();
-        this.qttyDobladoresNick.setText(Integer.toString(nickelodeon.getDobladores().getQuantityWorkers()));
-    }//GEN-LAST:event_removeFuenteAlimentacionAppleActionPerformed
-
-    private void removeRAMAppleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeRAMAppleActionPerformed
-        // TODO add your handling code here:
-        nickelodeon.getAnimadores().deleteWorker();
-        this.qttyAnimadoresNick.setText(Integer.toString(nickelodeon.getAnimadores().getQuantityWorkers()));
-    }//GEN-LAST:event_removeRAMAppleActionPerformed
-
-    private void removeCPUAppleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeCPUAppleActionPerformed
-        // TODO add your handling code here:
-        nickelodeon.getEscenarios().deleteWorker();
-        this.qttyEscenariosNick.setText(Integer.toString(nickelodeon.getEscenarios().getQuantityWorkers()));
-    }//GEN-LAST:event_removeCPUAppleActionPerformed
-
-    private void removePlacaBaseAppleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removePlacaBaseAppleActionPerformed
-        // TODO add your handling code here:
-        nickelodeon.getGuionistas().deleteWorker();
-        this.qttyGuionistasNick.setText(Integer.toString(nickelodeon.getGuionistas().getQuantityWorkers()));
-    }//GEN-LAST:event_removePlacaBaseAppleActionPerformed
-
-    private void addPlacaBaseAppleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addPlacaBaseAppleActionPerformed
-        // TODO add your handling code here:
-        nickelodeon.addWorkers(0);
-        this.qttyGuionistasNick.setText(Integer.toString(nickelodeon.getGuionistas().getQuantityWorkers()));
-    }//GEN-LAST:event_addPlacaBaseAppleActionPerformed
-
-    private void addCPUAppleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCPUAppleActionPerformed
-        // TODO add your handling code here:
-        nickelodeon.addWorkers(1);
-        this.qttyEscenariosNick.setText(Integer.toString(nickelodeon.getEscenarios().getQuantityWorkers()));
-    }//GEN-LAST:event_addCPUAppleActionPerformed
-
-    private void addEnsambladorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEnsambladorActionPerformed
-        // TODO add your handling code here:
-        nickelodeon.addWorkers(5);
-        this.qttyEnsambladoresNick.setText(Integer.toString(nickelodeon.getEnsambladores().getQuantityWorkers()));
-    }//GEN-LAST:event_addEnsambladorActionPerformed
-
-    private void addTarjetaGraficaAppleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTarjetaGraficaAppleActionPerformed
-        // TODO add your handling code here:
-        nickelodeon.addWorkers(4);
-        this.qttyGuionistasPlotTwistsNick.setText(Integer.toString(nickelodeon.getGuionistasPlotTwists().getQuantityWorkers()));
-    }//GEN-LAST:event_addTarjetaGraficaAppleActionPerformed
-
-    private void addFuenteAlimentacionAppleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addFuenteAlimentacionAppleActionPerformed
-        // TODO add your handling code here:
-        nickelodeon.addWorkers(3);
-        this.qttyDobladoresNick.setText(Integer.toString(nickelodeon.getDobladores().getQuantityWorkers()));
-    }//GEN-LAST:event_addFuenteAlimentacionAppleActionPerformed
+    }//GEN-LAST:event_txt1ActionPerformed
 
     private void addRAMAppleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addRAMAppleActionPerformed
         // TODO add your handling code here:
-        nickelodeon.addWorkers(2);
-        this.qttyAnimadoresNick.setText(Integer.toString(nickelodeon.getAnimadores().getQuantityWorkers()));
+//        nickelodeon.addWorkers(2);
+//        this.qttyRamApple.setText(Integer.toString(nickelodeon.getAnimadores().getQuantityWorkers()));
     }//GEN-LAST:event_addRAMAppleActionPerformed
 
-    private void removePlacaBaseDisneyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removePlacaBaseDisneyActionPerformed
+    private void addFuenteAlimentacionAppleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addFuenteAlimentacionAppleActionPerformed
         // TODO add your handling code here:
-        disney.getGuionistas().deleteWorker();
-        this.qttyGuionistasDisney.setText(Integer.toString(disney.getGuionistas().getQuantityWorkers()));
-    }//GEN-LAST:event_removePlacaBaseDisneyActionPerformed
+//        nickelodeon.addWorkers(3);
+//        this.qttyFuenteAlimentacionApple.setText(Integer.toString(nickelodeon.getDobladores().getQuantityWorkers()));
+    }//GEN-LAST:event_addFuenteAlimentacionAppleActionPerformed
 
-    private void addPlacaBaseDisneyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addPlacaBaseDisneyActionPerformed
+    private void addTarjetaGraficaAppleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTarjetaGraficaAppleActionPerformed
         // TODO add your handling code here:
-        disney.addWorkers(0);
-        this.qttyGuionistasDisney.setText(Integer.toString(disney.getGuionistas().getQuantityWorkers()));
-    }//GEN-LAST:event_addPlacaBaseDisneyActionPerformed
+//        nickelodeon.addWorkers(4);
+//        this.qttyGPUApple.setText(Integer.toString(nickelodeon.getGuionistasPlotTwists().getQuantityWorkers()));
+    }//GEN-LAST:event_addTarjetaGraficaAppleActionPerformed
 
-    private void removeCPUDellActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeCPUDellActionPerformed
-        // TODO add your handling code here:
-        disney.getEscenarios().deleteWorker();
-        this.qttyEscenariosDisney.setText(Integer.toString(disney.getEscenarios().getQuantityWorkers()));
-    }//GEN-LAST:event_removeCPUDellActionPerformed
+    private void addEnsambladorAppleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEnsambladorAppleActionPerformed
+//        // TODO add your handling code here:
+//        nickelodeon.addWorkers(5);
+//        this.qttyEnsambladoresApple.setText(Integer.toString(nickelodeon.getEnsambladores().getQuantityWorkers()));
+    }//GEN-LAST:event_addEnsambladorAppleActionPerformed
 
-    private void addCPUDellActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCPUDellActionPerformed
+    private void addCPUAppleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCPUAppleActionPerformed
         // TODO add your handling code here:
-        disney.addWorkers(1);
-        this.qttyEscenariosDisney.setText(Integer.toString(disney.getEscenarios().getQuantityWorkers()));
-    }//GEN-LAST:event_addCPUDellActionPerformed
+//        nickelodeon.addWorkers(1);
+//        this.qttyCPUApple.setText(Integer.toString(nickelodeon.getEscenarios().getQuantityWorkers()));
+    }//GEN-LAST:event_addCPUAppleActionPerformed
 
-    private void removeRAMDellActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeRAMDellActionPerformed
+    private void addPlacaBaseAppleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addPlacaBaseAppleActionPerformed
         // TODO add your handling code here:
-        disney.getAnimadores().deleteWorker();
-        this.qttyAnimadoresDisney.setText(Integer.toString(disney.getAnimadores().getQuantityWorkers()));
-    }//GEN-LAST:event_removeRAMDellActionPerformed
+//        nickelodeon.addWorkers(0);
+//        this.qttyProductoresBaseApple.setText(Integer.toString(nickelodeon.getGuionistas().getQuantityWorkers()));
+    }//GEN-LAST:event_addPlacaBaseAppleActionPerformed
 
-    private void addRAMDellActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addRAMDellActionPerformed
+    private void removePlacaBaseAppleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removePlacaBaseAppleActionPerformed
         // TODO add your handling code here:
-        disney.addWorkers(2);
-        this.qttyAnimadoresDisney.setText(Integer.toString(disney.getAnimadores().getQuantityWorkers()));
-    }//GEN-LAST:event_addRAMDellActionPerformed
+//        nickelodeon.getGuionistas().deleteWorker();
+//        this.qttyProductoresBaseApple.setText(Integer.toString(nickelodeon.getGuionistas().getQuantityWorkers()));
+    }//GEN-LAST:event_removePlacaBaseAppleActionPerformed
 
-    private void removeFuenteAlimentacionDellActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeFuenteAlimentacionDellActionPerformed
+    private void removeCPUAppleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeCPUAppleActionPerformed
         // TODO add your handling code here:
-        disney.getDobladores().deleteWorker();
-        this.qttyDobladoresDisney.setText(Integer.toString(disney.getDobladores().getQuantityWorkers()));
-    }//GEN-LAST:event_removeFuenteAlimentacionDellActionPerformed
+//        nickelodeon.getEscenarios().deleteWorker();
+//        this.qttyCPUApple.setText(Integer.toString(nickelodeon.getEscenarios().getQuantityWorkers()));
+    }//GEN-LAST:event_removeCPUAppleActionPerformed
 
-    private void addFuenteAlimentacionDellActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addFuenteAlimentacionDellActionPerformed
-        // TODO add your handling code here:
-        disney.addWorkers(3);
-        this.qttyDobladoresDisney.setText(Integer.toString(disney.getDobladores().getQuantityWorkers()));
-    }//GEN-LAST:event_addFuenteAlimentacionDellActionPerformed
+    private void removeRAMAppleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeRAMAppleActionPerformed
+//        // TODO add your handling code here:
+//        nickelodeon.getAnimadores().deleteWorker();
+//        this.qttyRamApple.setText(Integer.toString(nickelodeon.getAnimadores().getQuantityWorkers()));
+    }//GEN-LAST:event_removeRAMAppleActionPerformed
 
-    private void removeTarjetaGraficaDellActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeTarjetaGraficaDellActionPerformed
-        // TODO add your handling code here:
-        disney.getGuionistasPlotTwists().deleteWorker();
-        this.qttyGuionistasPlotTwistsDisney.setText(Integer.toString(disney.getGuionistasPlotTwists().getQuantityWorkers()));
-    }//GEN-LAST:event_removeTarjetaGraficaDellActionPerformed
+    private void removeFuenteAlimentacionAppleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeFuenteAlimentacionAppleActionPerformed
+//        // TODO add your handling code here:
+//        nickelodeon.getDobladores().deleteWorker();
+//        this.qttyFuenteAlimentacionApple.setText(Integer.toString(nickelodeon.getDobladores().getQuantityWorkers()));
+    }//GEN-LAST:event_removeFuenteAlimentacionAppleActionPerformed
 
-    private void addTarjetaGraficaDellActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTarjetaGraficaDellActionPerformed
-        // TODO add your handling code here:
-        disney.addWorkers(4);
-        this.qttyGuionistasPlotTwistsDisney.setText(Integer.toString(disney.getGuionistasPlotTwists().getQuantityWorkers()));
-    }//GEN-LAST:event_addTarjetaGraficaDellActionPerformed
+    private void removeTarjetaGraficaAppleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeTarjetaGraficaAppleActionPerformed
+//        // TODO add your handling code here:
+//        nickelodeon.getGuionistasPlotTwists().deleteWorker();
+//        this.qttyGPUApple.setText(Integer.toString(nickelodeon.getGuionistasPlotTwists().getQuantityWorkers()));
+    }//GEN-LAST:event_removeTarjetaGraficaAppleActionPerformed
 
-    private void removeEnsambladorDellActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeEnsambladorDellActionPerformed
-        // TODO add your handling code here:
-        disney.getEnsambladores().deleteWorker();
-        this.qttyEnsambladoresDisney.setText(Integer.toString(disney.getEnsambladores().getQuantityWorkers()));
-    }//GEN-LAST:event_removeEnsambladorDellActionPerformed
-
-    private void addEnsambladorDellActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEnsambladorDellActionPerformed
-        // TODO add your handling code here:
-        disney.addWorkers(5);
-        this.qttyEnsambladoresDisney.setText(Integer.toString(disney.getEnsambladores().getQuantityWorkers()));
-    }//GEN-LAST:event_addEnsambladorDellActionPerformed
+    private void removeEnsambladorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeEnsambladorActionPerformed
+//        // TODO add your handling code here:
+//        nickelodeon.getEnsambladores().deleteWorker();
+//        this.qttyEnsambladoresApple.setText(Integer.toString(nickelodeon.getEnsambladores().getQuantityWorkers()));
+    }//GEN-LAST:event_removeEnsambladorActionPerformed
 
     /**
      * @param args the command line arguments
@@ -2354,31 +1978,39 @@ public class MainView extends javax.swing.JFrame {
             }
         });
     }
+    
+    public int calculateQuantityA(){
+        int cantidadTrabajadoresTotal = Integer.parseInt(ProductoresBaseApple.getText()) + Integer.parseInt(CPUApple.getText()) + Integer.parseInt(RAMApple.getText()) + Integer.parseInt(FuenteAlimentacionApple.getText()) + Integer.parseInt(GPUApple.getText()) + Integer.parseInt(AssemblerApple.getText()) ;
+        System.out.println(cantidadTrabajadoresTotal);
+        return cantidadTrabajadoresTotal; 
+    }
+    
+    public int calculateQuantityD(){
+        int cantidadTrabajadoresTotal2 = Integer.parseInt(ProductoresBaseDell.getText()) + Integer.parseInt(CPUDell.getText()) + Integer.parseInt(RAMDell.getText()) +Integer.parseInt(FuenteAlimentacionDell.getText()) +Integer.parseInt(GPUDell.getText()) + Integer.parseInt(AssemblerDell.getText()); 
+        return cantidadTrabajadoresTotal2; 
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel AnimadoresDisney;
-    private javax.swing.JLabel AnimadoresNick;
+    private javax.swing.JLabel AssemblerApple;
+    private javax.swing.JLabel AssemblerDell;
+    private javax.swing.JLabel CPUApple;
+    private javax.swing.JLabel CPUDell;
     private javax.swing.JLabel CPUsMaxLabel;
     private javax.swing.JLabel CPUsMaxLabelDell;
     private javax.swing.JLabel CPUsSavedLabel;
     private javax.swing.JLabel CPUsSavedLabelDell;
     private javax.swing.JPanel ConfigurationDashboard;
     private javax.swing.JPanel DisneyDash;
-    private javax.swing.JLabel DobladoresDisney;
-    private javax.swing.JLabel DobladoresNick;
-    private javax.swing.JLabel EnsambladoresDisney;
-    private javax.swing.JLabel EnsambladoresNick;
-    private javax.swing.JLabel EscenariosDisney;
-    private javax.swing.JLabel EscenariosNick;
+    private javax.swing.JLabel FuenteAlimentacionApple;
+    private javax.swing.JLabel FuenteAlimentacionDell;
     private javax.swing.JLabel FuentesAlimentacionMaxLabel;
     private javax.swing.JLabel FuentesAlimentacionMaxLabelDell;
     private javax.swing.JLabel FuentesAlimentacionSavedLabel;
     private javax.swing.JLabel FuentesAlimentacionSavedLabelDell;
+    private javax.swing.JLabel GPUApple;
+    private javax.swing.JLabel GPUDell;
     private javax.swing.JPanel Grafico;
-    private javax.swing.JLabel GuionistasDisney;
-    private javax.swing.JLabel GuionistasNick;
-    private javax.swing.JLabel GuionistasPlotTwistsDisney;
-    private javax.swing.JLabel GuionistasPlotTwistsNick;
     private javax.swing.JPanel NickVSDisney;
     private javax.swing.JPanel NickelodeonDash;
     private javax.swing.JLabel PCsEstandarReadyLabel;
@@ -2389,31 +2021,26 @@ public class MainView extends javax.swing.JFrame {
     private javax.swing.JLabel PlacasBasesMaxLabelDell;
     private javax.swing.JLabel PlacasBasesSavedLabel;
     private javax.swing.JLabel PlacasBasesSavedLabelDell;
+    private javax.swing.JLabel ProductoresBaseApple;
+    private javax.swing.JLabel ProductoresBaseDell;
     private javax.swing.JLabel ProductoresFuentealimentaciónLabel1;
     private javax.swing.JLabel ProductoresFuentealimentaciónLabel2;
-    private javax.swing.JLabel ProductoresFuentealimentaciónLabelApple;
-    private javax.swing.JLabel ProductoresFuentealimentaciónLabelDell;
     private javax.swing.JLabel ProductoresMemoriaRAMLabel1;
     private javax.swing.JLabel ProductoresMemoriaRAMLabel2;
-    private javax.swing.JLabel ProductoresMemoriaRAMLabelApple;
-    private javax.swing.JLabel ProductoresMemoriaRAMLabelDell;
     private javax.swing.JLabel ProductoresPlacaBaseLabel1;
     private javax.swing.JLabel ProductoresPlacaBaseLabel2;
-    private javax.swing.JLabel ProductoresPlacaBaseLabelApple;
-    private javax.swing.JLabel ProductoresPlacaBaseLabelDell;
     private javax.swing.JLabel ProductoresdeCPUsLabel1;
     private javax.swing.JLabel ProductoresdeCPUsLabel2;
     private javax.swing.JLabel ProductoresdeCPUsLabel3;
-    private javax.swing.JLabel ProductoresdeCPUsLabelApple;
-    private javax.swing.JLabel ProductoresdeCPUsLabelDell;
     private javax.swing.JLabel ProductorestarjetasgráficasLabel1;
     private javax.swing.JLabel ProductorestarjetasgráficasLabel2;
-    private javax.swing.JLabel ProductorestarjetasgráficasLabelApple;
-    private javax.swing.JLabel ProductorestarjetasgráficasLabelDell;
+    private javax.swing.JLabel RAMApple;
+    private javax.swing.JLabel RAMDell;
     private javax.swing.JLabel RAMMaxLabel;
     private javax.swing.JLabel RAMMaxLabelDell;
     private javax.swing.JLabel RamsSavedLabel;
     private javax.swing.JLabel RamsSavedLabelDell;
+    private javax.swing.JButton Start;
     private javax.swing.JLabel TarjetasGraficasMaxLabel4;
     private javax.swing.JLabel TarjetasGraficasMaxLabelDell;
     private javax.swing.JLabel TarjetasGraficasSavedLabel;
@@ -2422,29 +2049,24 @@ public class MainView extends javax.swing.JFrame {
     private javax.swing.JButton addCPU;
     private javax.swing.JButton addCPU2;
     private javax.swing.JButton addCPUApple;
-    private javax.swing.JButton addCPUDell;
     private javax.swing.JButton addDia;
-    private javax.swing.JButton addEnsamblador;
     private javax.swing.JButton addEnsamblador1;
     private javax.swing.JButton addEnsamblador2;
-    private javax.swing.JButton addEnsambladorDell;
+    private javax.swing.JButton addEnsambladorApple;
     private javax.swing.JButton addFuenteAlimentacion;
     private javax.swing.JButton addFuenteAlimentacion2;
     private javax.swing.JButton addFuenteAlimentacionApple;
-    private javax.swing.JButton addFuenteAlimentacionDell;
     private javax.swing.JButton addPlacaBase;
     private javax.swing.JButton addPlacaBase2;
     private javax.swing.JButton addPlacaBaseApple;
-    private javax.swing.JButton addPlacaBaseDisney;
     private javax.swing.JButton addRAM;
     private javax.swing.JButton addRAM2;
     private javax.swing.JButton addRAMApple;
-    private javax.swing.JButton addRAMDell;
     private javax.swing.JButton addTarjetaGrafica;
     private javax.swing.JButton addTarjetaGrafica2;
     private javax.swing.JButton addTarjetaGraficaApple;
-    private javax.swing.JButton addTarjetaGraficaDell;
     private javax.swing.JLabel ammount;
+    private javax.swing.JLabel animadorLabel;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel costosLabel;
     private javax.swing.JLabel costosLabelDell;
@@ -2464,25 +2086,23 @@ public class MainView extends javax.swing.JFrame {
     private javax.swing.JLabel dia;
     private javax.swing.JLabel dinseyFondo;
     private javax.swing.JLabel directorStatus;
-    private javax.swing.JLabel directorStatusDell;
     private javax.swing.JLabel directorStatusLabel;
-    private javax.swing.JLabel directorStatusLabelD;
     private javax.swing.JLabel discountedLabel;
     private javax.swing.JLabel discountedLabelDell;
     private javax.swing.JLabel discountedLabelText;
     private javax.swing.JLabel discountedLabelText1;
+    private javax.swing.JLabel doblajeLabel;
     private javax.swing.JLabel ensambladorLabel;
     private javax.swing.JLabel ensambladorLabel1;
     private javax.swing.JLabel ensambladorLabel2;
-    private javax.swing.JLabel ensambladorLabelDisney;
+    private javax.swing.JLabel escenariosLabel;
     private javax.swing.JLabel faultsLabel;
-    private javax.swing.JLabel faultsLabelDell;
     private javax.swing.JLabel faultsLabelText;
-    private javax.swing.JLabel faultsLabelText1;
     private javax.swing.JLabel gananciaLabelText;
     private javax.swing.JLabel gananciaLabelText1;
     private javax.swing.JLabel gananciasLabel;
     private javax.swing.JLabel gananciasLabelDell;
+    private javax.swing.JLabel guionistasLabel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -2490,11 +2110,9 @@ public class MainView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
@@ -2511,11 +2129,9 @@ public class MainView extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
-    private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel17;
-    private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -2525,44 +2141,35 @@ public class MainView extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JLabel plotTwistLabel;
     private javax.swing.JLabel pmStatus;
-    private javax.swing.JLabel pmStatusDell;
     private javax.swing.JLabel pmStatusLabel;
-    private javax.swing.JLabel pmStatusLabelD;
-    private javax.swing.JLabel qttyAnimadoresDisney;
-    private javax.swing.JLabel qttyAnimadoresNick;
+    private javax.swing.JLabel qttyCPUApple;
     private javax.swing.JLabel qttyCPUsMaxApple;
     private javax.swing.JLabel qttyCPUsMaxDell;
     private javax.swing.JLabel qttyCPUsSavedApple;
     private javax.swing.JLabel qttyCPUsSavedDell;
     private javax.swing.JLabel qttyDirectoresApple;
-    private javax.swing.JLabel qttyDirectoresDell;
-    private javax.swing.JLabel qttyDobladoresDisney;
-    private javax.swing.JLabel qttyDobladoresNick;
-    private javax.swing.JLabel qttyEnsambladoresDisney;
-    private javax.swing.JLabel qttyEnsambladoresNick;
-    private javax.swing.JLabel qttyEscenariosDisney;
-    private javax.swing.JLabel qttyEscenariosNick;
+    private javax.swing.JLabel qttyEnsambladoresApple;
+    private javax.swing.JLabel qttyFuenteAlimentacionApple;
     private javax.swing.JLabel qttyFuentesAlimentacionMaxApple;
     private javax.swing.JLabel qttyFuentesAlimentacionMaxDell;
     private javax.swing.JLabel qttyFuentesAlimentacionSavedApple;
     private javax.swing.JLabel qttyFuentesAlimentacionSavedDell;
+    private javax.swing.JLabel qttyGPUApple;
     private javax.swing.JLabel qttyGPUsPCsReadyApple;
     private javax.swing.JLabel qttyGPUsPCsReadyDell;
-    private javax.swing.JLabel qttyGuionistasDisney;
-    private javax.swing.JLabel qttyGuionistasNick;
-    private javax.swing.JLabel qttyGuionistasPlotTwistsDisney;
-    private javax.swing.JLabel qttyGuionistasPlotTwistsNick;
     private javax.swing.JLabel qttyPlacasBasesMaxApple;
     private javax.swing.JLabel qttyPlacasBasesMaxDell;
     private javax.swing.JLabel qttyPlacasBasesSavedApple;
     private javax.swing.JLabel qttyPlacasBasesSavedDell;
+    private javax.swing.JLabel qttyProductoresBaseApple;
     private javax.swing.JLabel qttyProjectsManagersApple;
-    private javax.swing.JLabel qttyProjectsManagersDell;
     private javax.swing.JLabel qttyRAMMaxApple;
     private javax.swing.JLabel qttyRAMMaxDell;
     private javax.swing.JLabel qttyRAMSavedApple;
     private javax.swing.JLabel qttyRAMSavedDell;
+    private javax.swing.JLabel qttyRamApple;
     private javax.swing.JLabel qttyStandardPCsReadyApple;
     private javax.swing.JLabel qttyStandardPCsReadyDell;
     private javax.swing.JLabel qttyTarjetasGraficasMaxApple;
@@ -2573,29 +2180,23 @@ public class MainView extends javax.swing.JFrame {
     private javax.swing.JButton removeCPU;
     private javax.swing.JButton removeCPU2;
     private javax.swing.JButton removeCPUApple;
-    private javax.swing.JButton removeCPUDell;
     private javax.swing.JButton removeDia;
     private javax.swing.JButton removeEnsamblador;
     private javax.swing.JButton removeEnsamblador1;
     private javax.swing.JButton removeEnsamblador2;
-    private javax.swing.JButton removeEnsambladorDell;
     private javax.swing.JButton removeFuenteAlimentacion;
     private javax.swing.JButton removeFuenteAlimentacion2;
     private javax.swing.JButton removeFuenteAlimentacionApple;
-    private javax.swing.JButton removeFuenteAlimentacionDell;
     private javax.swing.JButton removePlacaBase;
     private javax.swing.JButton removePlacaBase2;
     private javax.swing.JButton removePlacaBaseApple;
-    private javax.swing.JButton removePlacaBaseDisney;
     private javax.swing.JButton removeRAM;
     private javax.swing.JButton removeRAM2;
     private javax.swing.JButton removeRAMApple;
-    private javax.swing.JButton removeRAMDell;
     private javax.swing.JButton removeTarjetaGrafica;
     private javax.swing.JButton removeTarjetaGrafica2;
     private javax.swing.JButton removeTarjetaGraficaApple;
-    private javax.swing.JButton removeTarjetaGraficaDell;
-    private javax.swing.JButton txt;
+    private javax.swing.JButton txt1;
     private javax.swing.JLabel utilidadesLabel;
     private javax.swing.JLabel utilidadesLabelDell;
     // End of variables declaration//GEN-END:variables
