@@ -5,13 +5,19 @@
 package GUI;
 
 import classes.Company;
+import classes.Wharehouse;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Paths;
+<<<<<<< Updated upstream
 import javax.swing.JOptionPane;
+=======
+import java.util.concurrent.Semaphore;
+>>>>>>> Stashed changes
 
 /**
  *
@@ -22,29 +28,87 @@ public class MainView extends javax.swing.JFrame {
     int xMouse, yMouse;
     Company dell, apple;    
     ConfigurationView configurationView;
+    SimulationView simulationView;
+    static String[] valuesApple;
+    static String[] valuesDell;
+    static String dayDuration;
+    static String deadline;
     
     public MainView() {
         initComponents();
-        this.dell = null;
-        this.apple = null;
+
+        MainView.valuesApple = new String[7];
+        MainView.valuesDell = new String[7];
+        MainView.dayDuration = "";
+        MainView.deadline = "";
         
-        String[] values = new String[7];
         String currentDir = System.getProperty("user.dir");        
         String path = Paths.get(currentDir, "src", "txtFiles", "config.txt").toString(); 
-        
-        try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
-            String linea;
-            int count = 0;
-            while ((linea = reader.readLine()) != null) {
-                values[count] = linea;
-                count++;
+        File file = new File(path);
+        if(file.length() == 0){
+            this.configurationView = new ConfigurationView(this.dell, this.apple);
+        }
+        else{
+            try (BufferedReader reader = new BufferedReader(new FileReader(path))) {                                                
+                reader.readLine();
+                for (int i = 0; i < 7; i++) {
+                    valuesApple[i] = reader.readLine();
+                }
+                reader.readLine();
+                for (int i = 0; i < 7; i++) {
+                    valuesDell[i] = reader.readLine();
+                }
+                dayDuration = reader.readLine().split(":")[1];                
+                deadline = reader.readLine().split(":")[1];                    
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+
+
+
+            this.configurationView = new ConfigurationView(this.dell, this.apple, valuesApple, valuesDell, dayDuration, deadline);
         }
         
+<<<<<<< Updated upstream
         
+=======
+        this.configurationView.setSize(800, 490);
+        this.configurationView.setLocation(0, 0);
+
+        body.removeAll();
+        body.add(configurationView, BorderLayout.CENTER);
+        body.revalidate();
+        body.repaint();  
+        
+        
+        Semaphore mutex = new Semaphore(1);
+        int dayDurationInt = Integer.parseInt(dayDuration);
+        int daysToDispatch = Integer.parseInt(deadline);
+
+        int limitWorkersApple = Integer.parseInt(valuesApple[0]);
+        int[] requerimentsApple = {2, 1, 4, 4, 2};
+        Wharehouse whApple = new Wharehouse(5, requerimentsApple);
+        Semaphore employeesMutexApple = new Semaphore(1);
+        
+        int limitWorkersDell = Integer.parseInt(valuesDell[0]);
+        int[] requerimentsDell = {1, 5, 6, 5, 1};
+        Wharehouse whDell = new Wharehouse(5, requerimentsDell);
+        Semaphore employeesMutexDell = new Semaphore(1);
+        
+        
+        this.simulationView = new SimulationView(valuesApple, valuesDell, dayDuration, deadline);
+        this.apple = new Company("Apple", limitWorkersApple, whApple, 3, dayDurationInt, 
+                daysToDispatch, 100, 150, employeesMutexApple, mutex, simulationView);
+        
+        this.dell = new Company("Dell", limitWorkersDell, whDell, 3, dayDurationInt, 
+                daysToDispatch, 100, 150, employeesMutexDell, mutex, simulationView); 
+        
+        this.simulationView.setApple(apple);
+        this.simulationView.setDell(dell);
+>>>>>>> Stashed changes
     }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -57,6 +121,7 @@ public class MainView extends javax.swing.JFrame {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
+<<<<<<< Updated upstream
         jTabbedPane1 = new javax.swing.JTabbedPane();
         ConfigurationDashboard = new javax.swing.JPanel();
         ProductoresdeCPUsLabel1 = new javax.swing.JLabel();
@@ -195,6 +260,13 @@ public class MainView extends javax.swing.JFrame {
         TarjetasGraficasSavedLabel = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         discountedLabelText = new javax.swing.JLabel();
+=======
+        body = new javax.swing.JPanel();
+        header = new javax.swing.JPanel();
+        configurationButton = new javax.swing.JButton();
+        appleButton = new javax.swing.JButton();
+        exit = new javax.swing.JPanel();
+>>>>>>> Stashed changes
         jLabel1 = new javax.swing.JLabel();
         deadlineLabelText = new javax.swing.JLabel();
         costosLabelText1 = new javax.swing.JLabel();
@@ -302,6 +374,7 @@ public class MainView extends javax.swing.JFrame {
         setLocationByPlatform(true);
         setUndecorated(true);
         setResizable(false);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -558,6 +631,7 @@ public class MainView extends javax.swing.JFrame {
                     .addComponent(addEnsamblador1))
                 .addContainerGap(27, Short.MAX_VALUE))
         );
+<<<<<<< Updated upstream
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
@@ -602,6 +676,14 @@ public class MainView extends javax.swing.JFrame {
         );
 
         ConfigurationDashboard.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 340, 320));
+=======
+        bodyLayout.setVerticalGroup(
+            bodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 490, Short.MAX_VALUE)
+        );
+
+        jPanel1.add(body, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 800, 490));
+>>>>>>> Stashed changes
 
         jPanel11.setBackground(new java.awt.Color(51, 51, 51));
 
@@ -615,6 +697,7 @@ public class MainView extends javax.swing.JFrame {
             }
         });
 
+<<<<<<< Updated upstream
         GuionistasDisney.setForeground(new java.awt.Color(255, 255, 255));
         GuionistasDisney.setText("0");
 
@@ -630,10 +713,27 @@ public class MainView extends javax.swing.JFrame {
 
         addCPU2.setText("+");
         addCPU2.addActionListener(new java.awt.event.ActionListener() {
+=======
+        appleButton.setBackground(new java.awt.Color(204, 255, 255));
+        appleButton.setText("Simulacion");
+        appleButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                appleButtonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                appleButtonMouseExited(evt);
+            }
+        });
+        appleButton.addActionListener(new java.awt.event.ActionListener() {
+>>>>>>> Stashed changes
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addCPU2ActionPerformed(evt);
             }
         });
+<<<<<<< Updated upstream
+=======
+        header.add(appleButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 0, 110, 40));
+>>>>>>> Stashed changes
 
         EscenariosDisney.setForeground(new java.awt.Color(255, 255, 255));
         EscenariosDisney.setText("0");
@@ -1882,20 +1982,12 @@ public class MainView extends javax.swing.JFrame {
 
         jPanel1.add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 530));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+<<<<<<< Updated upstream
     private void removeTarjetaGraficaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeTarjetaGraficaActionPerformed
         if (Integer.parseInt(GuionistasPlotTwistsNick.getText()) == 1){
             JOptionPane.showMessageDialog(null, "NO SE PUEDE DEJAR UN DEPARTAMENTO SIN TRABAJADORES");
@@ -2186,6 +2278,29 @@ public class MainView extends javax.swing.JFrame {
         nickelodeon.getDobladores().deleteWorker();
         this.qttyDobladoresNick.setText(Integer.toString(nickelodeon.getDobladores().getQuantityWorkers()));
     }//GEN-LAST:event_removeFuenteAlimentacionAppleActionPerformed
+=======
+    private void configurationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_configurationButtonActionPerformed
+        // TODO add your handling code here:        
+        configurationView.setSize(800, 490);
+        configurationView.setLocation(0, 0);
+        
+        body.removeAll();
+        body.add(configurationView, BorderLayout.CENTER);
+        body.revalidate();
+        body.repaint();
+        
+    }//GEN-LAST:event_configurationButtonActionPerformed
+
+    private void appleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_appleButtonActionPerformed
+        simulationView.setSize(800, 490);
+        simulationView.setLocation(0, 0);
+        
+        body.removeAll();
+        body.add(simulationView, BorderLayout.CENTER);
+        body.revalidate();
+        body.repaint();
+    }//GEN-LAST:event_appleButtonActionPerformed
+>>>>>>> Stashed changes
 
     private void removeRAMAppleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeRAMAppleActionPerformed
         // TODO add your handling code here:
@@ -2229,6 +2344,7 @@ public class MainView extends javax.swing.JFrame {
         this.qttyGuionistasPlotTwistsNick.setText(Integer.toString(nickelodeon.getGuionistasPlotTwists().getQuantityWorkers()));
     }//GEN-LAST:event_addTarjetaGraficaAppleActionPerformed
 
+<<<<<<< Updated upstream
     private void addFuenteAlimentacionAppleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addFuenteAlimentacionAppleActionPerformed
         // TODO add your handling code here:
         nickelodeon.addWorkers(3);
@@ -2246,6 +2362,12 @@ public class MainView extends javax.swing.JFrame {
         disney.getGuionistas().deleteWorker();
         this.qttyGuionistasDisney.setText(Integer.toString(disney.getGuionistas().getQuantityWorkers()));
     }//GEN-LAST:event_removePlacaBaseDisneyActionPerformed
+=======
+    private void appleButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_appleButtonMouseEntered
+        Color color = new Color(152, 234, 234);
+        appleButton.setBackground(color);
+    }//GEN-LAST:event_appleButtonMouseEntered
+>>>>>>> Stashed changes
 
     private void addPlacaBaseDisneyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addPlacaBaseDisneyActionPerformed
         // TODO add your handling code here:
@@ -2446,6 +2568,7 @@ public class MainView extends javax.swing.JFrame {
     private javax.swing.JButton addTarjetaGraficaDell;
     private javax.swing.JLabel ammount;
     private javax.swing.ButtonGroup buttonGroup1;
+<<<<<<< Updated upstream
     private javax.swing.JLabel costosLabel;
     private javax.swing.JLabel costosLabelDell;
     private javax.swing.JLabel costosLabelText;
@@ -2483,6 +2606,11 @@ public class MainView extends javax.swing.JFrame {
     private javax.swing.JLabel gananciaLabelText1;
     private javax.swing.JLabel gananciasLabel;
     private javax.swing.JLabel gananciasLabelDell;
+=======
+    private javax.swing.JButton configurationButton;
+    private javax.swing.JPanel exit;
+    private javax.swing.JPanel header;
+>>>>>>> Stashed changes
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
